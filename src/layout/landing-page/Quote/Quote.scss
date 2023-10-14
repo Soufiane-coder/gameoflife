@@ -1,0 +1,64 @@
+@import '../../../style/variables.scss';
+.quote-section{
+    width: 100vw;
+    height: $height-section;
+    background-color: $color-white-1;
+    position: relative;
+    z-index: -1;
+    color: $color-white-1;
+    transition: all 1s;
+    .background-oval{
+        position: absolute;
+        width: 100vw;
+        height: $height-section;
+        clip-path: ellipse(50% 50% at 50% 50%);
+        background-color: $color-primary;
+        z-index: -1;
+    }
+    .rectangle-green-up-right{
+        position: absolute;
+        width: 50vw;
+        height: calc($height-section / 2);
+        background-color: $color-primary;
+        right: 0;
+        z-index: -1;
+    }
+    .rectangle-green-down-left{
+        position: absolute;
+        width: 50vw;
+        height: calc($height-section / 2);
+        background-color: $color-primary;
+        left: 0;
+        bottom: 0;
+        z-index: -1;
+    }
+    .container-quote{
+        height: $height-section;
+        padding: calc($height-section / 2 - 3rem * 1.5) 7rem * 1.5;
+        @media (max-width: 760px) {
+            padding-top: 30rem;
+
+        }
+        .quote{
+            text-align: center;
+            font-family: DancingScript, sans-serif;
+            font-size: 4rem * 1.5;
+            
+        }
+        .quoter{
+            font-family: Imprima, sans-serif;
+            text-align: end;
+            margin-right: 8rem * 1.5;
+            line-height: 3rem * 1.5;
+            font-size: 1.4rem * 1.5;
+        }
+    }
+}
+
+#light .quote-section{
+    background-color: $color-white-1;
+}
+
+#dark .quote-section{
+    background-color: $color-dark-mode-primary;
+}

@@ -1,0 +1,17 @@
+@import '../../style/variables.scss';
+.toggle-sign-in-sign-up{
+    display: flex;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    .is-sign-in{
+        padding-bottom: 1rem;
+        margin-right: 2rem;
+        transition: all .5s;
+    }
+    .is-sign-up{
+        transition: all .5s;
+    }
+}

@@ -1,0 +1,50 @@
+@import '../../../style/variables.scss';
+
+.header{
+    width: 100vw;
+    height: $height-section;
+    background-color: $color-primary;
+    position: relative;
+    z-index: 0;
+    color: $color-black-1;
+    transition: all 1s;
+    &__background-white{
+        position: absolute;
+        width: 100vw;
+        height: $height-section;
+        clip-path: ellipse(50% 50% at 50% 50%);
+        background-color: $color-white-1;
+        z-index: -1;
+        transition: inherit;
+    }
+    &__triangle-white{
+        position: absolute;
+        width: 50vw;
+        height: calc($height-section / 2);
+        background-color: $color-white-1;
+        z-index: -1;
+        transition: inherit;
+    }
+    &__triangle-up-right{
+        top: 0;
+        right: 0;
+    }
+
+    &__triangle-buttom-left{
+        bottom: 0;
+
+    }
+    &__introduction-text{
+        width: 50%;
+    }
+    
+}
+
+
+#dark .header{
+    background-color: $color-primary;
+    color: $color-white-1;
+    &__background-white, &__triangle-white{
+        background-color: $color-dark-mode-primary;
+    }
+}

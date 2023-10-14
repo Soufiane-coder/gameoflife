@@ -1,0 +1,128 @@
+@import '../../../style/variables.scss';
+
+$shifting : -10rem;
+
+.lp-title{
+    color: $color-quoter;
+    font-size: 4.6rem;
+    font-weight: 600;
+}
+
+.lp-description{
+    width: 80%;
+    text-align: justify;
+    color: $color-quoter;
+    font-size: 2.5rem;
+    @media (max-width: $tablet-view) {
+        width: 90%;
+    }
+}
+
+.complete-routine{
+    display: grid;
+    grid-template-columns:  minmax(50rem,1fr) 1fr;
+    justify-items: center;
+    align-items: center;
+    max-width: 100%;
+    background-color: $color-white-1;
+    @media (max-width: $tablet-view) {
+            grid-template-columns: 50rem;
+            grid-template-rows: 2;
+            justify-content: center;
+    }
+    @media (max-width: $desktop-view) {
+        padding: 2rem;
+    }
+    @media (max-width: $tablet-view) {
+        padding: 5rem;
+    }
+    &__description{
+        width: 50rem;
+        @media (max-width: $tablet-view) {
+            margin-top: 0px;
+            width: 100%;
+            padding-right: 0px;
+        }
+    }
+
+    &__undraw{
+        width: 100%;
+        height: 40rem;
+        margin: 5rem;
+
+        @media (max-width: $desktop-view) {
+
+        }
+
+      
+    }
+}
+
+.lp-coins, .lp-inspiration{
+    display: inline-flex;
+    flex-direction: column;
+    width:50%;
+    background-color: $color-white-1;
+    padding: 2rem;
+
+    @media (max-width: $tablet-view) {
+        width: 100%;
+    }
+    
+    &__description-wrapper{
+        padding: 2rem 0;
+        max-width: 45rem;
+        height: 30rem;
+        // min-width: 35rem;
+        margin: auto;
+    }
+    &__undraw{
+        height: 40rem;
+        width:100%;
+    }
+}
+
+.lp-remember{
+    color: $color-quoter;
+    &__title{
+        font-size: 8rem;
+    }
+
+    &__wrapper{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 5rem;
+        @media (max-width: $tablet-view) {
+            justify-content: center;
+        }
+
+    }
+
+    &__section-description{
+        width: 40rem;
+        text-align: right;
+        @media (max-width: $tablet-view) {
+            text-align: center;
+        }
+    }
+
+    &__undraw{
+        width: 40rem;
+        max-height: 30rem;
+        height: 100%;
+    }
+}
+
+// #dark .complate__routine{
+//     background-color: $color-dark-mode-primary;
+//     &-description{
+//         .description-titre{
+//             @include description-title-dark;
+//         }
+//         .description-paragraphe{
+//             color: $color-white-1;
+//         }
+//     }
+// }

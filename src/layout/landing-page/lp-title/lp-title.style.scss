@@ -1,0 +1,42 @@
+@import '../../../style/variables.scss';
+
+$shifting : -10rem;
+.header-title{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    align-items: center;
+    grid-gap: 4rem;
+    padding: 12rem;
+    color: $color-black-1;
+    height:100%;
+    width: 100%;
+    &__game-of-life-clipart{
+        width: 100%;
+        height: 30rem;
+    }
+
+    &__game-draw{
+        margin-top: $shifting;
+        padding: 1rem;
+        width: 100%;
+        height: auto;
+        @media (max-width: 1024px) {
+            display: none;
+            width: 0%;
+        }
+    }
+}
+
+
+#dark .header-title{
+    color: $color-white-1;
+    .introduction-text{   
+       .quote{
+            color: $color-white-1;
+            &__quoter{
+                color: $color-white-1;
+            }
+        }
+        
+    }
+}

@@ -1,0 +1,132 @@
+@import '../../../style/variables.scss';
+
+$card-height: 55rem;
+$font-size: 3rem;
+.sign-in-container, .sign-up-container {
+    display: inline-block;
+    font-size: $font-size;
+    width: 350px;
+    &__card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+        border-radius: 15px;
+        background: $color-white-1;
+        box-shadow: 16px 16px 32px #c8c8c8;
+        border-radius: 8px;
+        padding: 0rem 5rem;
+    }
+    
+    &__inputBox{
+        position: relative;
+        width: 250px;
+    }
+
+    &__inputBox input{
+        width: 100%;
+        padding: 10px;
+        outline: none;
+        border: none;
+        color: $color-primary;
+        font-size: calc($font-size / 2);
+        background: transparent;
+        border-left: 2px solid $color-primary;
+        border-bottom: 2px solid $color-primary;
+        transition: 0.1s;
+        border-bottom-left-radius: 8px;
+    }
+
+    &__inputBox span{
+        margin-top: 5px;
+        position: absolute;
+        left: 0;
+        transform: translateY(-4px);
+        margin-left: 10px;
+        padding: 10px;
+        pointer-events: none;
+        font-size: calc($font-size / 2);
+        color: $color-primary;
+        text-transform: uppercase;
+        transition: 0.5s;
+        letter-spacing: 3px;
+        border-radius: 8px;
+    }
+
+    &__inputBox input:valid~span,
+    &__inputBox input:focus~span {
+        transform: translateX(156px) translateY(-15px);
+        font-size: calc($font-size / 2);
+        padding: 5px 10px;
+        background: $color-primary;
+        letter-spacing: 0.2em;
+        color: #fff;
+        border: 2px;
+    }
+
+    &__inputBox input:valid,
+    &__inputBox input:focus {
+        border: 2px solid $color-primary;
+        border-radius: 8px;
+    }
+    &__title {
+        color: $color-primary;
+        font-size: inherit;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        display: block;
+        font-weight: bold;
+        margin-top: 1.5em;
+    }
+
+    &__message{
+        color: red;
+        font-size: 1.5rem;
+    }
+    &__sign-in-button, &__sign-up-button {
+        color: $color-primary;
+        height: 45px;
+        width: 100px;
+        border-radius: 5px;
+        border: 2px solid $color-primary;
+        cursor: pointer;
+        background-color: transparent;
+        transition: 0.5s;
+        text-transform: uppercase;
+        font-size: calc($font-size / 2);
+        letter-spacing: 2px;
+        &:hover {
+            background-color: $color-primary;
+            color: white;
+        }
+    }
+    &__with-google{
+            max-width: 320px;
+            display: flex;
+            padding: 0.5rem 1.4rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+            vertical-align: middle;
+            align-items: center;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.25);
+            gap: 0.75rem;
+            color: rgb(65, 63, 63);
+            background-color: #fff;
+            cursor: pointer;
+            transition: all .6s ease;
+            margin: auto;
+            margin-bottom: 3em;
+           svg {
+            height: 24px;
+          }
+          
+          button:hover {
+            transform: scale(1.02);
+          }
+    }
+}

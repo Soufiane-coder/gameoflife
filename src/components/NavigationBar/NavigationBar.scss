@@ -1,0 +1,189 @@
+@import '../../style/variables.scss';
+
+
+$demension-icon: 7rem;
+
+.navigation-bar{
+    z-index: 1000;
+    padding: 2rem .7rem;
+    padding-right: 0;
+    position: fixed;
+    width: fit-content;
+    right: 0;
+    top: 4.5rem;
+    background-color: $color-secondary;
+    border-radius: 5rem 0 0 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    .icon{
+        display: inline-block;
+
+        padding: 5px;
+
+        height: $demension-icon;
+        width: $demension-icon;
+
+        fill: $color-white-1 !important;
+        &, circle{
+        stroke: $color-white-1 !important;
+        }
+        &:hover{
+            cursor: pointer;
+        }
+    
+    }
+}
+.navigation-burger-menu{
+    display: none;
+}
+
+@media  (max-width: $tablet-view) {
+    .navigation-bar{
+        display: none;
+        
+    }
+
+    .navigation-burger-menu{
+        $menu-position-top: 6rem ;
+        $menu-position-right: 5rem ;
+
+        $burger-menu-height: 8rem;
+        $burger-menu-width: 8rem;
+
+        display: block;
+        &__checkbox {
+            display: none; // this is the checkbox to verify if the menu is opend or closed
+        }
+    
+        &__button { // this is the button that when we click on it the background get full of page
+            background-color: $color-secondary;
+            height: $burger-menu-height ;
+            width: $burger-menu-width;
+            position: fixed;
+            top: $menu-position-top ;
+            right: $menu-position-right ;
+            border-radius: 50%;
+            z-index: 5000;
+            box-shadow: 0 1rem * 1.5 3rem * 1.5 rgba($color-black-1, .2);
+            text-align: center;
+            cursor: pointer;
+        }
+    
+        &__background { // this is the background that it get stretch to fill the page
+            height: $burger-menu-height;
+            width: $burger-menu-width;
+            border-radius: 50%;
+            position: fixed;
+            top: $menu-position-top ;
+            right: $menu-position-right ;
+            background-image: radial-gradient($color-primary, $color-primary-dark);
+            z-index: 1000;
+            transition: transform .8s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+    
+        &__nav {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1500;
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+            transition: opacity .5s, width 1s; // when it is unchecked do the transtion without delay
+        }
+    
+        &__list {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            list-style: none;
+            text-align: center;
+            width: 100%;
+        }
+    
+        &__item {
+            margin: 1.5rem;
+        }
+
+        &__link{
+            width: auto;
+            height: auto;
+            visibility:visible;
+            display: inline-block;
+            font-size: 4.5rem;
+            font-weight: 300;
+            padding: 1.5rem 3rem;
+            color: $color-white-1;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+    
+    
+        //FUNCTIONALITY
+        &__checkbox:checked ~ &__background {
+            transform: scale(40)
+        }
+
+        &__checkbox:checked ~ &__nav {
+            opacity: 1;
+            width: 100%;
+            transition: opacity .5s .5s; // when it checked do the transition with the delay
+        }
+    
+    
+        //ICON
+        &__icon {
+            position: absolute;
+            top: 50%;  
+            right: 50%;
+            transform: translate(50%, 50%);
+
+            &,
+            &::before,
+            &::after {
+                width: 4.5rem;
+                height: 3px;
+                background-color: $color-white-1;
+                display: inline-block;
+            }
+    
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                transition: all .2s;
+            }
+    
+            &::before { top: -1.8rem; } // this is the top top bread of the burger menu
+            &::after { top: 1.8rem; } // this is the top bottom bread of the burger menu
+        }
+    
+        &__button:hover &__icon::before {
+            top: -1.5rem;
+        }
+    
+        &__button:hover &__icon::after {
+            top: 1.5rem;
+        }
+    
+        &__checkbox:checked + &__button &__icon {
+            background-color: transparent;
+        }
+    
+        &__checkbox:checked + &__button &__icon::before {
+            top: 0;
+            transform: rotate(135deg);
+        }
+    
+        &__checkbox:checked + &__button &__icon::after {
+            top: 0;
+            transform: rotate(-135deg);
+        }
+        
+    }
+}

@@ -1,0 +1,57 @@
+@import '../../style/variables.scss';
+
+.clock-container{
+    position: relative;
+    background-color: $color-quoter;
+    background-size: 10rem 10rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 40rem;
+    height: 40rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    padding: 10px;
+    border-radius: 10px;
+
+    &.am{
+        background-image: url('../../assets/icons/am.svg');
+    }
+    &.pm{
+        background-image: url('../../assets/icons/pm.svg');
+    }
+    &__doughnut-timer{
+        position: absolute;
+        z-index: 1;
+    }
+    &__analoge-clock{
+        // background-color: $color-white-1;
+        border-radius: 10000px;
+        height: 90%;
+        width: 90%;
+        position: absolute;
+        z-index: 0;
+        overflow: hidden;
+        .u-clock-hour{
+            stroke: $color-primary;
+        }
+        .u-clock-minute{
+            stroke: $color-secondary;
+        }
+
+        .u-clock-second{
+            color: $color-quaternary-1;
+        }
+
+        .u-clock-marks{
+            line{
+                stroke: $color-white-1;
+            }
+        }
+    }
+}
+
+// #dark .clock-container{
+//     background-color: $color-white-1;
+// }

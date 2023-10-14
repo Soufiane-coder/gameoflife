@@ -1,0 +1,112 @@
+@import "../../style/mixins.scss";
+
+@include scale-routine;
+$width-routine-card: 40rem;
+
+.loading-routine {
+	--gray: rgba(229, 231, 235, 1);
+	margin-top: $emoji-height;
+	margin-bottom: calc(5rem * var(--scale));
+	width: calc($width-routine-card * var(--scale));
+	max-width: calc($width-routine-card * var(--scale));
+	height: calc(25rem * var(--scale));
+	border-radius: calc(2rem * var(--scale));
+	position: relative;
+	padding: calc(1.5rem * var(--scale));
+	padding-top: 0;
+	background-color: $color-white-12;
+	
+	&__skeleton {
+		background-color: var(--gray) !important;
+		animation: pulse .5s cubic-bezier(0.4, 0, 0.6, 1) alternate-reverse infinite;
+	}
+
+	.emoji, .emoji-bg {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		width: calc(10rem * var(--scale));
+		height: calc(10rem * var(--scale));
+		font-size: calc(7rem * var(--scale));
+		overflow: hidden;
+		border-radius: calc(1.6rem * var(--scale));
+		top: calc(0px - $emoji-height * var(--scale));
+		left: calc($width-routine-card * var(--scale) / 2 - 5rem * var(--scale));
+		background-color: $color-white-12;
+	}
+
+	.title {
+		display: block;
+		align-items: start;
+		justify-self: flex-start;
+		margin-top: calc($emoji-height * var(--scale) + 5px);
+		height: calc(4rem * var(--scale));
+		width: 100%;
+		border-radius: .5rem;
+		// border: 1px solid black;
+	}
+
+	.description {
+		margin-top: calc(1rem * var(--scale) + 5px);
+		height: calc(2.5rem * var(--scale));
+		border-radius: .5rem;
+		// border: 1px solid black;
+	}
+
+	.extra {
+		margin-top: calc(.25rem * var(--scale) + 5px);
+		padding-bottom: calc(.25rem * var(--scale));
+		height: calc(2rem * var(--scale));
+		border-bottom: .5px solid var(--gray);
+	}
+
+	.buttons {
+		margin-top: calc(1rem * var(--scale));
+		display: flex;
+		justify-content: space-around;
+
+		.btn {
+			width: calc(5rem * var(--scale));
+			height: calc(5rem * var(--scale));
+			border-radius: calc(1rem * var(--scale));
+			border: none;
+			// border: 1px solid black;
+		}
+	}
+
+	@keyframes pulse {
+		to {
+			opacity: .2;
+		}
+	}
+}
+
+.loading-routine {
+	transition: all 1s;
+	&__skeleton {
+		transition: all 1s;
+	}
+	.extra{
+		transition: all 1s;
+	}
+	.emoji, .emoji-bg {
+		transition: all 1s;
+	}
+}
+
+#dark{
+	.loading-routine {
+		--gray: rgba(229, 231, 235, 1);
+		background-color: $color-dark-mode-secondary;
+		&__skeleton {
+			background-color: $color-dark-mode-secondary-light !important;
+		}
+		.extra{
+			border-bottom: .5px solid $color-dark-mode-secondary-light;
+		}
+		.emoji, .emoji-bg {
+			background-color: $color-dark-mode-secondary;
+		}
+	}
+}

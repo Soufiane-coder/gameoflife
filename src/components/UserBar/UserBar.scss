@@ -1,0 +1,96 @@
+@import '../../style/variables.scss';
+
+.user-bar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height:$user-bar-height;
+    padding: 1.5rem;
+    padding-bottom: 0;
+    background-color: $color-white-1;
+    color: $color-black-1;
+    transition: all 1s;
+    padding-right: $width-navigation + 2rem;
+    @media (max-width: $tablet-view) {
+        padding-right: 1rem;
+    }
+    &__tree-lines{
+        width: 5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height : 3.5rem;
+    }
+
+    &__line-one, &__line-two, &__line-three{
+        border-radius: 1000px;
+        height: 20%;
+        background: linear-gradient(to right, $color-primary, $color-primary-dark);
+    }
+
+    &__rate{
+        display: flex;
+        height: 100%;
+        align-items: center;
+        margin-right: auto;
+        .et {
+            line-height: 4rem;
+            font-size: 4rem;
+        }
+        .checked {
+            color: $color-secondary;
+        }
+    }
+
+    &__coins-wrapper{
+        display: flex;
+        justify-items: center;
+        align-items: center;
+        font-weight: 600;
+        font-size: 3rem;
+        color: $color-black-1;
+        margin-left: 1rem;
+        border-right: 1px solid $color-white-2;
+        padding-right: 1rem;
+    }
+    &__coins-clipart{
+        fill: $color-black-1;
+        width: 3rem;
+        height: 3rem;    
+    }
+
+    &__user-img{
+        margin: 0 1rem;
+        margin-right: 0;
+        background-color: $color-white-1;
+        border-radius: 100px;
+        width: 4rem;
+    }
+    &__character{
+        margin-top: auto;
+        height : 4rem;
+    }
+
+    &__username {
+        margin-top: auto;
+        margin-bottom: auto;
+        padding-left: 1rem;
+        font-size: 2.5rem;
+        max-width: 280px;
+        @media(max-width: $mini-tablet-view){
+            max-width: 150px;
+        }    
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
+
+#dark .user-bar{
+    background-color: $color-dark-mode-primary;
+    color: $color-white-1;
+
+}
+
+

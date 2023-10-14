@@ -1,0 +1,18 @@
+@import '../../style/variables.scss';
+
+.page-header{
+    width: 100%;
+    height: $page-header-height;
+    display: flex;
+    align-items: center;
+    padding-left: 1.5rem;
+    background-color: $color-white-1;
+    color: $color-black-1;
+    font-size: 2rem;
+    transition: all 1s;
+}
+
+#dark .page-header{
+    background-color: $color-dark-mode-primary;
+    color: $color-white-1;
+}

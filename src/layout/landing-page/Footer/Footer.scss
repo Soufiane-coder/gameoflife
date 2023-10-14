@@ -1,0 +1,27 @@
+@import '../../../style/variables.scss';
+
+.footer{
+    background-color: $color-primary;
+    height: calc($height-section / 2);
+    position: relative;
+    z-index: -1;
+    .triangle-1{
+            position: absolute;
+            background-color: $color-primary-1;
+            clip-path: polygon(0% 0%, 0% 50%, 0% 50%, 60% 0%);
+            width: 100%; 
+            height: 100%;
+        }
+    .triangle-2{
+            position: absolute;
+            background-color: $color-primary-1;
+            clip-path: polygon(0% 100%, 100% 50%, 100% 50%, 100% 100%);
+            width: 100%; 
+            height: 100%;
+        }
+        .copyright{
+            z-index: 10;
+            text-align: right;
+            color: white;
+        }
+}

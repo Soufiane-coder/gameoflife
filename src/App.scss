@@ -1,0 +1,169 @@
+@font-face {
+  font-family: Quicksand;
+  src: url(/public/Quicksand-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family: Imprima;
+  src: url(/public/Imprima-Regular.ttf);
+}
+
+@font-face {
+  font-family: DancingScript;
+  src: url(/public/DancingScript-VariableFont_wght.ttf);
+  }
+
+@import './style/variables.scss';
+@import './style/mixins.scss';
+
+*, *::before, *::after{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+
+  color: inherit;
+
+  font-family: inherit;
+  font-weight:  inherit;
+  font-size: inherit;
+}
+
+input[type='text'], textarea{
+  border: 1px solid $color-black-1 ;
+  color: $color-black-1;
+  flex-grow: 1;
+  resize: none;
+  &:active, &:focus, &:focus-visible{
+      border-color: $color-primary ;
+      outline-color: $color-primary ;
+  }
+}
+
+input[type='time'], button{
+	border: 1px solid $color-black-2 ;
+}
+
+input, textarea, select, button{
+	padding: 5px;
+	background-color: white;
+	border-radius: 6px;
+}
+
+
+select{
+  cursor: pointer;
+  border: 1px solid $color-black-2 ;
+  &:active,
+        &:focus {
+            border-color: $color-primary;
+            outline-color: $color-primary;
+        }
+}
+
+button{
+	cursor: pointer;
+  // @include button-style(#17a2b8, #17a2b8, #0f8293, #17a2b8, #17a2b8,#7a9397)
+}
+
+h1{
+  font-size: 4rem;
+  font-weight:  700;
+}
+
+h2{
+  font-size: 3.5rem;
+  font-weight:  600;
+}
+
+h3{
+  font-size: 3rem;
+  font-weight:  500;
+}
+
+h4{
+  font-size: 2.5rem;
+  font-weight:  500;
+}
+
+h5{
+  font-size: 2.5rem;
+  font-weight:  400;
+}
+
+p{
+  font-size: 2.2rem;
+  font-weight:  400;
+}
+
+html{
+  font-size: 62.5%;
+  @media (max-width: $desktop-view) {
+      font-size: 57%;
+  }
+  @media (max-width: $tablet-view) {
+      font-size: 50%;
+  }
+  // @media (max-width: $mini-table-view) {
+  //     font-size: 45%;
+  // }
+}
+
+#dark{
+  background-color: $color-dark-mode-primary;
+}
+body{
+  font-family: Quicksand, sans-serif;
+  overflow-x: hidden;
+  font-size: 2.5rem;
+  font-weight: 400;
+  a:link, a:visited{
+      text-decoration: none;
+  }
+  .color-yellow{
+      color: $color-secondary;
+  }
+  .color-green{
+      color: $color-primary;
+  }
+  .color-blue{
+      color: $color-tertiary;
+  }
+  .color-red{
+      color: $color-quaternary;
+  }
+
+  &::-webkit-scrollbar {
+      width: 15px;
+  }
+  &::-webkit-scrollbar-track {
+  background: $color-white-1;
+      width: 15px;
+  }
+  &::-webkit-scrollbar-thumb {
+  background: $color-primary;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+      background: $color-primary-dark;
+  }
+  .hidden{
+      opacity: 0;
+      visibility: hidden;
+      width: 0;
+      height: 0;
+      display: none;
+  }
+}
+
+
+::selection{
+  border-radius: 5px;
+  background-color: $color-primary;
+  color: white;
+}
+
+
+
+#dark, #light{
+  position: relative;
+}
+

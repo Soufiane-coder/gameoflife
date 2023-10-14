@@ -1,0 +1,42 @@
+@import '../../style/mixins.scss';
+$width-of-popup: 70rem;
+$height-of-popup: 36rem;
+.message-content{
+    &__window{
+    }
+
+    &__popup{
+        @include popup-properties;
+        overflow-y: scroll;
+        &::-webkit-scrollbar{
+            width: 1px;
+        }
+    }
+
+    &__message-icon{
+        fill: $color-black-1;
+    }
+
+    &__close-icon{
+        margin-left: auto;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+
+    &__head{
+        color: $color-black-1;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    &__title{
+        @include head3;
+    }
+
+    &__message{
+        font-size: 3rem;
+    }
+}

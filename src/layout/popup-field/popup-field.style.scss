@@ -1,0 +1,29 @@
+.ReactModal{
+    &__Overlay {
+        z-index: 99999 !important;
+        transition: opacity 2000ms ease-in-out;
+        background-color: rgba(0, 0, 0, 0.542) !important;
+        &--after-open{
+            opacity: 1;
+        }
+        &--before-close{
+            opacity: 0;
+        }
+    }
+    &__Content{
+        background-color: transparent !important;
+        border: none !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        height: fit-content;
+        margin: auto; // to center the content in the center of page
+    }
+}
+
+.popup-model{
+    &__wrapper{
+        
+    }
+}

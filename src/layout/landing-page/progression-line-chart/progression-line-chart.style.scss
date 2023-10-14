@@ -1,0 +1,23 @@
+@import '../../../style/variables.scss';
+
+.progression-line-chart{
+    display: flex;
+    flex-wrap: wrap;
+    margin:10rem;
+    @media (max-width: $tablet-view) {
+        margin:0rem;
+    }
+    &__wrapper{
+        width:50%;
+        @media (max-width: $tablet-view) {
+            width: 100%;
+        }
+    }
+    &__chart{
+        width:50% !important;
+        height: auto !important;
+        @media (max-width: $tablet-view) {
+            width: 100% !important;
+        }
+    }
+}

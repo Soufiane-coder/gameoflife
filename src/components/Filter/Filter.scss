@@ -1,0 +1,59 @@
+@import '../../style/variables.scss';
+
+.filter-drop-menu{
+    width: 40px;
+    &__icon{
+        fill: $color-black-1;
+        transition: fill 1s;
+    }
+    &__list{
+        $width-of-list: 45rem;
+        top: calc(50% - ($width-of-list / 2));
+        left: calc(50% - ($width-of-list / 2));
+        list-style-type: none;
+        background-color: $color-white-1;
+        font-size: 5rem;
+        width: $width-of-list;
+        z-index: 10;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 1px 6px 5px rgba(0, 0, 0, 0.381);
+        transition: all 1s;
+    }
+    &__item{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-transform: uppercase;
+        padding-bottom: 1rem;
+        .tag {
+            font-size: 3rem;
+            background-color: transparent;
+            padding: 1px 1rem;
+            margin: 0;
+            margin-left: 8px;
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.383);
+            text-align: center;
+            border-radius: 100px;
+        }
+    }
+}
+
+#light .filter-drop-menu{
+    &__icon{
+        fill: $color-black-1;
+    }
+    &__list{
+        background-color: $color-white-1;
+    }
+}
+
+
+#dark .filter-drop-menu{
+    &__icon{
+        fill: $color-white-1;
+    }
+    &__list{
+        background-color: $color-dark-mode-secondary;
+    }
+}
