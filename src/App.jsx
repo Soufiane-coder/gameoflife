@@ -37,7 +37,6 @@ const App = ({ user, displayMode, routines, setCurrentRoutines, setCurrentUser }
     //and getting the user's informations from firebase
     const [userFromFirebaseLoading, setUserFromFirebaseLoading] = useState(true);
     const notificationSystem = createRef()
-
     useEffect(() => {
         (async () => {
             if (user && !routines) {
@@ -66,7 +65,7 @@ const App = ({ user, displayMode, routines, setCurrentRoutines, setCurrentUser }
                 setUserFromFirebaseLoading(false);
             }
         })()
-    }, [userImp,])
+    }, [userImp,userLoading])
 
     
     const style = {
