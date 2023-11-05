@@ -2,38 +2,246 @@
 @import '../../style/fonts.scss';
 
 $width-of-popup: 70rem;
-$height-of-popup: 36rem;
-.message-window{
-    &__popup{
+$height-of-popup: 40rem;
+
+.message-window {
+    &__popup {
         @include popup-properties;
     }
 
-    &__head{
+    &__head {
         width: 100%;
         display: flex;
         align-items: center;
         margin-bottom: 1rem;
     }
-    &__message-icon{
+
+    &__message-icon {
         width: 5rem;
         margin-left: -5px; // to get align with the other elements
     }
 
-    
-    &__title{
+
+    &__title {
         margin-left: 1rem;
         color: $color-black-1;
         @include head3;
     }
 
-    &__description{
+    &__description {
 
         font-size: 2.5rem;
         margin-bottom: 1rem;
-        
+
     }
-    
-    &__input-text{
+
+    &__check-goal {
+        --background: transparent;
+        --check: #4f29f0;
+        --disabled: #c3c8de;
+        --width: 100px;
+        --height: 180px;
+        --border-radius: 10px;
+        background: var(--background);
+        border-radius: var(--border-radius);
+        position: relative;
+        box-shadow: 0 10px 30px rgba(65, 72, 86, 0.05);
+        display: grid;
+        grid-template-columns: 30px auto;
+        align-items: center;
+        // justify-content: center;
+
+        label {
+            color: var(--text);
+            position: relative;
+            cursor: pointer;
+            display: grid;
+            align-items: center;
+            width: fit-content;
+            transition: color 0.3s ease;
+            margin-right: 20px;
+        }
+
+        label::before,
+        label::after {
+            content: "";
+            position: absolute;
+        }
+
+        label::before {
+            height: 2px;
+            width: 8px;
+            left: -27px;
+            background: var(--check);
+            border-radius: 2px;
+            transition: background 0.3s ease;
+        }
+
+        label:after {
+            height: 4px;
+            width: 4px;
+            top: 8px;
+            left: -25px;
+            border-radius: 50%;
+        }
+
+        input[type="checkbox"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            position: relative;
+            height: 15px;
+            width: 15px;
+            outline: none;
+            border: 0;
+            margin: 0 15px 0 0;
+            cursor: pointer;
+            background: var(--background);
+            display: grid;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        input[type="checkbox"]::before,
+        input[type="checkbox"]::after {
+            content: "";
+            position: absolute;
+            height: 2px;
+            top: auto;
+            background: var(--check);
+            border-radius: 2px;
+        }
+
+        input[type="checkbox"]::before {
+            width: 0px;
+            right: 60%;
+            transform-origin: right bottom;
+        }
+
+        input[type="checkbox"]::after {
+            width: 0px;
+            left: 40%;
+            transform-origin: left bottom;
+        }
+
+        input[type="checkbox"]:checked::before {
+            animation: check-01 0.4s ease forwards;
+        }
+
+        input[type="checkbox"]:checked::after {
+            animation: check-02 0.4s ease forwards;
+        }
+
+        input[type="checkbox"]:checked+label {
+            color: var(--disabled);
+            animation: move 0.3s ease 0.1s forwards;
+        }
+
+        input[type="checkbox"]:checked+label::before {
+            background: var(--disabled);
+            animation: slice 0.4s ease forwards;
+        }
+
+        input[type="checkbox"]:checked+label::after {
+            animation: firework 0.5s ease forwards 0.1s;
+        }
+
+        @keyframes move {
+            50% {
+                padding-left: 8px;
+                padding-right: 0px;
+            }
+
+            100% {
+                padding-right: 4px;
+            }
+        }
+
+        @keyframes slice {
+            60% {
+                width: 100%;
+                left: 4px;
+            }
+
+            100% {
+                width: 100%;
+                left: -2px;
+                padding-left: 0;
+            }
+        }
+
+        @keyframes check-01 {
+            0% {
+                width: 4px;
+                top: auto;
+                transform: rotate(0);
+            }
+
+            50% {
+                width: 0px;
+                top: auto;
+                transform: rotate(0);
+            }
+
+            51% {
+                width: 0px;
+                top: 8px;
+                transform: rotate(45deg);
+            }
+
+            100% {
+                width: 5px;
+                top: 8px;
+                transform: rotate(45deg);
+            }
+        }
+
+        @keyframes check-02 {
+            0% {
+                width: 4px;
+                top: auto;
+                transform: rotate(0);
+            }
+
+            50% {
+                width: 0px;
+                top: auto;
+                transform: rotate(0);
+            }
+
+            51% {
+                width: 0px;
+                top: 8px;
+                transform: rotate(-45deg);
+            }
+
+            100% {
+                width: 10px;
+                top: 8px;
+                transform: rotate(-45deg);
+            }
+        }
+
+        @keyframes firework {
+            0% {
+                opacity: 1;
+                box-shadow: 0 0 0 -2px #4f29f0, 0 0 0 -2px #4f29f0, 0 0 0 -2px #4f29f0, 0 0 0 -2px #4f29f0, 0 0 0 -2px #4f29f0, 0 0 0 -2px #4f29f0;
+            }
+
+            30% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                box-shadow: 0 -15px 0 0px #4f29f0, 14px -8px 0 0px #4f29f0, 14px 8px 0 0px #4f29f0, 0 15px 0 0px #4f29f0, -14px 8px 0 0px #4f29f0, -14px -8px 0 0px #4f29f0;
+            }
+        }
+    }
+
+
+
+
+    &__input-text {
         font-size: 2.5rem;
         max-width: 100%; // there is an overflow caus the margin we added at the left
         min-width: 100%;
@@ -43,19 +251,21 @@ $height-of-popup: 36rem;
         margin-bottom: 1rem;
         color: $color-black-1;
         flex-grow: 1;
-        &:active, &:focus{
+
+        &:active,
+        &:focus {
             border-color: $color-primary;
             outline-color: $color-primary;
         }
     }
 
-    &__buttons{
+    &__buttons {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
     }
 
-    &__button{   
+    &__button {
         font-size: 2.5rem;
         background-color: red;
         border: none;
@@ -65,22 +275,23 @@ $height-of-popup: 36rem;
         @media (max-width: 562px) {
             width: 100%;
         }
-        
-        &--filled{
+
+        &--filled {
             color: $color-white-1;
             background-color: $color-primary;
             padding: 1.5rem;
 
-            &:hover{
+            &:hover {
                 cursor: pointer;
             }
         }
 
-        &--outlined{
+        &--outlined {
             color: $color-primary;
-            background-color:  $color-white-1;
+            background-color: $color-white-1;
             padding: 1.5rem;
-            &:hover{
+
+            &:hover {
                 text-decoration: underline;
                 cursor: pointer;
             }

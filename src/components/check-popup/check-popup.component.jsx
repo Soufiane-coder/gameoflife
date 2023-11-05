@@ -1,6 +1,6 @@
 import './check-popup.style.scss';
 import { ReactComponent as MessageIcon } from '../../assets/icons/message.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -9,12 +9,27 @@ import { checkRoutine } from '../../redux/routines/routines.actions';
 import { Zoom } from 'react-reveal';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { hidePopup } from '../../redux/popup/popup.actions';
-import { checkRoutineInFirebase } from '../../../lib/firebase';
+import { checkGoalInFirabase, checkRoutineInFirebase } from '../../../lib/firebase';
+import { selectCurrentRoutines } from '../../redux/routines/routines.selector';
+import { getGoalsOfRoutine } from '../../../lib/firebase';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
-const CheckPopup = ({ user, checkRoutine, routineId, hidePopup }) => {
+const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
     const [messageInput, setMessageInput] = useState('');
 
     const [isLoading, setIsLoading] = useState(false);
+
+    const [lastGoal, setLastGoal] = useState({})
+
+    useEffect(() => {
+        if(routines){
+            (async () => {
+                let goals = await getGoalsOfRoutine(user.uid, routineId)
+                setLastGoal(goals.find(goal => !goal.isAchieved))
+            })()
+        }
+    }, [routines])
+
 
     const handleChange = (event) => {
         const { value } = event.target;
@@ -25,6 +40,9 @@ const CheckPopup = ({ user, checkRoutine, routineId, hidePopup }) => {
         setIsLoading(true);
         try {
             await checkRoutineInFirebase(user.uid, routineId, messageInput,)
+            if(lastGoal.isAchieved){
+                await checkGoalInFirabase(user.uid, routineId, lastGoal.goalId)
+            }
             checkRoutine(routineId, messageInput);
             hidePopup()
         } catch (err) {
@@ -32,6 +50,10 @@ const CheckPopup = ({ user, checkRoutine, routineId, hidePopup }) => {
         } finally {
             setIsLoading(false);
         }
+    }
+
+    const handleCheckGoal = () => {
+        setLastGoal(old => ({...old, isAchieved: !old.isAchieved}))
     }
 
     return (
@@ -45,6 +67,17 @@ const CheckPopup = ({ user, checkRoutine, routineId, hidePopup }) => {
                     <p className="message-window__description">
                         Write a message for future you to motivate, noting the progress or planing the next step
                     </p>
+                    {
+                        lastGoal?.description ? 
+                        <>
+                            <div className="message-window__check-goal">
+                                <input onChange={handleCheckGoal} name="goal" type="checkbox" id='message-window__check-goal_id'/>
+                                <label htmlFor='message-window__check-goal_id'>{lastGoal.description}</label>
+                            </div>
+                        </> : 
+                        <p>There is no goal go to <Link onClick={hidePopup} to={`road-map/${routineId}`}>road map</Link> and add a goal</p>
+                    }
+                   
                     <textarea type="text" className='message-window__input-text' value={messageInput} onChange={handleChange} />
                     <div className="message-window__buttons">
                         <button className="message-window__button message-window__button--filled" onClick={handleCheckRoutine}>
@@ -62,6 +95,7 @@ const CheckPopup = ({ user, checkRoutine, routineId, hidePopup }) => {
 
 const mapStateToProps = createStructuredSelector({
     user: selectCurrentUser,
+    routines: selectCurrentRoutines,
 })
 
 const mapDispatchToProps = dispatch => ({
