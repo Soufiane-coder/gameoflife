@@ -114,6 +114,7 @@ const RoadMap = ({ routines, user, }) => {
                         <button className="road-map__adding-button" onClick={handleAddGoal}>Add a goal</button>
                     </div>
                 </div>
+                
             </div>
         </div >
     )

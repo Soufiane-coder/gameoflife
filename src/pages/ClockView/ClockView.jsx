@@ -2,20 +2,23 @@
 import './ClockView.scss';
 import ClockContainer from '../../components/ClockContainer/ClockContainer';
 import SlideRoutine from '../../components/slide-routine/slide-routine.component';
-
+import React, { useState, useEffect  }  from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentRoutines } from '../../redux/routines/routines.selector';
 import PageHeader from '../../components/PageHeader/page-header';
 import { isAmPm, getCurrentRoutine, hourMinFormat } from './utils';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { addNewToDoItemToFirebase, getTodoItemsOfRoutine , changeTodoItemAttributesInFirebase} from '../../../lib/firebase';
+import { selectCurrentUser } from '../../redux/user/user.selector';
 
-const ClockView = ({ routines }) => {
+const ClockView = ({ user, routines }) => {
     const [loadingRoutines, setLoadingRoutines] = useState(true);
+    const [todoList, setTodoList] = useState([])
+    const [todoItemInput, setTodoItemInput ] = useState('')
 
     useEffect(() => {
         setLoadingRoutines(!routines);
+        getTodoItemsOfRoutine(user.uid,).then(setTodoList)
     }, [routines])
 
 
@@ -24,6 +27,27 @@ const ClockView = ({ routines }) => {
 
     const handleChangeCheckBox = () => {
         setAmPm(old => ({ am: !old.am, pm: !old.pm }))
+    }
+
+    const handleAddingTodoItem = (event) => {
+        event.preventDefault()
+        const newTodoItemId = addNewToDoItemToFirebase(user.uid, todoItemInput)
+        setTodoList(old => ([...old, {todoItemId : newTodoItemId, description : todoItemInput, isAchieved: false}]))
+        setTodoItemInput('')
+    }
+
+    const handleTodoItemInput = (event) => {
+        const {target: {value}} = event
+        setTodoItemInput(value)
+    }
+
+    const handleCheckTodoItem = (event) => {
+        const {checked, id} = event.target
+        const formatedId = id.split(':')[1]
+        changeTodoItemAttributesInFirebase(user.uid, formatedId, checked)
+        setTodoList(old => (
+            old.map(todoItem => todoItem.todoItemId == formatedId ? {...todoItem, isAchieved : checked} : todoItem)))
+
     }
 
     if (loadingRoutines) {
@@ -53,12 +77,30 @@ const ClockView = ({ routines }) => {
                     </label>
                 </div>
                 <SlideRoutine {...{ routines, selectedRoutine }} />
+                
+                <div>
+                    <div className="clock-view-page__to-do-list">
+                        {
+                            todoList?.map(todoItem => (
+                                <React.Fragment key={todoItem.todoItemId}>
+                                    <input onChange={handleCheckTodoItem} checked={todoItem.isAchieved}  id={"todo-item:"+ todoItem.todoItemId} type="checkbox"/>
+                                    <label htmlFor={"todo-item:"+ todoItem.todoItemId}>{todoItem.description}</label>
+                                </React.Fragment>
+                            ))
+                        }
+                    </div>
+                    <div className='clock-view-page__add-todo-item-wrapper'>
+                        <button onClick={handleAddingTodoItem} className='clock-view-page__add-todo-item-button'>Add a todo item</button>
+                        <input value={todoItemInput} onChange={handleTodoItemInput} className='clock-view-page__add-todo-item-input' type="text" />
+                    </div>
+                </div>
             </div>
         </>
     )
 }
 
 const mapPropsToMap = createStructuredSelector({
+    user: selectCurrentUser,
     routines: selectCurrentRoutines
 })
 
