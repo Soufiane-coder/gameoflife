@@ -1,6 +1,7 @@
 import './check-popup.style.scss';
 import { ReactComponent as MessageIcon } from '../../assets/icons/message.svg';
 import { useEffect, useState } from 'react';
+import useSound from 'use-sound';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -13,6 +14,7 @@ import { checkGoalInFirabase, checkRoutineInFirebase } from '../../../lib/fireba
 import { selectCurrentRoutines } from '../../redux/routines/routines.selector';
 import { getGoalsOfRoutine } from '../../../lib/firebase';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import bellSound from '../../../public/bell-sound.mp3'
 
 const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
     const [messageInput, setMessageInput] = useState('');
@@ -20,6 +22,8 @@ const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const [lastGoal, setLastGoal] = useState({})
+
+    const [playCheckSound] = useSound(bellSound)
 
     useEffect(() => {
         if(routines){
@@ -39,8 +43,9 @@ const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
     const handleCheckRoutine = async () => {
         setIsLoading(true);
         try {
+            playCheckSound()
             await checkRoutineInFirebase(user.uid, routineId, messageInput,)
-            if(lastGoal.isAchieved){
+            if(lastGoal?.isAchieved){
                 await checkGoalInFirabase(user.uid, routineId, lastGoal.goalId)
             }
             checkRoutine(routineId, messageInput);

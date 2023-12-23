@@ -47,7 +47,6 @@ const ClockView = ({ user, routines }) => {
         changeTodoItemAttributesInFirebase(user.uid, formatedId, checked)
         setTodoList(old => (
             old.map(todoItem => todoItem.todoItemId == formatedId ? {...todoItem, isAchieved : checked} : todoItem)))
-
     }
 
     if (loadingRoutines) {
