@@ -1,42 +1,93 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Header from '../../layout/GameField/Header/Header';
+import OptionBarLayout from '../../layout/GameField/option-bar/option-bar.layout';
 import './GameField.scss';
-import ListRoutine from '../../layout/GameField/ListRoutine/ListRoutine';
+import ListRoutine from '../../layout/GameField/list-routine/list-routine.layout';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from '../../redux/user/user.selector';
 import { setCurrentRoutines } from '../../redux/routines/routines.actions';
 import { selectCurrentRoutines } from '../../redux/routines/routines.selector';
+import LoadingRoutine from '../../components/loading-routine/loading-routine.component'
+import PageHeader from '../../components/PageHeader/page-header';
 
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
-const GameField = ({ setCurrentRoutines, user, routines}) => {
+const GameField = ({ setCurrentRoutines, user, routines }) => {
     const [selectedFilterOption, setSelectedFilterOption] = useState("all");
+    const [selectedCategory, setSelectedCategory] = useState('all');
+
     const [loadingRoutine, setLoadingRoutine] = useState(true);
+    const [labelFilterTags, setLabelFilterTags] = useState({
+        all: "0",
+        important: "0",
+        waiting: "0",
+        completed: "0",
+    });
 
     const history = useHistory();
-    if(!user){
+
+    if (!user) {
         console.error("user is not logged in")
         history.push('/signin')
     }
 
     useEffect(() => {
+        console.log(selectedCategory)
+    }, [selectedCategory])
+
+    useEffect(() => {
         setLoadingRoutine(!routines)
+        if (!routines) return;
+
+        Object.keys(labelFilterTags).forEach(tagName => {
+            let tagValue = 0
+            switch (tagName) {
+                case 'important':
+                    tagValue = routines?.reduce(
+                        (accum, routine) =>
+                            routine.priority === "important" ? ++accum : accum, 0);
+                    break
+                case "waiting":
+                    tagValue = routines?.reduce(
+                        (accum, routine) => (routine.isSubmitted === false ? ++accum : accum),
+                        0
+                    );
+                    break;
+                case "completed":
+                    tagValue = routines?.reduce(
+                        (accum, routine) => (routine.isSubmitted === true ? ++accum : accum),
+                        0
+                    );
+                    break;
+                default:
+                    tagValue = routines.length
+            }
+            setLabelFilterTags(old => ({ ...old, [tagName]: tagValue }))
+        });
     }, [routines])
 
-    if (loadingRoutine) {
-        return (
-            <h1>Loading routines ...</h1>
-        )
-    }
-    return (
-        <div className='game__field'>
 
-            
+    return (
+        <div className='game-field'>
             <main>
-                <Header {...{ selectedFilterOption, setSelectedFilterOption }} />
-                <ListRoutine {...{ selectedFilterOption, }} />
+                <PageHeader title="Routines" />
+                {
+                    loadingRoutine ?
+                        <LoadingRoutine />
+                        :
+                        <>
+                            <OptionBarLayout {
+                                ...{
+                                    selectedFilterOption,
+                                    setSelectedFilterOption,
+                                    setSelectedCategory,
+                                    labelFilterTags
+                                }} />
+                            <ListRoutine {...{ selectedFilterOption, selectedCategory, }} />
+                        </>
+                }
+
             </main>
         </div >
     )

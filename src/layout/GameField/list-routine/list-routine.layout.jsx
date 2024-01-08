@@ -1,20 +1,28 @@
 import React, { useState } from "react";
 import Routine from "../../../components/Routine/Routine";
 
-import './ListRoutine.scss';
+import './list-routine.style.scss';
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { selectFilteredOption } from "../../../redux/routines/routines.selector";
+import { selectFilteredOption, selectCurrentRoutines} from "../../../redux/routines/routines.selector";
 import { Fade } from "react-reveal";
 
 
-const ListRoutine = ({ filterOption, selectedFilterOption }) => {
+
+const ListRoutine = ({ filterOption, selectedFilterOption, currentRoutines }) => {
     const filteredRoutines = filterOption(selectedFilterOption);
     const archivedRoutines = filteredRoutines.filter((routine) => routine.isArchived);
     const notArchivedRoutines = filteredRoutines.filter((routine) => !routine.isArchived);
 
     const [showArchivedList, setShowArchivedList] = useState(false);
 
+    if (currentRoutines.length === 0){
+        return(
+            <h1>There is no routine</h1>
+        )
+    }
+
+    
     return (
         <>
             <div className="list-routine">
@@ -27,7 +35,6 @@ const ListRoutine = ({ filterOption, selectedFilterOption }) => {
                         )
                     })
                 }
-
             </div>
             <div className="archived-routines">
                 {
@@ -50,7 +57,8 @@ const ListRoutine = ({ filterOption, selectedFilterOption }) => {
 }
 
 const mapStateToProps = createStructuredSelector({
-    filterOption: selectFilteredOption
+    filterOption: selectFilteredOption,
+    currentRoutines: selectCurrentRoutines,
 })
 
 export default connect(mapStateToProps)(ListRoutine);

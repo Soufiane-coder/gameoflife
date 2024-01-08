@@ -136,7 +136,7 @@ const Routine = (
 			{/* {
 				<Cracks style={{ width: '100%', position: 'absolute', zIndex: '-1', height: '100%', top: '0', left: '0' }} />
 			} */}
-
+			{/* <div className="category">📚</div> */}
 			<div className="emoji" style={{ backgroundColor: routine.bgEmojiColor }}>{deleteLoading ? <LoadingSpinner /> : routine.emoji}</div>
 			<div className="title">{routine.title}</div>
 			<div className="description">{routine.description}</div>

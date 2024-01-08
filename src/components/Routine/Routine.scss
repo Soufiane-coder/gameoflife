@@ -1,5 +1,5 @@
 @import "../../style/mixins.scss";
-
+@import '../../style/variables.scss';
 
 $width-routine-card: 40rem;
 
@@ -26,6 +26,25 @@ $width-routine-card: 40rem;
     -webkit-backdrop-filter: blur( 4px );
     border-radius: 10px;
     border: 1px solid rgba( 255, 255, 255, 0.18 );
+
+    .category{
+        position: absolute;
+        left: 0;
+        top: 1.5rem;
+        width: 7rem;
+        height: 3rem;
+        background-color: $color-dark-mode-secondary-light;
+        clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 0 100%, 0 0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-right: 1rem;
+        font-size: 2rem;
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
 
     .important {
         top: -2.2rem;

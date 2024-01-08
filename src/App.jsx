@@ -23,7 +23,7 @@ import { auth, getUserData } from "../lib/firebase";
 import UserLoader from "./layout/user-loader/user-loader.layout";
 import { selectCurrentRoutines } from "./redux/routines/routines.selector";
 import { createContext, createRef, useEffect, useState } from "react";
-import { getRoutines } from "../lib/firebase";
+import { getRoutines, getCategories, } from "../lib/firebase";
 import { setCurrentRoutines } from "./redux/routines/routines.actions";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { initialProtocol } from "./utils";
@@ -44,9 +44,13 @@ const App = ({ user, displayMode, routines, setCurrentRoutines, setCurrentUser }
                 // so we can make sure that our users firebase is the one that has been uploaded
                 if (!user.lastVisit?.toDate) return;
                 setUserFromFirebaseLoading(false);
+
                 let routines = await getRoutines(user.uid)
                 routines = await initialProtocol(user, routines);
                 setCurrentRoutines(routines);
+
+                const categories = await getCategories(user.uid)
+                console.log(categories)
             }
         })()
     }, [user]);

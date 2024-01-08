@@ -21,9 +21,9 @@ export const selectFilteredOption = createSelector(
       case 'important':
         return routines.routines.filter(routine => routine.priority === 'important');
       case 'completed':
-        return routines.routines.filter(routine => routine.submitted === "1");
+        return routines.routines.filter(routine => routine.isSubmitted === true);
       case 'waiting':
-        return routines.routines.filter(routine => routine.submitted === "0");
+        return routines.routines.filter(routine => routine.isSubmitted === false);
       default:
         return routines.routines;
     }

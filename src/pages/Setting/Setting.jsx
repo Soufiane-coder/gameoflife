@@ -8,9 +8,10 @@ import { createStructuredSelector } from "reselect";
 import {selectCurrentUser } from '../../redux/user/user.selector';
 import LogoGOL from '../../assets/clipart/game_of_life_clipart.svg';
 import {setCurrentUser} from '../../redux/user/user.actions';
+import { setCurrentRoutines } from "../../redux/routines/routines.actions";
 import {signUserOutFromFirebase} from '../../../lib/firebase';
 
-const Setting = ({user, history, location: {pathname}, setCurrentUser,}) => {
+const Setting = ({user, history, location: {pathname}, setCurrentUser,setCurrentRoutines,}) => {
     useEffect(()=> {
         if(pathname === '/settings'){
             history.push('/settings/profile')
@@ -19,7 +20,8 @@ const Setting = ({user, history, location: {pathname}, setCurrentUser,}) => {
     const handleSignOut = async () => {
         try{
             await signUserOutFromFirebase();
-            setCurrentUser()
+            setCurrentUser(null)
+            setCurrentRoutines(null)
             history.push('/')
         }
         catch(err){
@@ -73,6 +75,7 @@ const Setting = ({user, history, location: {pathname}, setCurrentUser,}) => {
 
     const mapDispatchToProps = (dispatch) => ({
         setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+        setCurrentRoutines: (routines) => dispatch(setCurrentRoutines(routines))
     });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Setting);

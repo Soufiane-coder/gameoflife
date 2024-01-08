@@ -1,0 +1,58 @@
+.option-bar{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    .adding-routine-button{
+        &{
+            margin-left: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 6px 12px;
+            gap: 4px;
+            // height: 5rem;
+            width: fit-content;
+            border: none;
+            background: #1b1b1cd0;
+            // border-radius: 10rem;
+            cursor: pointer;
+          }
+          
+          .lable {
+            line-height: 22px;
+            font-size: 2rem;
+            color: #DE8A2A;
+            letter-spacing: 1px;
+          }
+          
+          &:hover {
+            background: #1b1b1cea;
+          }
+          
+          &:hover .svg-icon {
+            animation: rotate 1.3s linear infinite;
+          }
+          
+          @keyframes rotate {
+            0% {
+              transform: rotate(0deg);
+            }
+          
+            25% {
+              transform: rotate(10deg);
+            }
+          
+            50% {
+              transform: rotate(0deg);
+            }
+          
+            75% {
+              transform: rotate(-10deg);
+            }
+          
+            100% {
+              transform: rotate(0deg);
+            }
+          }
+    }
+}
