@@ -6,6 +6,7 @@ import userReducer from "./user/user.reducer";
 import routinesReducer from "./routines/routines.reducer";
 import displayModeReducer from './display-mode/display-mode.reducer';
 import popupReducer from "./popup/popup.reducer";
+import categoriesReducer from "./categories/categories.reducer";
 
 const persistConfig = {
   key: "root",
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   routines: routinesReducer,
   displayMode: displayModeReducer,
   popup: popupReducer,
+  categories: categoriesReducer, // todo verfy in here so there is no sub-object
 });
 
 export default persistReducer(persistConfig, rootReducer);

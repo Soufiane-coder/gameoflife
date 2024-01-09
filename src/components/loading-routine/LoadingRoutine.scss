@@ -1,3 +1,5 @@
+@import '../../style/variables.scss';
+
 .loader-list-routine {
 	width: 50px;
 	height: 50px;
@@ -8,6 +10,8 @@
 	border-right-color: rgb(20, 102, 226);
 	border-bottom-color: rgb(224, 71, 71);
 	animation: loader1776 2s linear infinite;
+	margin: auto;
+	margin-top : calc(2*$page-header-height + 2*$user-bar-height);
   }
   
   @keyframes loader1776 {

@@ -13,16 +13,18 @@ import Select from "react-select";
 import { customStyles } from "./styles";
 
 import { displayAddRoutinePopupState } from "../../../redux/popup/popup.actions";
+import { selectCurrentCategories } from "../../../redux/categories/categories.selector";
 
 const OptionBarLayout = ({
 	user,
 	routines,
+	labelFilterTags,
 	selectedFilterOption,
 	setSelectedFilterOption,
 	displayAddRoutinePopupState,
-	selectedCategory,
 	setSelectedCategory,
-	labelFilterTags,
+	selectedCategory,
+	categories,
 }) => {
 	let selectFilterOptions = [
 		{ value: "all", label: "All routine" },
@@ -38,8 +40,17 @@ const OptionBarLayout = ({
 
 	const selectCategoriesOptions = [
 		{ value: "all", label: "All categories" },
-		{ value: "books", label: "Books" },
 	];
+	categories.forEach(category => {
+		selectCategoriesOptions.push({
+			value : category.label,
+			label : category.label
+		})
+	})
+	selectCategoriesOptions.push(
+		{ value:'archieved', label:'Archieved'},
+		{ value:'default', label:'Default'}
+	)
 
 	const handleRadioChange = (event) => {
 		setSelectedFilterOption(event.target.value); // Update the state with the selected option
@@ -89,6 +100,26 @@ const OptionBarLayout = ({
 				</svg>
 				<span className="lable">Add routine</span>
 			</button>
+			<button
+				className="adding-routine-button"
+				onClick={() => displayAddRoutinePopupState(false)}
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="20"
+					viewBox="0 0 20 20"
+					height="20"
+					fill="none"
+					className="svg-icon"
+				>
+					<g strokeWidth="1.5" strokeLinecap="round" stroke="#de8a2a">
+						<circle r="7.5" cy="10" cx="10"></circle>
+						<path d="m9.99998 7.5v5"></path>
+						<path d="m7.5 9.99998h5"></path>
+					</g>
+				</svg>
+				<span className="lable">Add category</span>
+			</button>
 		</div>
 	);
 };
@@ -96,6 +127,7 @@ const OptionBarLayout = ({
 const mapStateToProps = createStructuredSelector({
 	user: selectCurrentUser,
 	routines: selectCurrentRoutines,
+	categories : selectCurrentCategories
 });
 
 const mapDispatchToProps = (dispatch) => ({

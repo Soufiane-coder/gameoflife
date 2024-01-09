@@ -15,7 +15,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const GameField = ({ setCurrentRoutines, user, routines }) => {
     const [selectedFilterOption, setSelectedFilterOption] = useState("all");
-    const [selectedCategory, setSelectedCategory] = useState('all');
+    const [selectedCategory, setSelectedCategory] = useState('default');
 
     const [loadingRoutine, setLoadingRoutine] = useState(true);
     const [labelFilterTags, setLabelFilterTags] = useState({
@@ -31,10 +31,6 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
         console.error("user is not logged in")
         history.push('/signin')
     }
-
-    useEffect(() => {
-        console.log(selectedCategory)
-    }, [selectedCategory])
 
     useEffect(() => {
         setLoadingRoutine(!routines)
@@ -70,8 +66,8 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
 
     return (
         <div className='game-field'>
-            <main>
-                <PageHeader title="Routines" />
+            <PageHeader title="Routines" />
+            <main className='game-field__main'>
                 {
                     loadingRoutine ?
                         <LoadingRoutine />
@@ -84,7 +80,11 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
                                     setSelectedCategory,
                                     labelFilterTags
                                 }} />
-                            <ListRoutine {...{ selectedFilterOption, selectedCategory, }} />
+                            <ListRoutine {
+                                ...{
+                                    selectedFilterOption,
+                                    selectedCategory,
+                                }} />
                         </>
                 }
 

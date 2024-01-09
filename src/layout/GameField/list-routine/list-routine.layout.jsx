@@ -1,20 +1,31 @@
-import React, { useState } from "react";
-import Routine from "../../../components/Routine/Routine";
+import React, { useEffect, useState } from "react";
 
 import './list-routine.style.scss';
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
-import { selectFilteredOption, selectCurrentRoutines} from "../../../redux/routines/routines.selector";
-import { Fade } from "react-reveal";
+import {connect} from "react-redux";
+import {createStructuredSelector} from "reselect";
+import {selectCurrentRoutines} from "../../../redux/routines/routines.selector";
+import {selectCurrentCategories} from '../../../redux/categories/categories.selector';
+import {filterRoutines, ListRoutinesComponent, filterCategoriesAndRoutines} from './utils'
 
+const ListRoutine = ({ 
+    selectedFilterOption,
+    currentRoutines,
+    selectedCategory,
+    currentCategories,
+}) => {
 
+    const [choosenCategory, setChoosenCategory ] = useState(currentCategories)
 
-const ListRoutine = ({ filterOption, selectedFilterOption, currentRoutines }) => {
-    const filteredRoutines = filterOption(selectedFilterOption);
-    const archivedRoutines = filteredRoutines.filter((routine) => routine.isArchived);
-    const notArchivedRoutines = filteredRoutines.filter((routine) => !routine.isArchived);
+    const [choosenRoutines, setChoosenRoutines ] = useState(currentRoutines)
 
-    const [showArchivedList, setShowArchivedList] = useState(false);
+    useEffect(() => {
+        if (selectedCategory === 'default'){
+            setChoosenRoutines(filterRoutines(currentRoutines, selectedFilterOption))
+            return
+        }
+        setChoosenCategory(filterCategoriesAndRoutines(currentCategories, selectedFilterOption, selectedCategory))
+    }, [selectedFilterOption, selectedCategory])
+
 
     if (currentRoutines.length === 0){
         return(
@@ -22,21 +33,24 @@ const ListRoutine = ({ filterOption, selectedFilterOption, currentRoutines }) =>
         )
     }
 
-    
     return (
         <>
-            <div className="list-routine">
+            <div className="list-routine ">
                 {
-                    notArchivedRoutines.map(routine => {
-                        return (
-                            <Fade key={routine.routineId}>
-                                <Routine className='routine' key={routine.routineId} {...{routine}} />
-                            </Fade>
-                        )
-                    })
+                    selectedCategory === 'default' ? 
+                        <div className="list-routine__default">
+                            <ListRoutinesComponent routines={choosenRoutines}/>
+                        </div>
+                    :
+                    choosenCategory.map(({categoryId, emoji, routines, label}) => (
+                        <fieldset className="list-routine__category-fieldset" key={`cat__${categoryId}`}>
+                            <legend className='list-routine__legend'>{emoji} {label}</legend>
+                            <ListRoutinesComponent routines={routines}/>
+                        </fieldset>
+                    ))
                 }
             </div>
-            <div className="archived-routines">
+            {/* <div className="archived-routines">
                 {
                     archivedRoutines?.length !== 0 ?
                         <>
@@ -51,14 +65,14 @@ const ListRoutine = ({ filterOption, selectedFilterOption, currentRoutines }) =>
                         </>
                         : null
                 }
-            </div>
+            </div> */}
         </>
     )
 }
 
 const mapStateToProps = createStructuredSelector({
-    filterOption: selectFilteredOption,
     currentRoutines: selectCurrentRoutines,
+    currentCategories: selectCurrentCategories,
 })
 
 export default connect(mapStateToProps)(ListRoutine);

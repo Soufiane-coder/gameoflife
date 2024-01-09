@@ -23,14 +23,21 @@ import { auth, getUserData } from "../lib/firebase";
 import UserLoader from "./layout/user-loader/user-loader.layout";
 import { selectCurrentRoutines } from "./redux/routines/routines.selector";
 import { createContext, createRef, useEffect, useState } from "react";
-import { getRoutines, getCategories, } from "../lib/firebase";
+import { getRoutines, getCategories, getRoutinesFromCategory} from "../lib/firebase";
 import { setCurrentRoutines } from "./redux/routines/routines.actions";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { initialProtocol } from "./utils";
 import NotificationSystem from 'react-notification-system';
+import { setCurrentCategories } from "./redux/categories/categories.actions";
 
 export const MyContext = createContext();
-const App = ({ user, displayMode, routines, setCurrentRoutines, setCurrentUser }) => {
+const App = ({ 
+    user, 
+    displayMode, 
+    routines, 
+    setCurrentRoutines, 
+    setCurrentUser,
+    setCurrentCategories }) => {
     const [userImp, userLoading, userError] = useAuthState(auth);
 
     // Adding this state so we can fill the gap between userImp has been finished
@@ -45,12 +52,26 @@ const App = ({ user, displayMode, routines, setCurrentRoutines, setCurrentUser }
                 if (!user.lastVisit?.toDate) return;
                 setUserFromFirebaseLoading(false);
 
-                let routines = await getRoutines(user.uid)
-                routines = await initialProtocol(user, routines);
-                setCurrentRoutines(routines);
+                let categories = await getCategories(user.uid)
+                setCurrentCategories(categories)
 
-                const categories = await getCategories(user.uid)
-                console.log(categories)
+                categories = await Promise.all(categories.map(async category => 
+                    ({
+                        ...category,
+                        routines : await getRoutinesFromCategory(user.uid, category.categoryId)
+                    })))
+
+                setCurrentCategories(categories)
+
+                const allRoutines = categories.reduce((acc, category) => {
+                    acc.push(...(category.routines))
+                    return acc
+                }, [])
+
+                // Promise.all(allRoutines.map(async routine))
+                // await initialProtocol(user, routines)
+
+                setCurrentRoutines(allRoutines)
             }
         })()
     }, [user]);
@@ -171,6 +192,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
     setCurrentRoutines: routines => dispatch(setCurrentRoutines(routines)),
     setCurrentUser: user => dispatch(setCurrentUser(user)),
+    setCurrentCategories: categories => dispatch(setCurrentCategories(categories)),
 })
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 

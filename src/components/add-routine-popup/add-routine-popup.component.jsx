@@ -15,7 +15,7 @@ import Picker from "@emoji-mart/react";
 import { randomColor } from "randomcolor";
 
 import TimeKeeper from "react-timekeeper";
-import { isTimeInArray } from "./utils";
+import { isTimeInArray , customStyles} from "./utils";
 import { timeStringToFloat } from "../../utils/clock";
 import { selectCurrentRoutines } from "../../redux/routines/routines.selector";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
@@ -26,6 +26,9 @@ import {
 } from "../../../lib/firebase";
 import { Timestamp } from "firebase/firestore";
 
+import Select from "react-select";
+import { selectCurrentCategories } from "../../redux/categories/categories.selector";
+
 const AddRoutinePopup = ({
 	user,
 	addRoutine,
@@ -33,6 +36,7 @@ const AddRoutinePopup = ({
 	hidePopup,
 	editRoutine,
 	editThisRoutine,
+	categories,
 }) => {
 	if(editThisRoutine){
 		editThisRoutine = routines.find(({ routineId }) => routineId === editThisRoutine)
@@ -156,6 +160,14 @@ const AddRoutinePopup = ({
 		setbgEmojiColorBtn(randomColor());
 	};
 
+	const selectCategoriesOptions = [];
+
+	categories.forEach(category => {
+		selectCategoriesOptions.push({
+			categoryId: category.categoryId,
+			label : category.label
+		})
+	})
 	return (
 		<div className="add-routine-window">
 			{showEmojiList && (
@@ -343,6 +355,23 @@ const AddRoutinePopup = ({
 									"Add Routine"
 								)}
 							</button>
+							<select
+								className="add-routine-window__priority-input"
+								name="category"
+							>
+								{
+									selectCategoriesOptions.map(category => (
+										<option
+											key={`cat-opt__${category.categoryId}`}
+											className="add-routine-window__priority-option"
+											value={category.label}
+										>
+											{category.label}
+										</option>
+									))
+								}
+							</select>
+							
 						</div>
 					</div>
 				</form>
@@ -353,6 +382,7 @@ const AddRoutinePopup = ({
 const mapStateToProps = createStructuredSelector({
 	user: selectCurrentUser,
 	routines: selectCurrentRoutines,
+	categories: selectCurrentCategories
 });
 
 const mapDispatchToProps = (dispatch) => ({

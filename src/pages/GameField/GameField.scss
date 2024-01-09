@@ -1,19 +1,21 @@
 @import '../../style/variables.scss';
 @import '../../style/mixins.scss';
 
+$padding : 2rem;
+
 .game-field{
-    display: flex;
     background-color: $color-white-1;
     transition: background-color 1s;
-    min-height: 100vh;
-    padding: 3rem;
-    main{
+    min-height: calc(100vh - $user-bar-height);
+
+    padding: $padding;
+    
+    &__main{
         padding-right: 90px;
         @media (max-width: 768px){
             padding: 1rem;
         }
         width: 100%;
-        
     }
 }
 

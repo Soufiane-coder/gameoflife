@@ -2,31 +2,35 @@
 @import '../../style/variables.scss';
 
 $width-routine-card: 40rem;
-
+$height-routine-card: 25rem;
 
 .routine {
+    position: relative;
+
     margin-top: $emoji-height;
     margin-bottom: 5rem;
-    width: $width-routine-card;
-    max-width: $width-routine-card;
-    height: 25rem;
-    border-radius: 2rem;
-    box-shadow: 0px 11px 14px rgba(0, 0, 0, 0.262);
-    position: relative;
+
     padding: 1.5rem;
     padding-top: 0;
-    transition: all 1s;
+
+    width: $width-routine-card;
+    max-width: $width-routine-card;
+    height: $height-routine-card;
+
     background-color: $color-white-2;
     color: $color-black-1;
 
-    
+    border-radius: 2rem;
+    box-shadow: 0px 11px 14px rgba(0, 0, 0, 0.262);
+
+    transition: all 1s;
+
     background: rgba( 74, 144, 226, 0.25 );
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
     backdrop-filter: blur( 4px );
     -webkit-backdrop-filter: blur( 4px );
     border-radius: 10px;
     border: 1px solid rgba( 255, 255, 255, 0.18 );
-
     .category{
         position: absolute;
         left: 0;
