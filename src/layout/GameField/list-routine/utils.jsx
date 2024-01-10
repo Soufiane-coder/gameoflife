@@ -16,7 +16,7 @@ export const filterRoutines = (routines, filterLabel) =>{
         }
 }
 
-export const filterCategoriesAndRoutines = (categories, filterLabel, categoryLabel) => {
+export const filterCategoriesAndRoutines = (categories, routines, filterLabel, categoryLabel) => {
     let filteredCategories = categories
 
     if (categoryLabel !== 'all'){
@@ -24,7 +24,9 @@ export const filterCategoriesAndRoutines = (categories, filterLabel, categoryLab
     }
     filteredCategories = filteredCategories.map(category => ({
         ...category,
-        routines: filterRoutines(category.routines, filterLabel)
+        routines: filterRoutines(
+            routines.filter(routine => routine.categoryId == category.categoryId),
+                filterLabel)
     }))
 
     return filteredCategories

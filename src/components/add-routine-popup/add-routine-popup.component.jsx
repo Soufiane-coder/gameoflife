@@ -22,12 +22,12 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { hidePopup } from "../../redux/popup/popup.actions";
 import {
 	addRoutineToFirebase,
-	EditRoutineInFirebase,
+	editRoutineInFirebase,
 } from "../../../lib/firebase";
 import { Timestamp } from "firebase/firestore";
 
-import Select from "react-select";
 import { selectCurrentCategories } from "../../redux/categories/categories.selector";
+
 
 const AddRoutinePopup = ({
 	user,
@@ -41,6 +41,16 @@ const AddRoutinePopup = ({
 	if(editThisRoutine){
 		editThisRoutine = routines.find(({ routineId }) => routineId === editThisRoutine)
 	}
+
+	const selectCategoriesOptions = [];
+
+	categories.forEach(category => {
+		selectCategoriesOptions.push({
+			categoryId: category.categoryId,
+			label : category.label
+		})
+	})
+
 	const [emoji, setEmoji] = useState(editThisRoutine ? editThisRoutine.emoji : '');
 	const [showEmojiList, setShowEmojiList] = useState(false);
 	const [showTimePiker, setShowTimePicker] = useState(false);
@@ -65,15 +75,21 @@ const AddRoutinePopup = ({
 				isSubmitted: false,
 			}
 	);
+
 	const [bgEmojiColorBtn, setbgEmojiColorBtn] = useState(editThisRoutine ? editThisRoutine.bgEmojiColor : '');
+	const [categoryId, setCategoryId] = useState(
+		editThisRoutine ? editThisRoutine.categoryId : (selectCategoriesOptions[0]?.categoryId || 'default'))
 
 	const [loadingAdding, setLoadingAdding] = useState(false);
 
 	const handleChange = (event) => {
-		const { name, value } = event.target;
-		if (event.target.type === "checkbox") {
+		const { name, value, type } = event.target;
+		if (type === "checkbox") {
 			setAddRoutineForm({ ...addRoutineForm, important: event.target.checked });
 			return;
+		}
+		else if (name === 'categories'){
+			setCategoryId(value)
 		}
 		setAddRoutineForm({ ...addRoutineForm, [name]: value });
 	};
@@ -100,22 +116,33 @@ const AddRoutinePopup = ({
 			return;
 		}
 		setLoadingAdding(true);
+		
+		if (categoryId === 'default') {alert('category label not defiend');return;}
 
 		try {
 			if (editThisRoutine) {
-				await EditRoutineInFirebase(user.uid, addRoutineForm);
-				editRoutine({...addRoutineForm, emoji, bgEmojiColorBtn})
+				await editRoutineInFirebase(user.uid, 
+					{
+						...addRoutineForm,
+						categoryId,
+						emoji,
+						bgEmojiColor: bgEmojiColorBtn,
+						categoryId,
+					});
+
+				editRoutine({...addRoutineForm, emoji, bgEmojiColor: bgEmojiColorBtn})
 			} else {
 				const newRoutineObject = {
 					...addRoutineForm,
 					level: Number(addRoutineForm.level),
-					emoji: emoji,
+					emoji,
 					bgEmojiColor: bgEmojiColorBtn,
 					lastSubmit: new Timestamp(0, 0),
+					categoryId,
 				};
 				const routineId = await addRoutineToFirebase(
 					user.uid,
-					newRoutineObject
+					newRoutineObject,
 				);
 				addRoutine({ ...newRoutineObject, routineId });
 			}
@@ -160,14 +187,10 @@ const AddRoutinePopup = ({
 		setbgEmojiColorBtn(randomColor());
 	};
 
-	const selectCategoriesOptions = [];
 
-	categories.forEach(category => {
-		selectCategoriesOptions.push({
-			categoryId: category.categoryId,
-			label : category.label
-		})
-	})
+
+
+
 	return (
 		<div className="add-routine-window">
 			{showEmojiList && (
@@ -357,14 +380,16 @@ const AddRoutinePopup = ({
 							</button>
 							<select
 								className="add-routine-window__priority-input"
-								name="category"
+								name="categories"
+								onChange={handleChange}
+								value={categoryId}
 							>
 								{
 									selectCategoriesOptions.map(category => (
 										<option
 											key={`cat-opt__${category.categoryId}`}
 											className="add-routine-window__priority-option"
-											value={category.label}
+											value={category.categoryId}
 										>
 											{category.label}
 										</option>

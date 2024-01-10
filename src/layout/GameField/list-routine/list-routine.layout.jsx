@@ -14,7 +14,10 @@ const ListRoutine = ({
     currentCategories,
 }) => {
 
-    const [choosenCategory, setChoosenCategory ] = useState(currentCategories)
+    const [choosenCategory, setChoosenCategory ] = useState(
+        filterCategoriesAndRoutines(
+            currentCategories, currentRoutines,selectedFilterOption, selectedCategory)
+    )
 
     const [choosenRoutines, setChoosenRoutines ] = useState(currentRoutines)
 
@@ -23,7 +26,9 @@ const ListRoutine = ({
             setChoosenRoutines(filterRoutines(currentRoutines, selectedFilterOption))
             return
         }
-        setChoosenCategory(filterCategoriesAndRoutines(currentCategories, selectedFilterOption, selectedCategory))
+        setChoosenCategory(
+            filterCategoriesAndRoutines(
+                currentCategories, currentRoutines,selectedFilterOption, selectedCategory))
     }, [selectedFilterOption, selectedCategory])
 
 

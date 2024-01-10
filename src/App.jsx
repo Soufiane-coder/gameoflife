@@ -23,7 +23,7 @@ import { auth, getUserData } from "../lib/firebase";
 import UserLoader from "./layout/user-loader/user-loader.layout";
 import { selectCurrentRoutines } from "./redux/routines/routines.selector";
 import { createContext, createRef, useEffect, useState } from "react";
-import { getRoutines, getCategories, getRoutinesFromCategory} from "../lib/firebase";
+import { getRoutinesFromFirebase, getCategories, } from "../lib/firebase";
 import { setCurrentRoutines } from "./redux/routines/routines.actions";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { initialProtocol } from "./utils";
@@ -55,23 +55,28 @@ const App = ({
                 let categories = await getCategories(user.uid)
                 setCurrentCategories(categories)
 
-                categories = await Promise.all(categories.map(async category => 
-                    ({
-                        ...category,
-                        routines : await getRoutinesFromCategory(user.uid, category.categoryId)
-                    })))
+                let routines = await getRoutinesFromFirebase(user.uid)
+                // routines = await initialProtocol(user, routines);
+                
+                setCurrentRoutines(routines)
+                
+                // categories = await Promise.all(categories.map(async category => 
+                //     ({
+                //         ...category,
+                //         routines : await getRoutinesFromCategory(user.uid, category.categoryId)
+                //     })))
 
-                setCurrentCategories(categories)
+                // setCurrentCategories(categories)
 
-                const allRoutines = categories.reduce((acc, category) => {
-                    acc.push(...(category.routines))
-                    return acc
-                }, [])
+                // const allRoutines = categories.reduce((acc, category) => {
+                //     acc.push(...(category.routines))
+                //     return acc
+                // }, [])
 
                 // Promise.all(allRoutines.map(async routine))
                 // await initialProtocol(user, routines)
 
-                setCurrentRoutines(allRoutines)
+                // setCurrentRoutines(allRoutines)
             }
         })()
     }, [user]);
