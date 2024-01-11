@@ -10,26 +10,26 @@ import {filterRoutines, ListRoutinesComponent, filterCategoriesAndRoutines} from
 const ListRoutine = ({ 
     selectedFilterOption,
     currentRoutines,
-    selectedCategory,
+    selectedCategories,
     currentCategories,
 }) => {
 
     const [choosenCategory, setChoosenCategory ] = useState(
         filterCategoriesAndRoutines(
-            currentCategories, currentRoutines,selectedFilterOption, selectedCategory)
+            currentCategories, currentRoutines,selectedFilterOption, selectedCategories)
     )
 
     const [choosenRoutines, setChoosenRoutines ] = useState(currentRoutines)
 
     useEffect(() => {
-        if (selectedCategory === 'default'){
+        if (selectedCategories?.length === 0){
             setChoosenRoutines(filterRoutines(currentRoutines, selectedFilterOption))
             return
         }
         setChoosenCategory(
             filterCategoriesAndRoutines(
-                currentCategories, currentRoutines,selectedFilterOption, selectedCategory))
-    }, [selectedFilterOption, selectedCategory])
+                currentCategories, currentRoutines,selectedFilterOption, selectedCategories))
+    }, [selectedFilterOption, selectedCategories])
 
 
     if (currentRoutines.length === 0){
@@ -42,7 +42,7 @@ const ListRoutine = ({
         <>
             <div className="list-routine ">
                 {
-                    selectedCategory === 'default' ? 
+                    selectedCategories?.length === 0 ? 
                         <div className="list-routine__default">
                             <ListRoutinesComponent routines={choosenRoutines}/>
                         </div>

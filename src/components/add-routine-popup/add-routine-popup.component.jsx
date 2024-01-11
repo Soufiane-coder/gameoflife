@@ -127,7 +127,6 @@ const AddRoutinePopup = ({
 						categoryId,
 						emoji,
 						bgEmojiColor: bgEmojiColorBtn,
-						categoryId,
 					});
 
 				editRoutine({...addRoutineForm, emoji, bgEmojiColor: bgEmojiColorBtn})

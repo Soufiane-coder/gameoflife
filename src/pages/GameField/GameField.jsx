@@ -15,7 +15,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const GameField = ({ setCurrentRoutines, user, routines }) => {
     const [selectedFilterOption, setSelectedFilterOption] = useState("all");
-    const [selectedCategory, setSelectedCategory] = useState('default');
+    const [selectedCategories, setSelectedCategories] = useState([]);
 
     const [loadingRoutine, setLoadingRoutine] = useState(true);
     const [labelFilterTags, setLabelFilterTags] = useState({
@@ -77,13 +77,13 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
                                 ...{
                                     selectedFilterOption,
                                     setSelectedFilterOption,
-                                    setSelectedCategory,
+                                    setSelectedCategories,
                                     labelFilterTags
                                 }} />
                             <ListRoutine {
                                 ...{
                                     selectedFilterOption,
-                                    selectedCategory,
+                                    selectedCategories,
                                 }} />
                         </>
                 }

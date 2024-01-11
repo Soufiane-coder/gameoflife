@@ -4,11 +4,11 @@ const optionColor = chroma('#00602d')
 export const customStyles = {
   container: (provided, state) => ({
       ...provided,
-      display: 'inline-block',
+      // display: 'inline-block',
   }),
   control: (provided, state) => ({
       ...provided,
-      width: "26rem",
+      // width: "30rem",
       // "&:active" : {
       //   ...provided[':active'],
       //   boxShadow: '0 0 0 1.5px ' + optionColor.css() ,

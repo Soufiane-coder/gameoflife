@@ -10,10 +10,14 @@ import { useState } from "react";
 import Filter from "../../../components/Filter/Filter";
 
 import Select from "react-select";
+import makeAnimated from 'react-select/animated';
+
 import { customStyles } from "./styles";
 
 import { displayAddRoutinePopupState } from "../../../redux/popup/popup.actions";
 import { selectCurrentCategories } from "../../../redux/categories/categories.selector";
+
+const animatedComponents = makeAnimated();
 
 const OptionBarLayout = ({
 	user,
@@ -22,7 +26,7 @@ const OptionBarLayout = ({
 	selectedFilterOption,
 	setSelectedFilterOption,
 	displayAddRoutinePopupState,
-	setSelectedCategory,
+	setSelectedCategories,
 	selectedCategory,
 	categories,
 }) => {
@@ -33,31 +37,31 @@ const OptionBarLayout = ({
 		{ value: "completed", label: "completed" },
 	];
 
+	const [isMulti, setIsMulti] = useState(true)
+
 	selectFilterOptions = selectFilterOptions.map((option) => ({
 		...option,
 		label: `${option.label} (${labelFilterTags[option.value]})`,
 	}));
 
 	const selectCategoriesOptions = [
-		{ value: "all", label: "All categories" },
+		// { value: "all", label: "All categories" },
 	];
+
 	categories.forEach(category => {
 		selectCategoriesOptions.push({
-			value : category.label,
+			value: category.categoryId,
 			label : category.label
 		})
 	})
-	selectCategoriesOptions.push(
-		{ value:'archieved', label:'Archieved'},
-		{ value:'default', label:'Default'}
-	)
 
-	const handleRadioChange = (event) => {
-		setSelectedFilterOption(event.target.value); // Update the state with the selected option
-	};
+	// selectCategoriesOptions.push(
+	// 	{ value:'archieved', label:'Archieved'},
+	// 	{ value:'default', label:'Default'}
+	// )
 
-	const handleChoosingCategory = (event) => {
-		setSelectedCategory(event.value);
+	const handleChoosingCategory = (selectedCategories) => {
+		setSelectedCategories(selectedCategories);
 	};
 
 	const handleChoosingFilter = (event) => {
@@ -72,6 +76,7 @@ const OptionBarLayout = ({
 				placeholder="select attribute..."
 				styles={customStyles}
 				onChange={handleChoosingFilter}
+				components={animatedComponents}
 			/>
 			<Select
 				options={selectCategoriesOptions}
@@ -79,6 +84,8 @@ const OptionBarLayout = ({
 				placeholder="select category..."
 				styles={customStyles}
 				onChange={handleChoosingCategory}
+				// components={animatedComponents}
+				isMulti={isMulti}
 			/>
 			<button
 				className="adding-routine-button"

@@ -3,7 +3,7 @@ import './LoadingRoutine.scss';
 
 const LoadingRoutine = () => {
     return (
-        <div class="loader-list-routine"></div>
+        <div className="loader-list-routine"></div>
     )
 
 }
