@@ -20,4 +20,9 @@ export const displayAddRoutinePopupState = (state) => ({
   payload: state,
 });
 
+export const displayAddCategoryPopupState = (state) => ({
+  type: popupActionTypes.ADD_CATEGORY_POPUP,
+  payload: state,
+})
+
 

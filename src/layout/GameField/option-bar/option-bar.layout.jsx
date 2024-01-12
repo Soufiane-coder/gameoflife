@@ -14,7 +14,7 @@ import makeAnimated from 'react-select/animated';
 
 import { customStyles } from "./styles";
 
-import { displayAddRoutinePopupState } from "../../../redux/popup/popup.actions";
+import { displayAddRoutinePopupState, displayAddCategoryPopupState } from "../../../redux/popup/popup.actions";
 import { selectCurrentCategories } from "../../../redux/categories/categories.selector";
 
 const animatedComponents = makeAnimated();
@@ -25,6 +25,7 @@ const OptionBarLayout = ({
 	labelFilterTags,
 	selectedFilterOption,
 	setSelectedFilterOption,
+	displayAddCategoryPopupState,
 	displayAddRoutinePopupState,
 	setSelectedCategories,
 	selectedCategory,
@@ -84,7 +85,7 @@ const OptionBarLayout = ({
 				placeholder="select category..."
 				styles={customStyles}
 				onChange={handleChoosingCategory}
-				// components={animatedComponents}
+				components={animatedComponents}
 				isMulti={isMulti}
 			/>
 			<button
@@ -109,7 +110,7 @@ const OptionBarLayout = ({
 			</button>
 			<button
 				className="adding-routine-button"
-				onClick={() => displayAddRoutinePopupState(false)}
+				onClick={() => displayAddCategoryPopupState(false)}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -140,6 +141,8 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch) => ({
 	displayAddRoutinePopupState: (state) =>
 		dispatch(displayAddRoutinePopupState(state)),
+	displayAddCategoryPopupState: (state) => 
+		dispatch(displayAddCategoryPopupState(state))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OptionBarLayout);

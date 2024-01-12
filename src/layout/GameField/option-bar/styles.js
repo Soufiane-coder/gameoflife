@@ -4,7 +4,7 @@ const optionColor = chroma('#00602d')
 export const customStyles = {
   container: (provided, state) => ({
       ...provided,
-      // display: 'inline-block',
+      width: '40rem',
   }),
   control: (provided, state) => ({
       ...provided,

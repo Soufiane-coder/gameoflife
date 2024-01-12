@@ -13,11 +13,13 @@ import MessagePopup from '../../components/message-popup/message-popup.component
 
 import ReactModal from 'react-modal';
 import { Zoom } from 'react-reveal';
+import AddCategoryPopupComponent from '../../components/add-category-popup/add-category-popup.component';
 
 const PopupField = ({ popup , hidePopup}) => {
     if(
         popup.type !== popupActionTypes.MESSAGE_POPUP &&
         popup.type !== popupActionTypes.ADD_ROUTINE_POPUP &&
+        popup.type !== popupActionTypes.ADD_CATEGORY_POPUP &&
         popup.type !== popupActionTypes.CHECK_POPUP
     ){
         return;
@@ -36,6 +38,10 @@ const PopupField = ({ popup , hidePopup}) => {
             case popupActionTypes.CHECK_POPUP:
                 return (
                     <CheckPopup routineId={popup.payload} />
+                )
+            case popupActionTypes.ADD_CATEGORY_POPUP:
+                return (
+                    <AddCategoryPopupComponent/>
                 )
             case popupActionTypes.HIDE_POPUP:
                 return null;
