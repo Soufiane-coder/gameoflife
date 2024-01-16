@@ -12,14 +12,32 @@
     &__category-fieldset{
         border: .3rem solid #7B3F00;
         padding: 1rem;
+        
     }
 
     &__legend{
+        display: flex;
+        align-items: center;
         color: #7B3F00;
         font-size: 4rem;
         font-weight: 600;
         margin-left: 2rem;
         padding: .5rem;
+    }
+
+    &__legend-edit-button{
+        height: 3.5rem;
+        width: 3.5rem;
+        border-radius: 50%;
+        padding: .5rem;
+        fill: #7B3F00;
+        cursor: pointer;
+        &:hover{
+            background-color: rgba(65, 65, 65, 0.166);
+        }
+        &:active{
+            background-color: rgba(65, 65, 65, 0.2);
+        }
     }
 }
 

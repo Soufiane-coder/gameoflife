@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import './list-routine.style.scss';
+import {ReactComponent as EditButton} from '../../../assets/icons/edit.svg';
 import {connect} from "react-redux";
 import {createStructuredSelector} from "reselect";
 import {selectCurrentRoutines} from "../../../redux/routines/routines.selector";
@@ -38,6 +39,13 @@ const ListRoutine = ({
         )
     }
 
+    // const EditButton = () => (
+    //     <button class="list-routine__edit-category">
+    //         <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+    //         <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM128,72a12,12,0,1,0-12-12A12,12,0,0,0,128,72Zm0,112a12,12,0,1,0,12,12A12,12,0,0,0,128,184Z"></path></svg>
+    //     </button>
+    // )
+
     return (
         <>
             <div className="list-routine ">
@@ -49,7 +57,7 @@ const ListRoutine = ({
                     :
                     choosenCategory.map(({categoryId, emoji, routines, label}) => (
                         <fieldset className="list-routine__category-fieldset" key={`cat__${categoryId}`}>
-                            <legend className='list-routine__legend'>{emoji} {label}</legend>
+                            <legend className='list-routine__legend'>{emoji} {label}<EditButton className="list-routine__legend-edit-button"/></legend>
                             <ListRoutinesComponent routines={routines}/>
                         </fieldset>
                     ))

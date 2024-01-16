@@ -26,6 +26,7 @@
     "react-notification-system": "^0.4.0",
     "react-redux": "^8.0.5",
     "react-reveal": "^1.2.2",
+    "react-ripples": "^2.2.1",
     "react-router-dom": "^5.3.4",
     "react-scripts": "^5.0.1",
     "react-select": "^5.8.0",

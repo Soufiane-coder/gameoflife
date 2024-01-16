@@ -6,6 +6,9 @@ import { hidePopup } from "../../redux/popup/popup.actions";
 import { selectCurrentUser } from "../../redux/user/user.selector";
 import {addCategoryToFirebase} from '../../../lib/firebase';
 
+import Ripples from 'react-ripples'
+
+
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 
@@ -15,22 +18,23 @@ const AddCategoryPopup = ({
 }) => {
 
 	const [showEmojiList, setShowEmojiList] = useState(false);
-    const [categoryForm, setCategoryForm] = useState({emoji: '', categoryLabel : ''})
+    const [categoryForm, setCategoryForm] = useState({emoji: '', label : ''})
 
     const handleEmoji = (emoji) => {
-		setCategoryForm(old => ({...old, emoji: emoji.native}));
+		setCategoryForm(oldState => ({...oldState, emoji: emoji.native}));
 		setShowEmojiList(false);
 	};
 
     const handleCategoryLabel = (event) => {
         const {value} = event.target
+        console.log(value)
         setCategoryForm(oldState => ({...oldState, label: value}))
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        console.log(event)
         addCategoryToFirebase(user.uid, categoryForm)
+        hidePopup()
     }
 
     return (
@@ -48,11 +52,19 @@ const AddCategoryPopup = ({
             onClick={() => {setShowEmojiList(true)}}>
                 {
                     categoryForm.emoji !== '' ? <span>{categoryForm.emoji}</span> :
-                    <button>select emoji...</button>
+                    <Ripples onClick={() => {setShowEmojiList(true)}}>
+                        <button className='btn-info'>select emoji...</button>
+                    </Ripples>
                 }
             </div>
-            <input type="text" value={categoryForm.categoryLabel} onChange={handleCategoryLabel}/>
-            <button onClick={handleSubmit}>add Category</button>
+            <input 
+                className="add-category-popup__category-label-input"
+                type="text"
+                value={categoryForm.label}
+                onChange={handleCategoryLabel}/>
+            <Ripples>
+                <button className='btn-success' onClick={handleSubmit}>add Category</button>
+            </Ripples>
         </div>
     )
 }

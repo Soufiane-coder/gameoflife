@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { ReactComponent as Close } from "../../assets/icons/close.svg";
 import { ReactComponent as AddBoxIcon } from "../../assets/icons/add_box.svg";
@@ -78,7 +78,7 @@ const AddRoutinePopup = ({
 
 	const [bgEmojiColorBtn, setbgEmojiColorBtn] = useState(editThisRoutine ? editThisRoutine.bgEmojiColor : '');
 	const [categoryId, setCategoryId] = useState(
-		editThisRoutine ? editThisRoutine.categoryId : (selectCategoriesOptions[0]?.categoryId || 'default'))
+		editThisRoutine ? (editThisRoutine.categoryId || (selectCategoriesOptions[0]?.categoryId || 'default')) : (selectCategoriesOptions[0]?.categoryId || 'default'))
 
 	const [loadingAdding, setLoadingAdding] = useState(false);
 
@@ -93,6 +93,7 @@ const AddRoutinePopup = ({
 		}
 		setAddRoutineForm({ ...addRoutineForm, [name]: value });
 	};
+
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		if (!addRoutineForm.title && !addRoutineForm.description) {
