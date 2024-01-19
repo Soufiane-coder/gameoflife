@@ -8,7 +8,11 @@ import { createStructuredSelector } from 'reselect';
 import { selectCurrentRoutines } from '../../redux/routines/routines.selector';
 import PageHeader from '../../components/PageHeader/page-header';
 import { isAmPm, getCurrentRoutine, hourMinFormat } from './utils';
-import { addNewToDoItemToFirebase, getTodoItemsOfRoutine , changeTodoItemAttributesInFirebase} from '../../../lib/firebase';
+import { 
+    addNewToDoItemToFirebase,
+    getTodoItemsOfRoutine ,
+    changeTodoItemAttributesInFirebase,
+    deleteAllToDoCheckedItemsFromFirebase} from '../../../lib/firebase';
 import { selectCurrentUser } from '../../redux/user/user.selector';
 
 const ClockView = ({ user, routines }) => {
@@ -47,6 +51,11 @@ const ClockView = ({ user, routines }) => {
         changeTodoItemAttributesInFirebase(user.uid, formatedId, checked)
         setTodoList(old => (
             old.map(todoItem => todoItem.todoItemId == formatedId ? {...todoItem, isAchieved : checked} : todoItem)))
+    }
+
+    const handleDeletingChekedItems = (event) => {
+        event.preventDefault()
+        deleteAllToDoCheckedItemsFromFirebase(user.uid,)
     }
 
     if (loadingRoutines) {
@@ -91,6 +100,7 @@ const ClockView = ({ user, routines }) => {
                     <div className='clock-view-page__add-todo-item-wrapper'>
                         <button onClick={handleAddingTodoItem} className='clock-view-page__add-todo-item-button'>Add a todo item</button>
                         <input value={todoItemInput} onChange={handleTodoItemInput} className='clock-view-page__add-todo-item-input' type="text" />
+                        <button onClick={handleDeletingChekedItems}>Delete checked items</button>
                     </div>
                 </div>
             </div>

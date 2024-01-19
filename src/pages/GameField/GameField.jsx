@@ -11,18 +11,20 @@ import LoadingRoutine from '../../components/loading-routine/loading-routine.com
 import PageHeader from '../../components/PageHeader/page-header';
 
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-
+const isRoutineArchived = (routine) => routine.isArchived
 
 const GameField = ({ setCurrentRoutines, user, routines }) => {
-    const [selectedFilterOption, setSelectedFilterOption] = useState("all");
+    const [selectedFilterOption, setSelectedFilterOption] = useState('unarchived');
     const [selectedCategories, setSelectedCategories] = useState([]);
 
     const [loadingRoutine, setLoadingRoutine] = useState(true);
     const [labelFilterTags, setLabelFilterTags] = useState({
-        all: "0",
-        important: "0",
-        waiting: "0",
-        completed: "0",
+        all: 0,
+        important: 0,
+        waiting: 0,
+        completed: 0,
+        archived: 0,
+        unarchived: 0,
     });
 
     const history = useHistory();
@@ -35,24 +37,36 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
     useEffect(() => {
         setLoadingRoutine(!routines)
         if (!routines) return;
-
         Object.keys(labelFilterTags).forEach(tagName => {
             let tagValue = 0
+            console.log(tagName)
             switch (tagName) {
                 case 'important':
                     tagValue = routines?.reduce(
                         (accum, routine) =>
-                            routine.priority === "important" ? ++accum : accum, 0);
+                            routine.priority === "important" && !isRoutineArchived(routine)? ++accum : accum, 0);
                     break
-                case "waiting":
+                case 'waiting':
                     tagValue = routines?.reduce(
-                        (accum, routine) => (routine.isSubmitted === false ? ++accum : accum),
+                        (accum, routine) => (routine.isSubmitted === false && !isRoutineArchived(routine)? ++accum : accum),
                         0
                     );
                     break;
-                case "completed":
+                case 'completed':
                     tagValue = routines?.reduce(
-                        (accum, routine) => (routine.isSubmitted === true ? ++accum : accum),
+                        (accum, routine) => (routine.isSubmitted === true && !isRoutineArchived(routine)? ++accum : accum),
+                        0
+                    );
+                    break;
+                case 'archived':
+                    tagValue = routines?.reduce(
+                        (accum, routine) => (routine.isArchived === true ? ++accum : accum),
+                        0
+                    );
+                    break;
+                case 'unarchived':
+                    tagValue = routines?.reduce(
+                        (accum, routine) => (routine.isArchived === false ? ++accum : accum),
                         0
                     );
                     break;

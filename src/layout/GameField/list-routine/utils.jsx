@@ -1,16 +1,22 @@
 import Routine from "../../../components/Routine/Routine";
 import { Fade } from "react-reveal";
 
+const isRoutineArchived = (routine) => routine.isArchived
+
 export const filterRoutines = (routines, filterLabel) =>{
     switch (filterLabel) {
         case 'all':
-            return routines;
+            return routines
         case 'important':
-            return routines.filter(routine => routine.priority === 'important');
+            return routines.filter(routine => routine.priority === 'important' && !isRoutineArchived(routine));
         case 'completed':
-            return routines.filter(routine => routine.isSubmitted === true);
+            return routines.filter(routine => routine.isSubmitted === true && !isRoutineArchived(routine));
         case 'waiting':
-            return routines.filter(routine => routine.isSubmitted === false);
+            return routines.filter(routine => routine.isSubmitted === false && !isRoutineArchived(routine));
+        case 'archived':
+            return routines.filter(routine => routine.isArchived === true);
+        case 'unarchived':
+            return routines.filter(routine => routine.isArchived === false);
         default:
             return routines;
         }
@@ -41,7 +47,7 @@ export const ListRoutinesComponent = ({routines}) => {
         return (
             <Fade key={routine.routineId}>
                 <Routine className='routine' key={routine.routineId} {...{routine}} />
-            </Fade>
+             </Fade> 
         )
     })
 }

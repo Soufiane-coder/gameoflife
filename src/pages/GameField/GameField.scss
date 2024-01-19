@@ -6,7 +6,6 @@ $padding : 2rem;
 .game-field{
     background-color: $color-white-1;
     transition: background-color 1s;
-    min-height: calc(100vh - $user-bar-height);
 
     padding: $padding;
     

@@ -20,10 +20,11 @@ const ListRoutine = ({
             currentCategories, currentRoutines,selectedFilterOption, selectedCategories)
     )
 
-    const [choosenRoutines, setChoosenRoutines ] = useState(currentRoutines)
+    const [choosenRoutines, setChoosenRoutines ] = useState(
+        filterRoutines(currentRoutines, selectedFilterOption)) // so it render directely filtered routines in the first render
 
     useEffect(() => {
-        if (selectedCategories?.length === 0){
+        if (selectedCategories.length === 0){
             setChoosenRoutines(filterRoutines(currentRoutines, selectedFilterOption))
             return
         }
@@ -50,14 +51,16 @@ const ListRoutine = ({
         <>
             <div className="list-routine ">
                 {
-                    selectedCategories?.length === 0 ? 
+                    selectedCategories.length === 0 ? 
                         <div className="list-routine__default">
                             <ListRoutinesComponent routines={choosenRoutines}/>
                         </div>
                     :
                     choosenCategory.map(({categoryId, emoji, routines, label}) => (
                         <fieldset className="list-routine__category-fieldset" key={`cat__${categoryId}`}>
-                            <legend className='list-routine__legend'>{emoji} {label}<EditButton className="list-routine__legend-edit-button"/></legend>
+                            <legend className='list-routine__legend'>{emoji} {label}
+                                <EditButton className="list-routine__legend-edit-button"/>
+                            </legend>
                             <ListRoutinesComponent routines={routines}/>
                         </fieldset>
                     ))

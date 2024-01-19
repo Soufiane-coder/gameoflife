@@ -36,18 +36,16 @@ const OptionBarLayout = ({
 		{ value: "important", label: "Important" },
 		{ value: "waiting", label: "Waiting" },
 		{ value: "completed", label: "completed" },
+		{ value:'archived', label:'Archived'},
+		{ value:'unarchived', label:'Unarchived'},
 	];
-
-	const [isMulti, setIsMulti] = useState(true)
 
 	selectFilterOptions = selectFilterOptions.map((option) => ({
 		...option,
 		label: `${option.label} (${labelFilterTags[option.value]})`,
 	}));
 
-	const selectCategoriesOptions = [
-		// { value: "all", label: "All categories" },
-	];
+	const selectCategoriesOptions = [];
 
 	categories.forEach(category => {
 		selectCategoriesOptions.push({
@@ -55,11 +53,6 @@ const OptionBarLayout = ({
 			label : category.label
 		})
 	})
-
-	// selectCategoriesOptions.push(
-	// 	{ value:'archieved', label:'Archieved'},
-	// 	{ value:'default', label:'Default'}
-	// )
 
 	const handleChoosingCategory = (selectedCategories) => {
 		setSelectedCategories(selectedCategories);
@@ -73,7 +66,7 @@ const OptionBarLayout = ({
 		<div className="option-bar">
 			<Select
 				options={selectFilterOptions}
-				// defaultValue={selectFilterOptions[0]}
+				defaultValue={selectFilterOptions[selectFilterOptions.length - 1]}
 				placeholder="select attribute..."
 				styles={customStyles}
 				onChange={handleChoosingFilter}
@@ -81,12 +74,12 @@ const OptionBarLayout = ({
 			/>
 			<Select
 				options={selectCategoriesOptions}
-				// defaultValue={selectCategoriesOptions[0]}
+				
 				placeholder="select category..."
 				styles={customStyles}
 				onChange={handleChoosingCategory}
 				components={animatedComponents}
-				isMulti={isMulti}
+				isMulti
 			/>
 			<button
 				className="adding-routine-button"
