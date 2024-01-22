@@ -7,20 +7,6 @@
     padding-right: 90px;
 }
 
-@mixin popup-properties{
-    display:flex;
-    flex-direction: column;
-    background-color: $color-white-1;
-    border-radius: 3rem;
-    padding: 2rem;
-    height: $height-of-popup;
-    width: $width-of-popup;
-    @media (max-width: 562px) {
-        height: $height-of-popup * 2;
-        width: $width-of-popup * .7;
-    }
-}
-
 
 
 @mixin clear-input-styles{

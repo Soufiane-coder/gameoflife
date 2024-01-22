@@ -6,7 +6,7 @@ $height-of-popup: 36rem;
     }
 
     &__popup{
-        @include popup-properties;
+        // @include popup-properties;
         overflow-y: scroll;
         &::-webkit-scrollbar{
             width: 1px;
@@ -33,7 +33,7 @@ $height-of-popup: 36rem;
     }
 
     &__title{
-        @include head3;
+        // @include head3;
     }
 
     &__message{

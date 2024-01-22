@@ -1,43 +1,58 @@
 @import "../../style/variables.scss";
-@import "../../style/mixins.scss";
-// @media (max-width: 1280px) {
-//     font-size: 57%;
-// }
-// @media (max-width: 1170px) {
-//     font-size: 50%;
-// }
-// @media (max-width: 562px) {
-//     font-size: 35%;
-// }
+// @import "../../style/mixins.scss";
+
 
 $width-of-popup: 60rem;
 $height-of-popup: 70rem;
 
-$gap : .5rem;
+$border-radius: .6rem;
 
-@mixin default-button {
-    border: none;
-    padding: 1rem;
-    font-size: 2rem;
-    color: $color-white-1;
-}
+
 
 .add-routine-window {
     color: $color-black-1;
+    width: $width-of-popup;
+    font-size: 2.2rem;
 
-    &__emoji-list{
-        background-color: red
+    @media (max-width: $mini-tablet-view) {
+        width: 35rem;
     }
+
     &__popup {
-        @include popup-properties;
-        max-height: 90vh;
-        height: fit-content !important;
+        max-height: 95vh;
+        height: fit-content;
         overflow-y: scroll;
+
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        @media (max-width: $mini-tablet-view) {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        gap: .8rem 2rem;
 
         &::-webkit-scrollbar {
             width: 1px;
         }
     }
+    
+    &__head {
+        color: inherit;
+        width: 100%;
+        align-items: center;
+        grid-column: 1 / -1;     
+        font-family: inherit;
+    }
+
+    // &__title {
+    // }
+
+
+    &__emoji-list{
+        background-color: red
+    }
+
 
     &__close-icon {
         margin-left: auto;
@@ -55,28 +70,18 @@ $gap : .5rem;
         width: auto;
     }
 
-    &__head {
-        color: $color-black-1;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        margin-bottom: 1rem;
-    }
 
-    &__title {
-        @include head3;
-    }
-
-    &__title-input-label,
-    &__description-input-label,
-    &__message-input-label,
-    &__start-label,
-    &__end-label,
-    &__difficulty-input-label,
-    &__priority-input-label {
-        @include head4;
-        margin-bottom: $gap;
-    }
+   
+    // &__title-input,
+    // &__description-input,
+    // &__message-input,
+    // &__start-time-input,
+    // &__end-time-input,
+    // &__difficulty-input-div,
+    // &__priority-input,
+    // &__category-input {
+        // height: 5rem;
+    // }
 
     &__hours-container {
         width: 100%;
@@ -117,17 +122,11 @@ $gap : .5rem;
         }
     }
 
-    &__footer-section {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-
     &__difficulty-input {
         appearance: none;
         width: 70%;
-        height: 4px;
-        border-radius: 5px;
+        height: 5px;
+        border-radius: $border-radius;
         background: #D5DBE1;
         outline: none;
         opacity: 0.7;
@@ -157,30 +156,29 @@ $gap : .5rem;
             background-color: #000000;
             cursor: pointer;
         }
-
-
+        &-value{
+            margin-left: 1rem;
+        }
     }
 
     &__difficulty-inputvalue {
         font-weight: 300;
-
     }
 
     &__difficulty-input-div {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 1rem;
-        border-radius: 6px;
+        // gap: 1rem;
         padding: 5px;
-        border-radius: 6px;
+        border-radius: $border-radius;
         border: 1px solid $color-black-2 ;
     }
 
     &__priority-input {
         width: 100%;
-        font-size: 3rem;
-        border-radius: 6px;
+        font-size: 2.5rem;
+        border-radius: $border-radius;
     }
 
 
@@ -205,44 +203,56 @@ $gap : .5rem;
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
     }
 
+    $emoji-dimensions : 4.5rem;
+
     &__emoji-btn {
-        @include default-button;
+        border: none;
+        padding: 1rem;
+        color: $color-white-1;
+
         background-color: $color-secondary;
-        border-radius: 10px 0 0 10px;
-        width: 15rem;
+        border-radius: $border-radius 0 0 $border-radius;
+        width: calc(100% - 4.1rem);
+        height: 100%;
 
         &:hover {
-            cursor: pointer;
             background-color: #fbc42d;
         }
     }
 
     &__emoji-over-view {
+        display: flex;
+        align-self: center;
+        justify-content: center;
+
         text-align: center;
         border: 1px solid $color-white-2;
         border-left: none;
         background-color: $color-white-1;
-        width: calc(4.1rem);
+
+        width: $emoji-dimensions;
         height: 100%;
-        font-size: 3rem;
-        display: inline-block;
-        align-self: center;
-        border-radius: 0 10px 10px 0;
+        
+        font-size: 3.3rem;
+        
+        border-radius: 0 $border-radius $border-radius 0;
+        text-shadow: 1px 2px 2px $color-black-1;
     }
 
-    &__add-btn , &__color-btn{
-        @include default-button;
-        border-radius: 10px;
-        width: calc(4.1rem + 15rem);
-        margin-left: 3px;
+    &__emoji-btn, &__add-btn , &__color-btn{
+        color: $color-white-1;
+        border: none;
     }
 
     &__add-btn{
         background-color: $color-primary;
+        grid-column: 1 / -1;
+        width : 100%;
+        cursor: pointer;
         &:hover {
-            cursor: pointer;
             background-color: $color-primary-1;
         }
         @media (max-width: 561px) {
@@ -252,6 +262,7 @@ $gap : .5rem;
 
     &__color-btn{
         background-color: $color-tertiary;
+        width: 100%;
         &:hover {
             cursor: pointer;
             background-color: $color-tertiary-1;
@@ -259,8 +270,7 @@ $gap : .5rem;
     }
 
     &__title-input {
-        margin-bottom: $gap;
-
+        grid-column: 1 / -1;
         &:active,
         &:focus {
             border-color: $color-primary;
@@ -279,9 +289,8 @@ $gap : .5rem;
 
     &__description-input,
     &__message-input {
-        min-height: 7rem;
-        max-height: 7rem;
-        margin-bottom: $gap;
+        grid-column: 1 / -1;
+        max-height: 5rem;
 
         &:active,
         &:focus {

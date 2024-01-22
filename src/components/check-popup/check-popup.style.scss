@@ -6,7 +6,7 @@ $height-of-popup: 40rem;
 
 .message-window {
     &__popup {
-        @include popup-properties;
+        // @include popup-properties;
     }
 
     &__head {
@@ -25,7 +25,7 @@ $height-of-popup: 40rem;
     &__title {
         margin-left: 1rem;
         color: $color-black-1;
-        @include head3;
+        // @include head3;
     }
 
     &__description {

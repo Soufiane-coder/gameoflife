@@ -1,4 +1,4 @@
-.ReactModal{
+.ReactModalPortal .ReactModal{
     &__Overlay {
         z-index: 99999 !important;
         transition: opacity 2000ms ease-in-out;
@@ -10,20 +10,27 @@
             opacity: 0;
         }
     }
+    
     &__Content{
         background-color: transparent !important;
         border: none !important;
+
         display: flex;
         align-items: center;
         justify-content: center;
+
         width: fit-content;
         height: fit-content;
+
+        inset:0 !important;
         margin: auto; // to center the content in the center of page
+
+        padding: 0 !important;
     }
 }
 
-.popup-model{
-    &__wrapper{
+// .popup-model{
+//     &__wrapper{
         
-    }
-}
+//     }
+// }

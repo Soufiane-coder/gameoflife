@@ -8,11 +8,17 @@ $padding : 2rem;
     transition: background-color 1s;
 
     padding: $padding;
+    @media (max-width: $mini-tablet-view){
+        padding: 1rem;
+    }
     
     &__main{
         padding-right: 7rem;
         @media (max-width: 768px){
             padding: 1rem;
+        }
+        @media (max-width: $mini-tablet-view){
+            padding: 0;
         }
         width: 100%;
     }

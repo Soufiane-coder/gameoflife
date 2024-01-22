@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ReactComponent as Close } from "../../assets/icons/close.svg";
 import { ReactComponent as AddBoxIcon } from "../../assets/icons/add_box.svg";
 
-import { addRoutine ,editRoutine} from "../../redux/routines/routines.actions";
+import { addRoutine, editRoutine } from "../../redux/routines/routines.actions";
 import { selectCurrentUser } from "../../redux/user/user.selector";
 import "./add-routine-popup.style.scss";
 import { connect } from "react-redux";
@@ -15,7 +15,7 @@ import Picker from "@emoji-mart/react";
 import { randomColor } from "randomcolor";
 
 import TimeKeeper from "react-timekeeper";
-import { isTimeInArray , customStyles} from "./utils";
+import { isTimeInArray, customStyles } from "./utils";
 import { timeStringToFloat } from "../../utils/clock";
 import { selectCurrentRoutines } from "../../redux/routines/routines.selector";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
@@ -38,7 +38,7 @@ const AddRoutinePopup = ({
 	editThisRoutine,
 	categories,
 }) => {
-	if(editThisRoutine){
+	if (editThisRoutine) {
 		editThisRoutine = routines.find(({ routineId }) => routineId === editThisRoutine)
 	}
 
@@ -47,7 +47,7 @@ const AddRoutinePopup = ({
 	categories.forEach(category => {
 		selectCategoriesOptions.push({
 			categoryId: category.categoryId,
-			label : category.label
+			label: category.label
 		})
 	})
 
@@ -88,7 +88,7 @@ const AddRoutinePopup = ({
 			setAddRoutineForm({ ...addRoutineForm, important: event.target.checked });
 			return;
 		}
-		else if (name === 'categories'){
+		else if (name === 'categories') {
 			setCategoryId(value)
 		}
 		setAddRoutineForm({ ...addRoutineForm, [name]: value });
@@ -117,12 +117,12 @@ const AddRoutinePopup = ({
 			return;
 		}
 		setLoadingAdding(true);
-		
-		if (categoryId === 'default') {alert('category label not defiend');return;}
+
+		if (categoryId === 'default') { alert('category label not defiend'); return; }
 
 		try {
 			if (editThisRoutine) {
-				await editRoutineInFirebase(user.uid, 
+				await editRoutineInFirebase(user.uid,
 					{
 						...addRoutineForm,
 						categoryId,
@@ -130,7 +130,7 @@ const AddRoutinePopup = ({
 						bgEmojiColor: bgEmojiColorBtn,
 					});
 
-				editRoutine({...addRoutineForm, emoji, bgEmojiColor: bgEmojiColorBtn})
+				editRoutine({ ...addRoutineForm, emoji, bgEmojiColor: bgEmojiColorBtn })
 			} else {
 				const newRoutineObject = {
 					...addRoutineForm,
@@ -228,8 +228,8 @@ const AddRoutinePopup = ({
 				</div>
 			)}
 			<Zoom duration={500}>
-				<form className="add-routine-window__popup" onSubmit={handleSubmit}>
-					<div className="add-routine-window__head">
+				<form className="popup-window add-routine-window__popup" onSubmit={handleSubmit}>
+					<div className="popup-window__head add-routine-window__head">
 						<AddBoxIcon className="add-routine-window__add-box-icon" />
 						<h3 className="add-routine-window__title">
 							{editThisRoutine ? "Modifie your routine" : "Add routine"}
@@ -241,7 +241,7 @@ const AddRoutinePopup = ({
 							}}
 						/>
 					</div>
-					<h4 className="add-routine-window__title-input-label">Title</h4>
+					<h5 className="add-routine-window__title-input-label">Title</h5>
 					<input
 						type="text"
 						className="add-routine-window__title-input"
@@ -250,9 +250,10 @@ const AddRoutinePopup = ({
 						value={addRoutineForm.title}
 						onChange={handleChange}
 					/>
-					<h4 className="add-routine-window__description-input-label">
+
+					<h5 className="add-routine-window__description-input-label">
 						Description
-					</h4>
+					</h5>
 					<textarea
 						className="add-routine-window__description-input"
 						name="description"
@@ -262,7 +263,8 @@ const AddRoutinePopup = ({
 						value={addRoutineForm.description}
 						onChange={handleChange}
 					></textarea>
-					<h4 className="add-routine-window__message-input-label">Message</h4>
+
+					<h5 className="add-routine-window__message-input-label">Message</h5>
 					<textarea
 						className="add-routine-window__message-input"
 						name="message"
@@ -272,133 +274,136 @@ const AddRoutinePopup = ({
 						value={addRoutineForm.message}
 						onChange={handleChange}
 					></textarea>
-					<div className="add-routine-window__hours-container">
-						<div className="add-routine-window__start">
-							<h4 className="add-routine-window__start-label">Start</h4>
+
+
+					{/* <div className="add-routine-window__start"> */}
+						<h5 className="add-routine-window__start-label">Start</h5>
+						<input
+							className="add-routine-window__start-time-input"
+							type="time"
+							name="start-routine"
+							value={addRoutineForm.startRoutine}
+							onChange={() => { }}
+							onClick={handleTimeRoutine}
+						></input>
+					{/* </div> */}
+					{/* <div className="add-routine-window__end"> */}
+						<h5 className="add-routine-window__end-label">End</h5>
+						<input
+							className="add-routine-window__end-time-input"
+							type="time"
+							name="end-routine"
+							value={addRoutineForm.endRoutine}
+							onChange={() => { }}
+							onClick={handleTimeRoutine}
+						></input>
+					{/* </div> */}
+					{/* <div> */}
+						<h5 className="add-routine-window__difficulty-input-label">
+							Difficulty
+						</h5>
+						<div className="add-routine-window__difficulty-input-div">
 							<input
-								className="add-routine-window__start-time-input"
-								type="time"
-								name="start-routine"
-								value={addRoutineForm.startRoutine}
-								onChange={() => { }}
-								onClick={handleTimeRoutine}
-							></input>
-						</div>
-						<div className="add-routine-window__end">
-							<h4 className="add-routine-window__end-label">end</h4>
-							<input
-								className="add-routine-window__end-time-input"
-								type="time"
-								name="end-routine"
-								value={addRoutineForm.endRoutine}
-								onChange={() => { }}
-								onClick={handleTimeRoutine}
-							></input>
-						</div>
-					</div>
-					<div className="add-routine-window__footer-section">
-						<div className="add-routine-window__diff-imp-container">
-							<h4 className="add-routine-window__difficulty-input-label">
-								Difficulty
-							</h4>
-							<div className="add-routine-window__difficulty-input-div">
-								<input
-									className="add-routine-window__difficulty-input"
-									type="range"
-									name="level"
-									id="range-difficulty"
-									min="1"
-									max="5"
-									value={addRoutineForm.level}
-									onChange={handleChange}
-								/>
-								<p className="add-routine-window__difficulty-inputvalue">
-									{addRoutineForm.level}🎚️
-								</p>
-							</div>
-							<h4 className="add-routine-window__priority-input-label">
-								Priority
-							</h4>
-							<select
-								className="add-routine-window__priority-input"
-								name="priority"
-								value={addRoutineForm.priority}
+								className="add-routine-window__difficulty-input"
+								type="range"
+								name="level"
+								id="range-difficulty"
+								min="1"
+								max="5"
+								value={addRoutineForm.level}
 								onChange={handleChange}
-							>
-								<option
-									className="add-routine-window__priority-option"
-									value="low"
-								>
-									low
-								</option>
-								<option
-									className="add-routine-window__priority-option"
-									value="medium"
-								>
-									medium
-								</option>
-								<option
-									className="add-routine-window__priority-option"
-									value="important"
-								>
-									important
-								</option>
-							</select>
+							/>
+							<p className="add-routine-window__difficulty-input-value">
+								{addRoutineForm.level}🎚️
+							</p>
 						</div>
-						<div className="add-routine-window__emoji-add-btn-container">
-							<button
+
+
+						<h5 className="add-routine-window__priority-input-label">
+							Priority
+						</h5>
+						<select
+							className="add-routine-window__priority-input"
+							name="priority"
+							value={addRoutineForm.priority}
+							onChange={handleChange}
+						>
+							<option
+								className="add-routine-window__priority-option"
+								value="low"
+							>
+								Low
+							</option>
+							<option
+								className="add-routine-window__priority-option"
+								value="medium"
+							>
+								Medium
+							</option>
+							<option
+								className="add-routine-window__priority-option"
+								value="important"
+							>
+								Important
+							</option>
+						</select>
+
+					<h5 className="add-routine-window__category-input-label">
+							Category
+					</h5>
+					 <select
+						className="add-routine-window__category-input"
+						name="categories"
+						onChange={handleChange}
+						value={categoryId}
+					>
+						{
+							selectCategoriesOptions.map(category => (
+								<option
+									key={`cat-opt__${category.categoryId}`}
+									className="add-routine-window__priority-option"
+									value={category.categoryId}
+								>
+									{category.label}
+								</option>
+							))
+						}
+					</select>
+					
+					<div className="add-routine-window__emoji-section">
+						<button
+							className="add-routine-window__emoji-btn"
+							onClick={(event) => {
+								event.preventDefault();
+								setShowEmojiList(true);
+							}}
+						>
+							Choose Emoji
+						</button>
+						<span
+							style={{ backgroundColor: bgEmojiColorBtn }}
+							className="add-routine-window__emoji-over-view"
+						>
+							{emoji}
+						</span>
+					</div>
+
+					<button
 								className="add-routine-window__color-btn"
 								onClick={handleClickBgColor}
 							>
 								Change color
-							</button>
-							<div className="add-routine-window__emoji-section">
-								<button
-									className="add-routine-window__emoji-btn"
-									onClick={(event) => {
-										event.preventDefault();
-										setShowEmojiList(true);
-									}}
-								>
-									Choose Emoji
-								</button>
-								<span
-									style={{ backgroundColor: bgEmojiColorBtn }}
-									className="add-routine-window__emoji-over-view"
-								>
-									{emoji}
-								</span>
-							</div>
-							<button className="add-routine-window__add-btn" type="submit">
-								{loadingAdding ? (
-									<LoadingSpinner />
-								) : editThisRoutine ? (
-									"Modify Routine"
-								) : (
-									"Add Routine"
-								)}
-							</button>
-							<select
-								className="add-routine-window__priority-input"
-								name="categories"
-								onChange={handleChange}
-								value={categoryId}
-							>
-								{
-									selectCategoriesOptions.map(category => (
-										<option
-											key={`cat-opt__${category.categoryId}`}
-											className="add-routine-window__priority-option"
-											value={category.categoryId}
-										>
-											{category.label}
-										</option>
-									))
-								}
-							</select>
-							
-						</div>
-					</div>
+					</button>
+
+					<button className="add-routine-window__add-btn">
+						{loadingAdding ? (
+							<LoadingSpinner />
+						) : editThisRoutine ? (
+							"Modify Routine"
+						) : (
+							"Add Routine"
+						)}
+					</button>
 				</form>
 			</Zoom>
 		</div>
@@ -413,7 +418,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch) => ({
 	addRoutine: (routine) => dispatch(addRoutine(routine)),
 	hidePopup: () => dispatch(hidePopup()),
-	editRoutine : (routine) => dispatch(editRoutine(routine))
+	editRoutine: (routine) => dispatch(editRoutine(routine))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddRoutinePopup);
