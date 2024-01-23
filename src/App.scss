@@ -182,10 +182,40 @@ body{
   border-radius: 3rem;
   padding: 2rem;
   padding-top: 1.5rem;
+  color: $color-black-1;
+  max-height: 95vh;
+  height: fit-content;
+  overflow-y:scroll;
+
+  &::-webkit-scrollbar {
+    width: 1px;
+  }
+  
   &__head{
     display: flex;
+    align-items: center;
+    
     gap: 1rem;
+    width: 100%;
+    font-family: inherit;
+    color: inherit;
   }
+  
+  &__icon{
+    fill: $color-black-1;
+    height: 100%;
+    width: auto;
+  }
+
+  &__close-icon {
+    margin-left: auto;
+    height: 100%;
+    width: auto;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
 }
 
 @import './style/btn.styles.scss';

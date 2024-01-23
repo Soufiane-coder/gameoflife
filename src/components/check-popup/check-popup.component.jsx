@@ -1,7 +1,9 @@
 import './check-popup.style.scss';
-import { ReactComponent as MessageIcon } from '../../assets/icons/message.svg';
 import { useEffect, useState } from 'react';
 import useSound from 'use-sound';
+
+import { ReactComponent as MessageIcon } from '../../assets/icons/message.svg';
+import { ReactComponent as CloseIcon } from '../../assets/icons/close.svg';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -64,14 +66,18 @@ const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
     return (
         <div className="message-window">
             <Zoom duration={500}>
-                <div className="message-window__popup">
-                    <div className="message-window__head">
-                        <MessageIcon className='message-window__message-icon' />
-                        <h2 className='message-window__title'>Write message</h2>
+                <div className="popup-window message-window__popup">
+                    <div className="popup-window__head message-window__head">
+                        <MessageIcon className='popup-window__icon message-window__message-icon' />
+                        <h3 className='message-window__title'>
+                            Write message
+                        </h3>
+                        <CloseIcon className='popup-window__close-icon'/>
                     </div>
                     <p className="message-window__description">
                         Write a message for future you to motivate, noting the progress or planing the next step
                     </p>
+                    
                     {
                         lastGoal?.description ? 
                         <>
@@ -84,14 +90,15 @@ const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
                     }
                    
                     <textarea type="text" className='message-window__input-text' value={messageInput} onChange={handleChange} />
-                    <div className="message-window__buttons">
-                        <button className="message-window__button message-window__button--filled" onClick={handleCheckRoutine}>
-                            {
-                                isLoading ? <LoadingSpinner /> : "Check this routine"
-                            }
-                        </button>
-                        <button className="message-window__button message-window__button--outlined" onClick={() => hidePopup()}>Cancel</button>
-                    </div>
+                    
+                    
+                    <button className="message-window__button message-window__button--filled" onClick={handleCheckRoutine}>
+                        {
+                            isLoading ? <LoadingSpinner /> : "Check this routine"
+                        }
+                    </button>
+                    <button className="message-window__button message-window__button--outlined" onClick={() => hidePopup()}>Cancel</button>
+                    
                 </div>
             </Zoom>
         </div>

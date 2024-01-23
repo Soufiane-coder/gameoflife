@@ -1,38 +1,44 @@
 @import '../../style/mixins.scss';
-@import '../../style/fonts.scss';
 
-$width-of-popup: 70rem;
+$width-of-popup: 60rem;
 $height-of-popup: 40rem;
 
 .message-window {
+    width: $width-of-popup;
+
+    @media (max-width: $mini-tablet-view) {
+        width: 40rem;
+    }
     &__popup {
-        // @include popup-properties;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+
+        @media (max-width: $mini-tablet-view) {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        > * {
+            grid-column: 1 / -1;
+        }
+        
     }
 
-    &__head {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        margin-bottom: 1rem;
-    }
+    // &__head {
 
-    &__message-icon {
-        width: 5rem;
-        margin-left: -5px; // to get align with the other elements
-    }
+    // }
 
+    // &__message-icon {
+    // }
 
     &__title {
-        margin-left: 1rem;
         color: $color-black-1;
         // @include head3;
     }
 
     &__description {
-
         font-size: 2.5rem;
-        margin-bottom: 1rem;
 
+        text-align: justify;
     }
 
     &__check-goal {
@@ -242,44 +248,39 @@ $height-of-popup: 40rem;
 
 
     &__input-text {
-        font-size: 2.5rem;
-        max-width: 100%; // there is an overflow caus the margin we added at the left
-        min-width: 100%;
-        padding: 5px;
-        border: 1px solid $color-black-1 ;
-        border-radius: 5px;
-        margin-bottom: 1rem;
-        color: $color-black-1;
-        flex-grow: 1;
 
-        &:active,
-        &:focus {
-            border-color: $color-primary;
-            outline-color: $color-primary;
-        }
+        // max-width: 100%; // there is an overflow caus the margin we added at the left
+        // min-width: 100%;
+        // padding: 5px;
+        // border: 1px solid $color-black-1 ;
+        // border-radius: 5px;
+        // margin-bottom: 1rem;
+        // color: $color-black-1;
+        // flex-grow: 1;
+
+        // &:active,
+        // &:focus {
+        //     border-color: $color-primary;
+        //     outline-color: $color-primary;
+        // }
     }
 
-    &__buttons {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-    }
 
     &__button {
-        font-size: 2.5rem;
-        background-color: red;
-        border: none;
-        width: calc($width-of-popup / 2) - 4rem; // ther is a gap of 2rem betwwen two buttons
-        border-radius: 1rem;
+        grid-column: auto;
+
+        // font-size: 2.5rem;
+        // border: none;
+        // border-radius: 1rem;
 
         @media (max-width: 562px) {
             width: 100%;
         }
 
         &--filled {
-            color: $color-white-1;
-            background-color: $color-primary;
-            padding: 1.5rem;
+            // color: $color-white-1;
+            // background-color: $color-primary;
+            // padding: 1.5rem;
 
             &:hover {
                 cursor: pointer;
