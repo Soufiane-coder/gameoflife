@@ -16,6 +16,7 @@ import { checkGoalInFirabase, checkRoutineInFirebase } from '../../../lib/fireba
 import { selectCurrentRoutines } from '../../redux/routines/routines.selector';
 import { getGoalsOfRoutine } from '../../../lib/firebase';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+
 import bellSound from '../../../public/bell-sound.mp3'
 
 const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
@@ -25,7 +26,6 @@ const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
 
     const [lastGoal, setLastGoal] = useState({})
 
-    const [playCheckSound] = useSound(bellSound)
 
     useEffect(() => {
         if(routines){
@@ -45,7 +45,6 @@ const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
     const handleCheckRoutine = async () => {
         setIsLoading(true);
         try {
-            playCheckSound()
             await checkRoutineInFirebase(user.uid, routineId, messageInput,)
             if(lastGoal?.isAchieved){
                 await checkGoalInFirabase(user.uid, routineId, lastGoal.goalId)

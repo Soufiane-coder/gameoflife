@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { ReactComponent as Close } from "../../assets/icons/close.svg";
 import { ReactComponent as AddBoxIcon } from "../../assets/icons/add_box.svg";
@@ -25,8 +25,8 @@ import {
 	editRoutineInFirebase,
 } from "../../../lib/firebase";
 import { Timestamp } from "firebase/firestore";
-
 import { selectCurrentCategories } from "../../redux/categories/categories.selector";
+import { NotficationContext } from "../../App";
 
 
 const AddRoutinePopup = ({
@@ -38,6 +38,7 @@ const AddRoutinePopup = ({
 	editThisRoutine,
 	categories,
 }) => {
+	const {notificationSystem} = useContext(NotficationContext);
 	if (editThisRoutine) {
 		editThisRoutine = routines.find(({ routineId }) => routineId === editThisRoutine)
 	}
@@ -96,16 +97,28 @@ const AddRoutinePopup = ({
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-		if (!addRoutineForm.title && !addRoutineForm.description) {
-			alert("insert all fields");
-			return;
-		}
+		// if (!addRoutineForm.title && !addRoutineForm.description) {
+		// 	notificationSystem.current.addNotification({
+        //         title: 'Error',
+        //         message: 'Title and description fields are required',
+        //         level: 'warning',
+        //         position: 'tc',
+        //         autoDismiss: 5
+        //     });
+		// 	return;
+		// }
 
 		if (
 			timeStringToFloat(addRoutineForm.startRoutine) >
 			timeStringToFloat(addRoutineForm.endRoutine)
 		) {
-			alert("the hour of start is bigger than the hour of end");
+			notificationSystem.current.addNotification({
+                title: 'Error',
+                message: 'The hour of start is bigger than the hour of end',
+                level: 'warning',
+                position: 'tc',
+                autoDismiss: 5
+            });
 			return;
 		}
 
@@ -249,6 +262,7 @@ const AddRoutinePopup = ({
 						id="routine-title"
 						value={addRoutineForm.title}
 						onChange={handleChange}
+						required
 					/>
 
 					<h5 className="add-routine-window__description-input-label">
@@ -262,6 +276,7 @@ const AddRoutinePopup = ({
 						rows="10"
 						value={addRoutineForm.description}
 						onChange={handleChange}
+						required
 					></textarea>
 
 					<h5 className="add-routine-window__message-input-label">Message</h5>

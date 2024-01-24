@@ -10,22 +10,21 @@ import { hidePopup } from '../../redux/popup/popup.actions';
 
 const MessagePopup = ({ routineId, message, hidePopup }) => {
     return (
-        <div className='message-content__window'>
+        <div className='message-content-window'>
             <Zoom duration={500}>
-                <div className="message-content__popup">
-                    <div className="message-content__head">
-                        <MessageIcon className="message-content__message-icon" />
-                        <h2 className="message-content__title">Your Message</h2>
-                        <CloseIcon className="message-content__close-icon" onClick={() => hidePopup()} />
+                <div className="popup-window message-content-window__popup">
+                    <div className="popup-window__head message-content-window__head">
+                        <MessageIcon className="popup-window__icon message-content-window__message-icon" />
+                        <h3 className="message-content-window__title">Your Message</h3>
+                        <CloseIcon className="popup-window__close-icon" onClick={() => hidePopup()} />
                     </div>
-                    <p className="message-content__message">
+                    <p className="message-content-window__message">
                         {
                             message(String(routineId))
                         }
                     </p>
                 </div>
             </Zoom>
-
         </div>
     )
 }

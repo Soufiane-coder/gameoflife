@@ -167,12 +167,6 @@ $border-radius: .6rem;
         border: 1px solid $color-black-2 ;
     }
 
-    &__priority-input {
-        width: 100%;
-        font-size: 2.5rem;
-        border-radius: $border-radius;
-    }
-
 
     &__emoji-add-btn-container {
         width: calc($width-of-popup / 2 - 5rem);

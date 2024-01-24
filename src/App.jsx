@@ -30,7 +30,7 @@ import { initialProtocol } from "./utils";
 import NotificationSystem from 'react-notification-system';
 import { setCurrentCategories } from "./redux/categories/categories.actions";
 
-export const MyContext = createContext();
+export const NotficationContext = createContext();
 const App = ({ 
     user, 
     displayMode, 
@@ -56,7 +56,7 @@ const App = ({
                 setCurrentCategories(categories)
 
                 let routines = await getRoutinesFromFirebase(user.uid)
-                // routines = await initialProtocol(user, routines);
+                routines = await initialProtocol(user, routines);
                 
                 setCurrentRoutines(routines)
                 
@@ -98,12 +98,15 @@ const App = ({
         })()
     }, [userImp, userLoading])
 
+    
+
 
     const style = {
         NotificationItem: { // Override the notification item
             DefaultStyle: { // Applied to every notification, regardless of the notification level
                 fontSize: '2rem',
                 width: '40rem',
+                zIndex: '110'
             },
         },
         Title: {
@@ -121,7 +124,7 @@ const App = ({
     return (
         <>
             <div id={displayMode}>
-                <MyContext.Provider value={{ notificationSystem }}>
+                <NotficationContext.Provider value={{ notificationSystem }}>
                     {
                         user ? <PopupField /> : ''
                     }
@@ -181,7 +184,7 @@ const App = ({
                             <div style={{ fontSize: "200px" }}>not found</div>
                         </Route>
                     </Switch>
-                </MyContext.Provider>
+                </NotficationContext.Provider>
             </div>
         </>
 

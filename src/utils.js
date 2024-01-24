@@ -52,8 +52,8 @@ export const initialProtocol = async (user, routines) => {
         const dateDiff = Math.floor((currentDate - new Date(lastSubmitFormatted)) / (1000 * 60 * 60 * 24));
 
 
-        if(skip >= dateDiff- 1){ // it will not be -1 cause when diff is zero it means yesterday
-            skip -= dateDiff- 1; // -1 means untill yesterday
+        if(skip >= dateDiff - 1){ // it will not be -1 cause when diff is zero it means yesterday
+            skip -= dateDiff - 1; // -1 means untill yesterday
 
             await UpdateSkipAndLastSubmitInFirebase(user.uid, routineId, skip, Timestamp.fromDate(yesterday))
             routine.skip = skip;

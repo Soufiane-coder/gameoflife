@@ -1,6 +1,6 @@
 .ReactModalPortal .ReactModal{
     &__Overlay {
-        z-index: 99999 !important;
+        z-index: 100 !important;
         transition: opacity 2000ms ease-in-out;
         background-color: rgba(0, 0, 0, 0.542) !important;
         &--after-open{

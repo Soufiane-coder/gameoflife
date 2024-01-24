@@ -23,7 +23,7 @@ import {
 	deleteRoutineFromFirebase ,
 	addSkipDayToFirebase ,
 	buySkipFromFirebase} from "../../../lib/firebase";
-import { MyContext } from "../../App";
+import { NotficationContext } from "../../App";
 
 const Routine = (
 	{ 
@@ -37,7 +37,7 @@ const Routine = (
 	const [showOtherOptions, setShowOtherOptions] = useState(false);
 	const [deleteLoading, setDeleteLoading] = useState(false);
 	const [skipLoading, setSkipLoading] = useState(false);
-	const {notificationSystem} = useContext(MyContext);
+	const {notificationSystem} = useContext(NotficationContext);
 
 	const handleDone = async (event) => {
 		const id = event.target.closest('.routine').id;
@@ -163,7 +163,9 @@ const Routine = (
 				<button className="btn btn-danger remove  " onClick={handleRoadMapClick} >
 					<GoalIcon />
 				</button>
-				<button className="routine__other-options " onClick={() => setShowOtherOptions(!showOtherOptions)}>
+				<button 
+					className="routine__other-options "
+					onClick={() => setShowOtherOptions(!showOtherOptions)}>
 					<ul className="routine__other-options-list" style={!showOtherOptions ? { display: 'none' } : {}}>
 						<li className="routine__other-options-item"
 							onClick={async () => {
