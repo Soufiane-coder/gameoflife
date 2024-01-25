@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./Setting.scss";
+import "./setting.style.scss";
 import DisplayModeSwitcher from '../../components/DisplayModeSwitcher/DisplayModeSwitcher';
 
 import { Route , Link} from "react-router-dom";
@@ -30,7 +30,6 @@ const Setting = ({user, history, location: {pathname}, setCurrentUser,setCurrent
     }
         return (
             <>
-                
                 <div className="settings">
                     <nav className="settings__nav-bar">
                         <img src={LogoGOL} alt="" className="settings__logo-img" />

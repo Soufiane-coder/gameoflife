@@ -1,8 +1,11 @@
+@import '../../../style/variables.scss';
+
 .option-bar{
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
     justify-content: center;
+
     .adding-routine-button{
             display: flex;
             justify-content: center;
@@ -15,9 +18,9 @@
             // border-radius: 10rem;
             cursor: pointer;
 
-            &:first-of-type{
-              margin-left: auto;
-            }
+            // &:first-of-type{
+            //   margin-left: auto;
+            // }
           
           .lable {
             line-height: 22px;

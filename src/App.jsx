@@ -4,10 +4,10 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import LandingPage from "./pages/landing-page/LandingPage";
 import SignInAndSignUp from "./pages/SignInAndSignUp/SignInAndSignUp";
 import GameField from "./pages/GameField/GameField";
-import Setting from "./pages/Setting/Setting";
+import Setting from "./pages/setting/setting.page";
 import ClockView from "./pages/ClockView/ClockView";
 import RoadMap from "./pages/roadMap/road-map";
-import StatisticsPage from "./pages/Statistics/statistics.page";
+import StatisticsPage from "./pages/statistics/statistics.page";
 
 import PopupField from "./layout/popup-field/popup-field.layout";
 
