@@ -3,4 +3,9 @@
 .statistics-page{
     padding: $page-padding;
     padding-top: 0;
+
+    &__30days-progession{
+        margin: auto;
+        max-width: 70rem;
+    }
 }

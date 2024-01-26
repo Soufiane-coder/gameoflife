@@ -17,6 +17,7 @@ import { selectCurrentRoutines } from '../../redux/routines/routines.selector';
 import { getGoalsOfRoutine } from '../../../lib/firebase';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
+
 import bellSound from '../../../public/bell-sound.mp3'
 
 const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
@@ -28,6 +29,7 @@ const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
 
 
     useEffect(() => {
+
         if(routines){
             (async () => {
                 let goals = await getGoalsOfRoutine(user.uid, routineId)

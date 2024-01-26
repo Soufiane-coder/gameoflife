@@ -1,6 +1,5 @@
 import './statistics.style.scss';
 import PageHeader from '../../components/PageHeader/page-header';
-
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -12,6 +11,12 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { getStatisticsFromFirebase } from '../../../lib/firebase'
+import { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { selectCurrentUser } from '../../redux/user/user.selector';
+import { createStructuredSelector } from 'reselect';
+import { isYesterday, isToday, fillMissingDates} from './utils'
 
 ChartJS.register(
     CategoryScale,
@@ -23,99 +28,24 @@ ChartJS.register(
     Legend
 );
 
-const statistics = [
-    {
-        day: '16-01-2024',
-        routinesChecked: [
-            '50MOf1STLRGZ25krewPk',
-            '43YCFu7m5eJLcjpoNT92',
-            '6Mc3JsLrCTkiOU0yzaiK',
-            
-        ],
-    }, 
-    {
-        day: '17-01-2024',
-        routinesChecked: [
-            '50MOf1STLRGZ25krewPk',
-            '43YCFu7m5eJLcjpoNT92',
-            '6Mc3JsLrCTkiOU0yzaiK',
-            'CXXKf3YRsnnuU9IGjHyS',
-            'XcMFZqtxTy4lnYpDW8aP',
-        ],
-    },
-    {
-        day: '18-01-2024',
-        routinesChecked: [
-            '50MOf1STLRGZ25krewPk',
-            '43YCFu7m5eJLcjpoNT92',
-            '6Mc3JsLrCTkiOU0yzaiK',
-            'CXXKf3YRsnnuU9IGjHyS',
-        ],
-    },
-    {
-        day: '19-01-2024',
-        routinesChecked: [
-            '50MOf1STLRGZ25krewPk',
-            '43YCFu7m5eJLcjpoNT92',
-            '6Mc3JsLrCTkiOU0yzaiK',
-            'CXXKf3YRsnnuU9IGjHyS',
-        ],
-    },
-    {
-        day: '20-01-2024',
-        routinesChecked: [
-            '50MOf1STLRGZ25krewPk',
-            '43YCFu7m5eJLcjpoNT92',
-            '6Mc3JsLrCTkiOU0yzaiK',
-            'CXXKf3YRsnnuU9IGjHyS',
-            'HEvEMb1pEOoHiHJ5Aigc',
+const StatisticsPage = ({user}) => {
+    const [last30DaysStatistics, setLast30DaysStatistics] = useState([{day: '', routinesChecked: []}])
 
-        ],
-    },
-    {
-        day: '21-01-2024',
-        routinesChecked: [
-            '50MOf1STLRGZ25krewPk',
-        ],
-    },
-    {
-        day: '22-01-2024',
-        routinesChecked: [
-            '50MOf1STLRGZ25krewPk',
-            '43YCFu7m5eJLcjpoNT92',
-            'CXXKf3YRsnnuU9IGjHyS',
-            'HEvEMb1pEOoHiHJ5Aigc',
-            'HVu9m11WaxMbUkpMV5Rg',
-        ],
-    },
-    {
-        day: '23-01-2024',
-        routinesChecked: [
-            'HEvEMb1pEOoHiHJ5Aigc',
-            'HVu9m11WaxMbUkpMV5Rg',
-            'Hpmip2s12SrHbC4uJfCD',
-            'M5ZrusDoYsvuc0AoyOqj',
-            'XcMFZqtxTy4lnYpDW8aP',
-        ],
-    },
-    {
-        day: '24-01-2024',
-        routinesChecked: [
-            'CXXKf3YRsnnuU9IGjHyS',
-            'HEvEMb1pEOoHiHJ5Aigc',
-            'HVu9m11WaxMbUkpMV5Rg',
-            'Hpmip2s12SrHbC4uJfCD',
-        ],
-    },
-]
+    useEffect(() => {
+        (async () => {
+            let newStatistics = await getStatisticsFromFirebase(user.uid)
+            newStatistics = fillMissingDates(newStatistics)
+            setLast30DaysStatistics(newStatistics)
+        })()
+    }, [])
 
-
-const StatisticsPage = () => {
     const data = {
-        labels: statistics.map(statistic => statistic.day),
+        labels: last30DaysStatistics.map(
+            statistic => (isYesterday(statistic.day) ? 'yesterday' : 
+            (isToday(statistic.day) ? 'today' : statistic.day))),
         datasets: [{
             label: 'Your pregression in checking routines',
-            data: statistics.map(statistic => statistic.routinesChecked.length),
+            data: last30DaysStatistics.map(statistic => statistic.routinesChecked.length),
             fill: false,
             borderColor: '#009245',
             // tension: .3,
@@ -134,6 +64,7 @@ const StatisticsPage = () => {
         responsive: true,
         plugins: {
             legend: {
+                display: false,
                 position: 'bottom',
             },
             title: {
@@ -145,8 +76,8 @@ const StatisticsPage = () => {
             y: {
                 display: true,
                 suggestedMin: 0,
-                suggestedMax: statistics.reduce((acc, statistic) => 
-                Math.max(statistic.routinesChecked.length, acc), 0) + 3, // max check routines * 2 to view it in the chart
+                suggestedMax: last30DaysStatistics.reduce((acc, statistic) => 
+                    Math.max(statistic.routinesChecked.length, acc), 0) + 3, // max check routines * 2 to view it in the chart
                 title: {
                     display: true,
                     text: 'All routines'
@@ -154,14 +85,19 @@ const StatisticsPage = () => {
             },
         },
     };
+    
     return (
         <div className='statistics-page' >
             <PageHeader title={'Statistics'} />
-            <div className="statistics-page__30days-progession" style={{width: '70rem'}}>
+            <div className="statistics-page__30days-progession">
                 <Line className='' options={options} data={data} />
             </div>
         </div>
     )
 }
 
-export default StatisticsPage;
+const mapStateToProps = createStructuredSelector({
+    user: selectCurrentUser,
+})
+
+export default connect(mapStateToProps)(StatisticsPage);
