@@ -1,7 +1,7 @@
 {
   "name": "game_of_life",
   "homepage": "https://soufiane-coder.github.io/game_of_life",
-  "version": "1.5.2",
+  "version": "1.6.2",
   "private": true,
   "dependencies": {
     "@emoji-mart/data": "^1.1.2",
