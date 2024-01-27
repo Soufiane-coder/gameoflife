@@ -50,7 +50,7 @@ const OptionBarLayout = ({
 	categories.forEach(category => {
 		selectCategoriesOptions.push({
 			value: category.categoryId,
-			label : category.label
+			label : category.emoji + ' ' + category.label
 		})
 	})
 

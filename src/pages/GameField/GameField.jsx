@@ -39,7 +39,6 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
         if (!routines) return;
         Object.keys(labelFilterTags).forEach(tagName => {
             let tagValue = 0
-            console.log(tagName)
             switch (tagName) {
                 case 'important':
                     tagValue = routines?.reduce(

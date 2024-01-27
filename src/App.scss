@@ -39,11 +39,11 @@ input[type='text'], textarea{
   }
 }
 
-input[type='time'], button{
+input[type='time']{
 	border: 1px solid $color-black-2 ;
 }
 
-input, textarea, select, button{
+input, textarea, select{
 	padding: 5px;
 	background-color: white;
 	border-radius: 6px;
@@ -66,7 +66,8 @@ select{
 
 button{
 	cursor: pointer;
-  // @include button-style(#17a2b8, #17a2b8, #0f8293, #17a2b8, #17a2b8,#7a9397)
+  border: none;
+  background-color: $color-white-2;
 }
 
 
@@ -178,7 +179,7 @@ body{
   position: relative;
 }
 
-.popup-window{
+body .popup-window{ // i wrote body to add a primitive
   background-color: $color-white-1;
   border-radius: 3rem;
   padding: 2rem;
@@ -208,13 +209,23 @@ body{
     width: auto;
   }
 
+  &__button{
+    height: 4.5rem;
+    font-size: 2rem;  
+    font-family: Quicksand, sans-serif;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
   &__close-icon {
     margin-left: auto;
     height: 100%;
     width: auto;
+    border-radius: 50%;
 
     &:hover {
         cursor: pointer;
+        background-color: $color-white-2;
     }
 }
 }

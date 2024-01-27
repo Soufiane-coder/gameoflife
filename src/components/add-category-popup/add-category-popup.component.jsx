@@ -7,8 +7,7 @@ import { selectCurrentUser } from "../../redux/user/user.selector";
 import {addCategoryToFirebase} from '../../../lib/firebase';
 import {ReactComponent as CategoryIcon} from '../../assets/icons/category.svg';
 import {ReactComponent as CloseIcon} from '../../assets/icons/close.svg';
-
-import Ripples from 'react-ripples'
+import { Button } from '@mui/material';
 
 
 import data from "@emoji-mart/data";
@@ -33,6 +32,7 @@ const AddCategoryPopup = ({
 
     const handleSubmit = (event) => {
         event.preventDefault()
+        console.log('submited')
         addCategoryToFirebase(user.uid, categoryForm)
         hidePopup()
     }
@@ -48,14 +48,14 @@ const AddCategoryPopup = ({
                     />
                 )
             }
-            <div className="popup-window add-category-window__popup">
+            <form className="popup-window add-category-window__popup" onSubmit={handleSubmit}>
                 <div className="popup-window__head add-category-window__head">
                     <CategoryIcon className="popup-window__icon" />
                     <h3 className="add-category-window__title">
                         Add routine
                     </h3>
                     <CloseIcon
-                        className="add-routine-window__close-icon"
+                        className="popup-window__close-icon"
                         onClick={() => {
                             hidePopup(false);
                         }}
@@ -71,19 +71,30 @@ const AddCategoryPopup = ({
                     className="add-category-window__category-label-input"
                     type="text"
                     value={categoryForm.label}
-                    onChange={handleCategoryLabel}/>
+                    onChange={handleCategoryLabel}
+                    required
+                    />
 
-                <Ripples>
-                    <button className='add-category-window__btn' onClick={() => {setShowEmojiList(true)}}>
+                    <Button 
+                        className='popup-window__button add-category-window__btn'
+                        color='info'
+                        variant='contained'
+                        type='button'
+                        onClick={() => {setShowEmojiList(true)}}
+                        >
                         Change emoji
-                    </button>
-                </Ripples>
-                <Ripples>
-                    <button className='add-category-window__btn' onClick={handleSubmit}>
+                    </Button>
+
+                    <Button 
+                        className='popup-window__button add-category-window__btn'
+                        color='success'
+                        variant='contained'
+                        type='submit'
+                    >
                         Add category
-                    </button>
-                </Ripples>
-            </div>
+                    </Button>
+                
+            </form>
         </div>
     )
 }

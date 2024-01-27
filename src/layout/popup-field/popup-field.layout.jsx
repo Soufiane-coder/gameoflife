@@ -37,7 +37,7 @@ const PopupField = ({ popup , hidePopup}) => {
                 )
             case popupActionTypes.CHECK_POPUP:
                 return (
-                    <CheckPopup routineId={popup.payload} />
+                    <CheckPopup routine={popup.payload} />
                 )
             case popupActionTypes.ADD_CATEGORY_POPUP:
                 return (

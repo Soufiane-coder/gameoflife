@@ -40,8 +40,11 @@ const Routine = (
 	const {notificationSystem} = useContext(NotficationContext);
 
 	const handleDone = async (event) => {
-		const id = event.target.closest('.routine').id;
-		displayCheckPopupState(id);
+		const { id: routineId }= event.target.closest('.routine');
+		displayCheckPopupState({
+			routineId,
+			message: routine.message,
+		});
 	}
 
 	const handleSkip = async (event) => {

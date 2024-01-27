@@ -16,11 +16,15 @@ import { checkGoalInFirabase, checkRoutineInFirebase } from '../../../lib/fireba
 import { selectCurrentRoutines } from '../../redux/routines/routines.selector';
 import { getGoalsOfRoutine } from '../../../lib/firebase';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import {Button} from '@mui/material';
+
+
+
 
 
 import bellSound from '../../../public/bell-sound.mp3'
 
-const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
+const CheckPopup = ({ user, checkRoutine, routine, hidePopup, routines }) => {
     const [messageInput, setMessageInput] = useState('');
 
     const [isLoading, setIsLoading] = useState(false);
@@ -29,10 +33,9 @@ const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
 
 
     useEffect(() => {
-
         if(routines){
             (async () => {
-                let goals = await getGoalsOfRoutine(user.uid, routineId)
+                let goals = await getGoalsOfRoutine(user.uid, routine)
                 setLastGoal(goals.find(goal => !goal.isAchieved))
             })()
         }
@@ -47,11 +50,11 @@ const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
     const handleCheckRoutine = async () => {
         setIsLoading(true);
         try {
-            await checkRoutineInFirebase(user.uid, routineId, messageInput,)
+            await checkRoutineInFirebase(user.uid, routine.routineId, messageInput,)
             if(lastGoal?.isAchieved){
-                await checkGoalInFirabase(user.uid, routineId, lastGoal.goalId)
+                await checkGoalInFirabase(user.uid, routine.routineId, lastGoal.goalId)
             }
-            checkRoutine(routineId, messageInput);
+            checkRoutine(routine.routineId, messageInput);
             hidePopup()
         } catch (err) {
             console.error(`Error cannot checked this routine`, err.message);
@@ -73,7 +76,7 @@ const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
                         <h3 className='message-window__title'>
                             Write message
                         </h3>
-                        <CloseIcon className='popup-window__close-icon'/>
+                        <CloseIcon className='popup-window__close-icon' onClick={hidePopup}/>
                     </div>
                     <p className="message-window__description">
                         Write a message for future you to motivate, noting the progress or planing the next step
@@ -83,22 +86,41 @@ const CheckPopup = ({ user, checkRoutine, routineId, hidePopup, routines }) => {
                         lastGoal?.description ? 
                         <>
                             <div className="message-window__check-goal">
-                                <input onChange={handleCheckGoal} name="goal" type="checkbox" id='message-window__check-goal_id'/>
-                                <label htmlFor='message-window__check-goal_id'>{lastGoal.description}</label>
+                                <input 
+                                    onChange={handleCheckGoal}
+                                    name="goal"
+                                    type="checkbox"
+                                    id='message-window__check-goal_id'/>
+                                <label htmlFor='message-window__check-goal_id'>
+                                    {lastGoal.description}
+                                </label>
                             </div>
                         </> : 
-                        <p>There is no goal go to <Link onClick={hidePopup} to={`road-map/${routineId}`}>road map</Link> and add a goal</p>
+                        <p>There is no goal go to <Link onClick={hidePopup} to={`road-map/${routine.routineId}`}>road map</Link> and add a goal</p>
                     }
                    
-                    <textarea type="text" className='message-window__input-text' value={messageInput} onChange={handleChange} />
+                    <textarea 
+                        placeholder={routine.message} 
+                        type="text"
+                        className='message-window__input-text'
+                        value={messageInput}
+                        onChange={handleChange}
+                    />
                     
-                    
-                    <button className="message-window__button message-window__button--filled" onClick={handleCheckRoutine}>
+                    <Button 
+                        variant="contained"
+                        className='popup-window__button btn-success'
+                        onClick={handleCheckRoutine}
+                        disabled={isLoading}
+                    >
                         {
                             isLoading ? <LoadingSpinner /> : "Check this routine"
                         }
-                    </button>
-                    <button className="message-window__button message-window__button--outlined" onClick={() => hidePopup()}>Cancel</button>
+                    </Button>
+                    {/* <button className="message-window__button message-window__button--filled" >
+                        
+                    </button> */}
+                    {/* <button className="message-window__button message-window__button--outlined" onClick={() => hidePopup()}>Cancel</button> */}
                     
                 </div>
             </Zoom>
