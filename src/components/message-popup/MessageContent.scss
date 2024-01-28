@@ -5,7 +5,7 @@ $height-of-popup: 36rem;
 .message-content-window{
     width: $width-of-popup;
     @media (max-width: $mini-tablet-view) {
-        width: 35rem;
+        width: 90vw;
     }
     
     &__popup{

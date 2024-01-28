@@ -4,7 +4,10 @@
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
-
+    @media (max-width : $tablet-view){
+      justify-content: center;
+      align-items: center;
+    }
     .adding-routine-button{
             display: flex;
             justify-content: center;
@@ -13,24 +16,28 @@
             gap: 4px;
             // height: 5rem;
             border: none;
-            background: #1b1b1cd0;
+            // background: #1b1b1cd0;
             // border-radius: 10rem;
             cursor: pointer;
 
-            // &:first-of-type{
-            //   margin-left: auto;
-            // }
+            &:first-of-type{
+              margin-left: auto;
+
+              @media (max-width : $tablet-view){
+                margin-left: 0;
+              }
+            }
           
-          .lable {
-            line-height: 22px;
-            font-size: 2rem;
-            color: #DE8A2A;
-            letter-spacing: 1px;
-          }
+          // .lable {
+          //   line-height: 22px;
+          //   font-size: 2rem;
+          //   color: #DE8A2A;
+          //   letter-spacing: 1px;
+          // }
           
-          &:hover {
-            background: #1b1b1cea;
-          }
+          // &:hover {
+          //   background: #1b1b1cea;
+          // }
           
           &:hover .svg-icon {
             animation: rotate 1.3s linear infinite;

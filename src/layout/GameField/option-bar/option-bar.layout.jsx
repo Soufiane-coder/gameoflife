@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
 import { ReactComponent as CoinIcon } from "../../../assets/icons/coin-icon.svg";
 import "./option-bar.style.scss";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../../../redux/user/user.selector";
 import { selectCurrentRoutines } from "../../../redux/routines/routines.selector";
-import { useState } from "react";
 
 import Filter from "../../../components/Filter/Filter";
 
@@ -16,6 +14,7 @@ import { customStyles } from "./styles";
 
 import { displayAddRoutinePopupState, displayAddCategoryPopupState } from "../../../redux/popup/popup.actions";
 import { selectCurrentCategories } from "../../../redux/categories/categories.selector";
+import { Button } from '@mui/material';
 
 const animatedComponents = makeAnimated();
 
@@ -71,6 +70,7 @@ const OptionBarLayout = ({
 				styles={customStyles}
 				onChange={handleChoosingFilter}
 				components={animatedComponents}
+				isSearchable={false}
 			/>
 			<Select
 				options={selectCategoriesOptions}
@@ -79,10 +79,13 @@ const OptionBarLayout = ({
 				styles={customStyles}
 				onChange={handleChoosingCategory}
 				components={animatedComponents}
+				isSearchable={false}
 				isMulti
 			/>
-			<button
-				className="adding-routine-button"
+			<Button
+				className="popup-window__button adding-routine-button"
+				variant='contained'
+				color='success'
 				onClick={() => displayAddRoutinePopupState(false)}
 			>
 				<svg
@@ -93,16 +96,18 @@ const OptionBarLayout = ({
 					fill="none"
 					className="svg-icon"
 				>
-					<g strokeWidth="1.5" strokeLinecap="round" stroke="#de8a2a">
+					<g strokeWidth="1.5" strokeLinecap="round" stroke="#fff">
 						<circle r="7.5" cy="10" cx="10"></circle>
 						<path d="m9.99998 7.5v5"></path>
 						<path d="m7.5 9.99998h5"></path>
 					</g>
 				</svg>
 				<span className="lable">Add routine</span>
-			</button>
-			<button
-				className="adding-routine-button"
+			</Button>
+			<Button
+				className="popup-window__button adding-routine-button"
+				variant='contained'
+				color='info'
 				onClick={() => displayAddCategoryPopupState(false)}
 			>
 				<svg
@@ -113,14 +118,14 @@ const OptionBarLayout = ({
 					fill="none"
 					className="svg-icon"
 				>
-					<g strokeWidth="1.5" strokeLinecap="round" stroke="#de8a2a">
+					<g strokeWidth="1.5" strokeLinecap="round" stroke="#fff">
 						<circle r="7.5" cy="10" cx="10"></circle>
 						<path d="m9.99998 7.5v5"></path>
 						<path d="m7.5 9.99998h5"></path>
 					</g>
 				</svg>
 				<span className="lable">Add category</span>
-			</button>
+			</Button>
 		</div>
 	);
 };

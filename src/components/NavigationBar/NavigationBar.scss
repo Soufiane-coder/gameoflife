@@ -46,11 +46,11 @@ $demension-icon: 7rem;
     }
 
     .navigation-burger-menu{
-        $menu-position-top: 6rem ;
+        $menu-position-top: 6.5rem ;
         $menu-position-right: 5rem ;
 
-        $burger-menu-height: 8rem;
-        $burger-menu-width: 8rem;
+        $burger-menu-height: 6rem;
+        $burger-menu-width: 6rem;
 
         display: block;
         &__checkbox {
@@ -114,8 +114,8 @@ $demension-icon: 7rem;
             height: auto;
             visibility:visible;
             display: inline-block;
-            font-size: 4.5rem;
-            font-weight: 300;
+            font-size: 3rem;
+            font-weight: 400;
             padding: 1.5rem 3rem;
             color: $color-white-1;
             text-decoration: none;
@@ -145,8 +145,8 @@ $demension-icon: 7rem;
             &,
             &::before,
             &::after {
-                width: 4.5rem;
-                height: 3px;
+                width: 3.5rem;
+                height: 2.5px;
                 background-color: $color-white-1;
                 display: inline-block;
             }
@@ -159,8 +159,8 @@ $demension-icon: 7rem;
                 transition: all .2s;
             }
     
-            &::before { top: -1.8rem; } // this is the top top bread of the burger menu
-            &::after { top: 1.8rem; } // this is the top bottom bread of the burger menu
+            &::before { top: -1.3rem; } // this is the top top bread of the burger menu
+            &::after { top: 1.3rem; } // this is the top bottom bread of the burger menu
         }
     
         &__button:hover &__icon::before {

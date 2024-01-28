@@ -20,7 +20,7 @@ const MessagePopup = ({ routineId, message, hidePopup }) => {
                     </div>
                     <p className="message-content-window__message">
                         {
-                            message(String(routineId))
+                            message(routineId) ? message(routineId) : 'There is no message'
                         }
                     </p>
                 </div>

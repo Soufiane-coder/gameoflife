@@ -27,6 +27,7 @@ import {
 import { Timestamp } from "firebase/firestore";
 import { selectCurrentCategories } from "../../redux/categories/categories.selector";
 import { NotficationContext } from "../../App";
+import { Button } from '@mui/material';
 
 
 const AddRoutinePopup = ({
@@ -386,15 +387,18 @@ const AddRoutinePopup = ({
 					</select>
 					
 					<div className="add-routine-window__emoji-section">
-						<button
-							className="add-routine-window__emoji-btn"
+						<Button
+							variant="contained"
+							color='warning'
+							type='button'
+							className="popup-window__button add-routine-window__emoji-btn"
 							onClick={(event) => {
 								event.preventDefault();
 								setShowEmojiList(true);
 							}}
 						>
 							Choose Emoji
-						</button>
+						</Button>
 						<span
 							style={{ backgroundColor: bgEmojiColorBtn }}
 							className="add-routine-window__emoji-over-view"
@@ -403,14 +407,22 @@ const AddRoutinePopup = ({
 						</span>
 					</div>
 
-					<button
-								className="add-routine-window__color-btn"
-								onClick={handleClickBgColor}
-							>
+					<Button
+						className="popup-window__button add-routine-window__color-btn"
+						variant="contained"
+						color='info'
+						type='button'
+						onClick={handleClickBgColor}
+					>
 								Change color
-					</button>
+					</Button>
 
-					<button className="add-routine-window__add-btn">
+					<Button 
+						className="popup-window__button add-routine-window__add-btn"
+						variant="contained"
+						color='success'
+						type='submit'
+					>
 						{loadingAdding ? (
 							<LoadingSpinner />
 						) : editThisRoutine ? (
@@ -418,7 +430,7 @@ const AddRoutinePopup = ({
 						) : (
 							"Add Routine"
 						)}
-					</button>
+					</Button>
 				</form>
 			</Zoom>
 		</div>
