@@ -23,19 +23,18 @@ const routinesReducer = (state = INITIAL_STATE, action) => {
         ...state,
         routines: changeArchivedOption(state.routines, action.payload.routineId, action.payload.archivedOption),
       };
-    case RoutinesActionTypes.ADD_ROUTINE: {
-      state.routines.unshift(action.payload);
+    case RoutinesActionTypes.ADD_ROUTINE: 
       return {
         ...state,
-        routines: [...state.routines],
+        routines: [...state.routines, {...action.payload}],
       };
-    }
-    case RoutinesActionTypes.REMOVE_ROUTINE: {
+    
+    case RoutinesActionTypes.REMOVE_ROUTINE: 
       return {
         ...state,
         routines: [...removeRoutine(state.routines, action.payload)],
       };
-    }
+    
     case RoutinesActionTypes.SKIP_ROUTINE: {
       return {
         ...state,

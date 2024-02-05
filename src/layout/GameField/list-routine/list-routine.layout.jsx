@@ -31,7 +31,7 @@ const ListRoutine = ({
         setChoosenCategory(
             filterCategoriesAndRoutines(
                 currentCategories, currentRoutines,selectedFilterOption, selectedCategories))
-    }, [selectedFilterOption, selectedCategories])
+    }, [selectedFilterOption, selectedCategories, currentRoutines])
 
 
     if (currentRoutines.length === 0){
@@ -61,7 +61,11 @@ const ListRoutine = ({
                             <legend className='list-routine__legend'>{emoji} {label}
                                 <EditButton className="list-routine__legend-edit-button"/>
                             </legend>
-                            <ListRoutinesComponent routines={routines}/>
+                            {
+                                routines?.length == 0 ? 
+                                <h2 className='list-routine__no-categry'>There is no routine in this category</h2> :
+                                <ListRoutinesComponent routines={routines}/>
+                            }
                         </fieldset>
                     ))
                 }

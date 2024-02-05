@@ -144,7 +144,7 @@ const Routine = (
 			<div className="title">{routine.title}</div>
 			<div className="description">{routine.description}</div>
 			<div className="extra">
-				<div className="combo">{routine.combo === 0 ? "" : `⚡${routine.combo}`}</div>
+				<div className="combo">{routine.combo === 0 ? "" : `🔥${routine.combo}`}</div>
 				<div className="skip-num">{routine.skip === 0 ? "" : `↪️${routine.skip}`}</div>
 				<div className="level">🎚️{routine.level}</div>
 			</div>

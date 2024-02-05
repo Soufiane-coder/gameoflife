@@ -30,7 +30,7 @@ export const initialProtocol = async (user, routines) => {
     if(lastVisit !== formattingDate(new Date())){
         await uncheckAllRoutinesBelongToUserInFirebase(user.uid, routines);
         await updateTheDayOfLastVisitToTodayInFirebase(user.uid)
-        routines.map(routine => ({isSubmitted: false,...routine}))
+        routines = routines.map(routine => ({...routine, isSubmitted: false,}))
     }
 
     return await Promise.all(routines.map(async routine => {
@@ -63,6 +63,7 @@ export const initialProtocol = async (user, routines) => {
             await setComboToZeroInFirebase(user.uid, routineId);
             routine.combo = 0;
         }
+
         return routine;
     }))
 

@@ -29,13 +29,14 @@ const CheckPopup = ({ user, checkRoutine, routine, hidePopup, routines }) => {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const [lastGoal, setLastGoal] = useState({})
+    const [lastGoal, setLastGoal] = useState(false)
 
+    
 
     useEffect(() => {
         if(routines){
             (async () => {
-                let goals = await getGoalsOfRoutine(user.uid, routine)
+                let goals = await getGoalsOfRoutine(user.uid, routine.routineId)
                 setLastGoal(goals.find(goal => !goal.isAchieved))
             })()
         }
@@ -81,9 +82,8 @@ const CheckPopup = ({ user, checkRoutine, routine, hidePopup, routines }) => {
                     <p className="message-window__description">
                         Write a message for future you to motivate, noting the progress or planing the next step
                     </p>
-                    
                     {
-                        lastGoal?.description ? 
+                        lastGoal ? 
                         <>
                             <div className="message-window__check-goal">
                                 <input 

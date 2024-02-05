@@ -76,7 +76,6 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
         });
     }, [routines])
 
-
     return (
         <div className='game-field'>
             <PageHeader title="Routines" />

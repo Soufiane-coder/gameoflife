@@ -40,11 +40,3 @@
     
 }
 
-
-#dark .header{
-    background-color: $color-primary;
-    color: $color-white-1;
-    &__background-white, &__triangle-white{
-        background-color: $color-dark-mode-primary;
-    }
-}

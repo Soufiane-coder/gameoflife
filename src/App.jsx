@@ -57,26 +57,7 @@ const App = ({
 
                 let routines = await getRoutinesFromFirebase(user.uid)
                 routines = await initialProtocol(user, routines);
-                
                 setCurrentRoutines(routines)
-                
-                // categories = await Promise.all(categories.map(async category => 
-                //     ({
-                //         ...category,
-                //         routines : await getRoutinesFromCategory(user.uid, category.categoryId)
-                //     })))
-
-                // setCurrentCategories(categories)
-
-                // const allRoutines = categories.reduce((acc, category) => {
-                //     acc.push(...(category.routines))
-                //     return acc
-                // }, [])
-
-                // Promise.all(allRoutines.map(async routine))
-                // await initialProtocol(user, routines)
-
-                // setCurrentRoutines(allRoutines)
             }
         })()
     }, [user]);
