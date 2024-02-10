@@ -9,6 +9,7 @@ import {
     Title,
     Tooltip,
     Legend,
+    Filler,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { getStatisticsFromFirebase } from '../../../lib/firebase'
@@ -26,7 +27,8 @@ ChartJS.register(
     LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    Filler,
 );
 
 const StatisticsPage = ({user, routines,}) => {
@@ -40,32 +42,44 @@ const StatisticsPage = ({user, routines,}) => {
         })()
     }, [])
 
+    const unarchivedRoutines = routines.reduce((acc, routine) => !routine.isArchived ? acc + 1: acc, 0)
+    const average = last30DaysStatistics
+        .reduce((acc, statistic) => acc + statistic.routinesChecked.length, 0) / last30DaysStatistics.length
+
     const data = {
         labels: last30DaysStatistics.map(
             statistic => (isYesterday(statistic.day) ? 'yesterday' : 
             (isToday(statistic.day) ? 'today' : statistic.day))),
         datasets: [{
-            label: 'Your pregression in checking routines',
+            label: 'Your accomplished routines',
             data: last30DaysStatistics.map(statistic => statistic.routinesChecked.length),
             fill: false,
             borderColor: '#009245',
-            // tension: .3,
+        },
+        {
+            label: 'All unarchieved routines',
+            data: last30DaysStatistics.map(() => unarchivedRoutines),
+            fill: true,
+            backgroundColor: '#FDC8301F',
+            borderColor: '#FDC830',
+            hidden: true,
+        },
+        {
+            label: 'Average checked routines',
+            data: last30DaysStatistics.map(() => average),
+            fill: true,
+            backgroundColor: '#43BEED1F',
+            borderColor: '#43BEED',
+            hidden: true,
         },
         ]
-        // {
-        //     label: 'what do you think progression is',
-        //     data: [0,300,600,900,1200,1500,1800,2100, 2400, 2700,3000],
-        //     fill: false,
-        //     borderColor: '#EA3117',
-        //     tension: 0,
-        //   }]
     };
 
     const options = {
         responsive: true,
         plugins: {
             legend: {
-                display: false,
+                display: true,
                 position: 'bottom',
             },
             title: {
@@ -79,8 +93,7 @@ const StatisticsPage = ({user, routines,}) => {
                 suggestedMin: 0,
                 // suggestedMax: last30DaysStatistics.reduce((acc, statistic) => 
                 //     Math.max(statistic.routinesChecked.length, acc), 0), // max check routines * 2 to view it in the chart
-                suggestedMax : Math.max(routines.reduce((acc, routine) => 
-                    !routine.isArchived ? acc + 1: acc, 0),
+                suggestedMax : Math.max(unarchivedRoutines,
                     last30DaysStatistics.reduce((acc, statistic) => 
                     Math.max(statistic.routinesChecked.length, acc), 0)),
                 ticks: {

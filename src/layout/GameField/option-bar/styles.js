@@ -8,6 +8,7 @@ export const customStyles = {
   }),
   control: (provided, state) => ({
       ...provided,
+      height: '5rem',
       // width: "30rem",
       // "&:active" : {
       //   ...provided[':active'],

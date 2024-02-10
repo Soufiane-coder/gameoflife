@@ -17,6 +17,7 @@ import { selectCurrentRoutines } from '../../redux/routines/routines.selector';
 import { getGoalsOfRoutine } from '../../../lib/firebase';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import {Button} from '@mui/material';
+import { addCoin } from '../../redux/user/user.actions';
 
 
 
@@ -24,7 +25,14 @@ import {Button} from '@mui/material';
 
 import bellSound from '../../../public/bell-sound.mp3'
 
-const CheckPopup = ({ user, checkRoutine, routine, hidePopup, routines }) => {
+const CheckPopup = ({ 
+    user,
+    routine,
+    checkRoutine,
+    hidePopup,
+    routines,
+    addCoin,
+}) => {
     const [messageInput, setMessageInput] = useState('');
 
     const [isLoading, setIsLoading] = useState(false);
@@ -56,6 +64,7 @@ const CheckPopup = ({ user, checkRoutine, routine, hidePopup, routines }) => {
                 await checkGoalInFirabase(user.uid, routine.routineId, lastGoal.goalId)
             }
             checkRoutine(routine.routineId, messageInput);
+            addCoin()
             hidePopup()
         } catch (err) {
             console.error(`Error cannot checked this routine`, err.message);
@@ -135,7 +144,8 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
     checkRoutine: (routineId, message) => dispatch(checkRoutine(routineId, message)),
-    hidePopup: () => dispatch(hidePopup())
+    hidePopup: () => dispatch(hidePopup()),
+    addCoin: () => dispatch(addCoin())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CheckPopup);
