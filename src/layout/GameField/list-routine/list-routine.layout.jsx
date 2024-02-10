@@ -6,13 +6,19 @@ import {connect} from "react-redux";
 import {createStructuredSelector} from "reselect";
 import {selectCurrentRoutines} from "../../../redux/routines/routines.selector";
 import {selectCurrentCategories} from '../../../redux/categories/categories.selector';
-import {filterRoutines, ListRoutinesComponent, filterCategoriesAndRoutines} from './utils'
+import {
+    filterRoutines,
+    ListRoutinesComponent,
+    filterCategoriesAndRoutines,
+    sortRoutinesBy
+} from './utils'
 
 const ListRoutine = ({ 
     selectedFilterOption,
     currentRoutines,
     selectedCategories,
     currentCategories,
+    selectedSort,
 }) => {
 
     const [choosenCategory, setChoosenCategory ] = useState(
@@ -25,13 +31,17 @@ const ListRoutine = ({
 
     useEffect(() => {
         if (selectedCategories.length === 0){
-            setChoosenRoutines(filterRoutines(currentRoutines, selectedFilterOption))
+            setChoosenRoutines(
+                sortRoutinesBy(
+                    filterRoutines(currentRoutines, selectedFilterOption), selectedSort))
             return
         }
         setChoosenCategory(
-            filterCategoriesAndRoutines(
-                currentCategories, currentRoutines,selectedFilterOption, selectedCategories))
-    }, [selectedFilterOption, selectedCategories, currentRoutines])
+            sortRoutinesBy(
+                filterCategoriesAndRoutines(
+                    currentCategories, currentRoutines,selectedFilterOption, selectedCategories), selectedSort))
+        
+    }, [selectedFilterOption, selectedCategories, currentRoutines, selectedSort])
 
 
     if (currentRoutines.length === 0){

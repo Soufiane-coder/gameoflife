@@ -2,12 +2,19 @@
 
 .option-bar{
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 2rem;
-    @media (max-width : $tablet-view){
-      justify-content: center;
-      align-items: center;
+    &__filter, &__btns{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem
     }
+    // flex-wrap: wrap;
+    // gap: 2rem;
+    // @media (max-width : $tablet-view){
+    //   justify-content: center;
+    //   align-items: center;
+    // }
     .adding-routine-button{
             display: flex;
             justify-content: center;
@@ -20,7 +27,7 @@
             cursor: pointer;
 
             &:first-of-type{
-              margin-left: auto;
+              // margin-left: auto;
 
               @media (max-width : $tablet-view){
                 margin-left: 0;

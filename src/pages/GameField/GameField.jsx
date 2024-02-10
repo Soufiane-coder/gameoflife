@@ -16,6 +16,7 @@ const isRoutineArchived = (routine) => routine.isArchived
 const GameField = ({ setCurrentRoutines, user, routines }) => {
     const [selectedFilterOption, setSelectedFilterOption] = useState('unarchived');
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedSort, setSelectedSort] = useState()
 
     const [loadingRoutine, setLoadingRoutine] = useState(true);
     const [labelFilterTags, setLabelFilterTags] = useState({
@@ -90,12 +91,14 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
                                     selectedFilterOption,
                                     setSelectedFilterOption,
                                     setSelectedCategories,
-                                    labelFilterTags
+                                    setSelectedSort,
+                                    labelFilterTags,
                                 }} />
                             <ListRoutine {
                                 ...{
                                     selectedFilterOption,
                                     selectedCategories,
+                                    selectedSort,
                                 }} />
                         </>
                 }

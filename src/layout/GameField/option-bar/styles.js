@@ -4,11 +4,11 @@ const optionColor = chroma('#00602d')
 export const customStyles = {
   container: (provided, state) => ({
       ...provided,
-      minWidth: '30rem',
+      minWidth: '28rem',
   }),
   control: (provided, state) => ({
       ...provided,
-      height: '5rem',
+      minHeight: '5rem',
       // width: "30rem",
       // "&:active" : {
       //   ...provided[':active'],
