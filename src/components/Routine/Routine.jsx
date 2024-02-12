@@ -24,6 +24,7 @@ import {
 	addSkipDayToFirebase ,
 	buySkipFromFirebase} from "../../../lib/firebase";
 import { NotficationContext } from "../../App";
+import { Button } from "@mui/material";
 
 const Routine = (
 	{ 
@@ -40,7 +41,7 @@ const Routine = (
 	const {notificationSystem} = useContext(NotficationContext);
 
 	const handleDone = async (event) => {
-		const { id: routineId }= event.target.closest('.routine');
+		const { routineId } = routine
 		displayCheckPopupState({
 			routineId,
 			message: routine.message,
@@ -49,7 +50,7 @@ const Routine = (
 
 	const handleSkip = async (event) => {
 		setSkipLoading(true);
-		const {id: routineId} = event.target.closest('.routine');
+		const { routineId} = routine
 		try{
 			if(user.coins >= 10) {
 				await buySkipFromFirebase(user.uid);
@@ -97,7 +98,7 @@ const Routine = (
 
 	const handleRemove = async (event) => {
 		event.preventDefault();
-		const { id } = event.target.closest('.routine');
+		const { routineId } = routine
 		const notification = notificationSystem.current;
 		notification.addNotification({
 			title: 'Do you really want to delete this item',
@@ -106,8 +107,14 @@ const Routine = (
 			autoDismiss: 0,
 			children : (
 				<div style={{display: 'flex', justifyContent: 'space-between'}}>
-					<button style={{border: 'none'}}>cancel</button>
-					<button onClick={() => handleRemoveRoutine(id)} style={{backgroundColor: '#ebad1a',color: '#fff', border: 'none'}}>Delete this rouitne</button>
+					<Button 
+						variant='outlined'
+						type='button'
+						style={{border: 'none'}}>cancel</Button>
+					<Button
+						variant='outlined'
+						type='submit'
+						onClick={() => handleRemoveRoutine(routineId)} style={{backgroundColor: '#ebad1a',color: '#fff', border: 'none'}}>Delete this rouitne</Button>
 				</div>
 			),
 			position: 'tc',
@@ -115,13 +122,13 @@ const Routine = (
 	}
 
 	const handleMessage = (event) => {
-		const {id} = event.target.closest('.routine');
-		displayMessagePopupState(id);
+		const {routineId} = routine
+		displayMessagePopupState(routineId);
 	}
 
 	const handleRoadMapClick = (event) => {
-		const { id } = event.target.closest('.routine');
-		history.push(`/road-map/${id}`)
+		const { routineId } = routine
+		history.push(`/road-map/${routineId}`)
 	}
 	const handleEditRoutine = (event) => {
 		event.preventDefault();

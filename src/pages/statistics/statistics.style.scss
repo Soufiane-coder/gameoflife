@@ -3,9 +3,15 @@
 .statistics-page{
     padding: $page-padding;
     padding-top: 0;
-
+    height: 100lvh;
     &__30days-progession{
+        background-color: $color-white-1;
+        padding: 2rem;
         margin: auto;
-        max-width: 70rem;
+        max-width: 80rem;
     }
+}
+
+#dark .statistics-page{
+    background-color: $color-dark-mode-primary;
 }

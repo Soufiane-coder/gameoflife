@@ -55,7 +55,7 @@ const OptionBarLayout = ({
 	})
 
 	let selectSortOptions = [
-		{ value: "level", label: "Level" },
+		{ value: "difficulty", label: "Difficulty" },
 		{ value: "priority", label: "Priority" },
 	];
 

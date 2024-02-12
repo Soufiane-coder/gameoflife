@@ -68,6 +68,8 @@ button{
 	cursor: pointer;
   border: none;
   background-color: $color-white-2;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 
@@ -118,7 +120,6 @@ html{
   //     font-size: 45%;
   // }
 }
-
 #dark{
   background-color: $color-dark-mode-primary;
 }

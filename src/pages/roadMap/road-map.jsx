@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentRoutines } from '../../redux/routines/routines.selector';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import PageHeader from '../../components/PageHeader/page-header';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -17,9 +17,9 @@ import { checkGoalInFirabase } from '../../../lib/firebase';
 const RoadMap = ({ routines, user, }) => {
     const params = useParams();
     const [loadingRoutine, setLoadingRoutine] = useState(true);
-
+    
     const [goal, setGoal] = useState({});
-
+    
     const [goals, setGoals] = useState([]);
     const [newGoal, setNewGoal] = useState({
         description: '',
@@ -27,6 +27,7 @@ const RoadMap = ({ routines, user, }) => {
         index: -1,
         isAchieved: false,
     });
+    
 
     useEffect(() => {
         if (routines) {
@@ -87,7 +88,7 @@ const RoadMap = ({ routines, user, }) => {
     return (
         <div className="road-map">
             <PageHeader title={'Road Map'} />
-            <PathGoal {...{ goals, setGoal, getIndexOfLastAchievedGoal }} />
+            <PathGoal {...{ goals, setGoal, getIndexOfLastAchievedGoal,user }} />
             <div className="road-map__dashboard">
                 <div className="road-map__goal-descriptions">
                     {

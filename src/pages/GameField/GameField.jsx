@@ -102,7 +102,6 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
                                 }} />
                         </>
                 }
-
             </main>
         </div >
     )

@@ -1,0 +1,115 @@
+@import '../../style/variables.scss';
+
+.path-goal{
+    height: 15rem;
+    width: 95%;
+    overflow-x: scroll;
+    position: relative;
+    margin-bottom: 10rem;
+    background-color: transparent;
+    border-bottom: 3px solid $color-tertiary;
+
+    &::-webkit-scrollbar {
+        height: 0rem;
+    }
+    &::-webkit-scrollbar-track {
+    background: $color-white-1;
+        width: 15px;
+    }
+    &::-webkit-scrollbar-thumb {
+    background: $color-primary;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: $color-primary-dark;
+    }
+    
+
+    &__progress-container{
+        display: block;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 8px;
+        background-color: $color-white-1;
+        border: 1px solid $color-tertiary;
+        border-right: none;
+        border-left: none;
+        z-index: 1;
+    }
+
+    &__progress{
+        display: block;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 8px;
+        background-color: $color-tertiary;
+        border-right: none;
+        border-left: none;
+        z-index: 2;
+    }
+
+    &__character{
+        position: absolute;
+        height: 5rem;
+        bottom: 1rem;
+        // margin-bottom: .5rem;
+        z-index: 10;
+        transition: all 1s;
+    }
+    
+    &__station{
+        position: absolute;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-size: 1rem;
+        font-weight: 800;
+        color: $color-black-1;
+        background-color: $color-white-1;
+
+        width: 6rem;
+        height: 6rem;
+        border-radius: 10000px;
+        border: 1px solid $color-tertiary;
+        cursor: pointer;
+
+        top: 50%;
+        transform: translate(-50%, -50%);
+
+        width: 2rem;
+        height: 2rem;
+
+        z-index: 10;
+
+
+
+
+        &--big-goal{
+            width: 7rem;
+            height: 7rem;
+            
+        }
+
+        &--small-goal{
+            width: 4rem;
+            height: 4rem;
+        }
+
+        &--achieved{
+            background-color: $color-tertiary;
+            color: $color-white-1;
+        }
+        
+    }
+    
+    &__path{
+        position: absolute;
+        bottom: 0;
+        height: 1rem;
+        // background-color: $color-dark-mode-primary;
+        width: 100%;
+    }
+}

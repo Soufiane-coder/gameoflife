@@ -31,6 +31,7 @@ import NotificationSystem from 'react-notification-system';
 import { setCurrentCategories } from "./redux/categories/categories.actions";
 
 export const NotficationContext = createContext();
+
 const App = ({ 
     user, 
     displayMode, 

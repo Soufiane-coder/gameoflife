@@ -44,7 +44,7 @@ export const filterCategoriesAndRoutines = (categories, routines, filterLabel, c
 
 export const sortRoutinesBy = (routines, sortAttr) => {
     switch (sortAttr){
-        case 'level':
+        case 'difficulty':
             routines.sort((a, b) => b.level - a.level)
             return routines
         case 'priority':
@@ -52,7 +52,6 @@ export const sortRoutinesBy = (routines, sortAttr) => {
                 const priorityOrder = { 'important': 0, 'medium': 1, 'low': 2 };
                 return priorityOrder[a.priority] - priorityOrder[b.priority];
             })
-            console.log(routines.map(routine => routine.priority))
             return routines
         default:
             return routines
