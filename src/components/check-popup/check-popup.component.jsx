@@ -45,6 +45,7 @@ const CheckPopup = ({
         if(routines){
             (async () => {
                 let goals = await getGoalsOfRoutine(user.uid, routine.routineId)
+                goals.sort((a, b) => a.index - b.index)
                 setLastGoal(goals.find(goal => !goal.isAchieved))
             })()
         }

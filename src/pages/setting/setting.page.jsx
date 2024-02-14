@@ -6,10 +6,12 @@ import { Route , Link} from "react-router-dom";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import {selectCurrentUser } from '../../redux/user/user.selector';
-import LogoGOL from '../../assets/clipart/game_of_life_clipart.svg';
+
 import {setCurrentUser} from '../../redux/user/user.actions';
 import { setCurrentRoutines } from "../../redux/routines/routines.actions";
 import {signUserOutFromFirebase} from '../../../lib/firebase';
+import SettingSidebar from "../../layout/setting/setting-sidebar/setting-sidebar.component";
+
 
 const Setting = ({user, history, location: {pathname}, setCurrentUser,setCurrentRoutines,}) => {
     useEffect(()=> {
@@ -31,13 +33,14 @@ const Setting = ({user, history, location: {pathname}, setCurrentUser,setCurrent
         return (
             <>
                 <div className="settings">
-                    <nav className="settings__nav-bar">
+                    <SettingSidebar/>
+                    {/* <nav className="settings__nav-bar">
                         <img src={LogoGOL} alt="" className="settings__logo-img" />
                         <Link to='/settings/profile'  
                             className={`settings__nav-bar-item ${pathname === '/settings/profile' ? "settings__nav-bar-item--selected" : ""}`} >Profile</Link>
                         <Link to='/settings/appearance'
                             className={`settings__nav-bar-item ${pathname === '/settings/appearance' ? "settings__nav-bar-item--selected" : ""}`}>Appearance</Link>
-                    </nav>
+                    </nav>*/}
                     <main className="settings__dashboard">
                         <Route exact path="/settings/profile">
                             <h1 className="settings__title">Profile</h1>
@@ -62,7 +65,7 @@ const Setting = ({user, history, location: {pathname}, setCurrentUser,setCurrent
                                 </li>
                             </ul>
                         </Route>
-                    </main>
+                    </main> 
                 </div>
             </>
         );

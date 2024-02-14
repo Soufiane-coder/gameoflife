@@ -11,17 +11,26 @@ const PathGoal = ({ goals, setGoal, getIndexOfLastAchievedGoal, user }) => {
         }
     }, [goals])
 
+    const scrollingContainerRef = useRef(null); // Ref for the scrolling container
+    const pathGoal = useRef(null);
+
+    // Event handler for scrolling
+    const handleScroll = () => {
+        const scrollLeft = scrollingContainerRef.current.scrollLeft;
+        pathGoal.current.style.left = +scrollLeft + 'px';
+    };
+
     const handleClick = (event) => {
         const { id } = event.target;
         const searchedGoal = goals.find(goal => goal.goalId === id);
-        console.log(searchedGoal)
         setGoal(searchedGoal);
     }
 
     const getCharacterPosition = (getIndexOfLastAchievedGoal ? getIndexOfLastAchievedGoal : 0) + 1;
-    
+
+
     return (
-        <div className="path-goal">
+        <div className="path-goal" onScroll={handleScroll} ref={scrollingContainerRef}>
             <img 
                 src={user.character ? user.character : ArrowUp} alt=""
                 className="path-goal__character"
@@ -49,7 +58,11 @@ const PathGoal = ({ goals, setGoal, getIndexOfLastAchievedGoal, user }) => {
                 ))
             }
  
-            <div className="path-goal__path" />
+            <div className="path-goal__path" ref={pathGoal} style={{
+                width: Math.floor((getCharacterPosition / goals.length) * 100) + '%'
+            }}>
+                {Math.floor((getCharacterPosition / goals.length) * 100) || 0}%
+            </div>
         </div>
     )
 }

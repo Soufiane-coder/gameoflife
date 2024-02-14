@@ -1,13 +1,15 @@
 @import '../../style/variables.scss';
 
 .settings{
+    display: flex; 
+
     height: calc(100vh - $user-bar-height);
-    padding: 0rem 20rem 0 20rem;
-    padding-top: 1rem;
-    background-color: $color-white-1;
-    display: flex;
+    // padding: 0rem 20rem 0 20rem;
+    // padding-top: 1rem;
+    // background-color: $color-white-1;
     &__logo-img{
-        padding: 1rem;
+        padding: 2rem;
+
     }
     $width-setting-nav-bar: 35rem;
     &__nav-bar{
@@ -36,19 +38,17 @@
     }
 
     &__dashboard{
-        height: 100%;
-        width: calc(100% - $width-setting-nav-bar);
-        background-color: $color-white-12;
+        width: calc(100% - 17rem);
+        // background-color: #1b95e60f;
         padding: 3rem;
         padding-top: 0;
     }
 
     &__title{
-        text-align: center;
         color: $color-primary-1;
-        font-size: 7rem;
         border-bottom: 1px solid $color-black-1;
-        padding: 3rem;
+        padding: 2rem;
+        padding-left: 0;
     }
     &__setting-list{
         width: 100%;

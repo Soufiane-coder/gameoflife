@@ -99,7 +99,6 @@ const RoadMap = ({ routines, user, }) => {
                         </> :
                             <h1>Click on your goals</h1>
                     }
-
                 </div>
                 <div className="road-map__adding-goal">
                     <h1>Add a goal</h1>
