@@ -29,6 +29,7 @@ import { setCurrentUser } from "./redux/user/user.actions";
 import { initialProtocol } from "./utils";
 import NotificationSystem from 'react-notification-system';
 import { setCurrentCategories } from "./redux/categories/categories.actions";
+import GoogleAd from "./components/google-ad/google-ad.component";
 
 export const NotficationContext = createContext();
 
@@ -106,6 +107,7 @@ const App = ({
     return (
         <>
             <div id={displayMode}>
+                <GoogleAd/>
                 <NotficationContext.Provider value={{ notificationSystem }}>
                     {
                         user ? <PopupField /> : ''
