@@ -107,7 +107,7 @@ const App = ({
     return (
         <>
             <div id={displayMode}>
-                <GoogleAd/>
+                {/* <GoogleAd/> */}
                 <NotficationContext.Provider value={{ notificationSystem }}>
                     {
                         user ? <PopupField /> : ''
