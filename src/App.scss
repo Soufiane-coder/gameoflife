@@ -1,236 +1,380 @@
 @font-face {
-  font-family: Quicksand;
-  src: url(/public/Quicksand-VariableFont_wght.ttf);
+	font-family: Quicksand;
+	src: url(/public/Quicksand-VariableFont_wght.ttf);
 }
 
 @font-face {
-  font-family: Imprima;
-  src: url(/public/Imprima-Regular.ttf);
+	font-family: Imprima;
+	src: url(/public/Imprima-Regular.ttf);
 }
 
 @font-face {
-  font-family: DancingScript;
-  src: url(/public/DancingScript-VariableFont_wght.ttf);
-  }
+	font-family: DancingScript;
+	src: url(/public/DancingScript-VariableFont_wght.ttf);
+}
 
 @import './style/variables.scss';
 @import './style/mixins.scss';
 
-*, *::before, *::after{
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
+*,
+*::before,
+*::after {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
 
-  color: inherit;
+	color: inherit;
 
-  font-family: inherit;
-  font-weight:  inherit;
-  font-size: inherit;
+	font-family: inherit;
+	font-weight: inherit;
+	font-size: inherit;
 }
 
-input[type='text'], textarea{
-  border: 1px solid $color-black-1 ;
-  color: $color-black-1;
-  flex-grow: 1;
-  resize: none;
-  &:active, &:focus, &:focus-visible{
-      border-color: $color-primary ;
-      outline-color: $color-primary ;
-  }
-}
+// input[type='text'], textarea{
+//   border: 1px solid $color-black-1 ;
+//   color: $color-black-1;
+//   flex-grow: 1;
+//   resize: none;
+//   &:active, &:focus, &:focus-visible{
+//       border-color: $green-8 ;
+//       outline-color: $green-8 ;
+//   }
+// }
 
-input[type='time']{
+input[type='time'] {
 	border: 1px solid $color-black-2 ;
 }
 
-input, textarea, select{
+input,
+textarea,
+select {
 	padding: 5px;
 	background-color: white;
 	border-radius: 6px;
 }
 
-input[type='range']{
-  padding: 0;
+input[type='range'] {
+	padding: 0;
 }
 
 
-select{
-  cursor: pointer;
-  border: 1px solid $color-black-2 ;
-  &:active,
-        &:focus {
-            border-color: $color-primary;
-            outline-color: $color-primary;
-        }
-}
-
-button{
+select {
 	cursor: pointer;
-  border: none;
-  background-color: $color-white-2;
-  letter-spacing: 0;
-  text-transform: none;
+	border: 1px solid $color-black-2 ;
+
+	&:active,
+	&:focus {
+		border-color: $green-8;
+		outline-color: $green-8;
+	}
+}
+
+button {
+	cursor: pointer;
+	border: none;
+	background-color: $color-white-2;
+	letter-spacing: 0;
+	text-transform: none;
 }
 
 
-h1{
-  font-size: 4rem;
-  font-weight:  700;
+h1 {
+	font-size: 4rem;
+	font-weight: 700;
 }
 
-h2{
-  font-size: 3.5rem;
-  font-weight:  600;
+h2 {
+	font-size: 3.5rem;
+	font-weight: 600;
 }
 
-h3{
-  font-size: 3rem;
-  font-weight:  600;
+h3 {
+	font-size: 3rem;
+	font-weight: 600;
 }
 
-h4{
-  font-size: 3rem;
-  font-weight:  500;
+h4 {
+	font-size: 3rem;
+	font-weight: 500;
 }
 
-h5{
-  font-size: 2.5rem;
-  font-weight:  500;
+h5 {
+	font-size: 2.5rem;
+	font-weight: 500;
 }
 
-h6{
-  font-size: 2.5rem;
-  font-weight:  400;
+h6 {
+	font-size: 2.5rem;
+	font-weight: 400;
 }
 
-p{
-  font-size: 2.2rem;
-  font-weight:  400;
+p {
+	font-size: 2.2rem;
+	font-weight: 400;
 }
 
-html{
-  font-size: 62.5%;
-  @media (max-width: $desktop-view) {
-      font-size: 57%;
-  }
-  @media (max-width: $tablet-view) {
-      font-size: 50%;
-  }
-  // @media (max-width: $mini-table-view) {
-  //     font-size: 45%;
-  // }
-}
-#dark{
-  background-color: $color-dark-mode-primary;
-}
-body{
-  font-family: Quicksand, sans-serif;
-  overflow-x: hidden;
-  font-size: 2.5rem;
-  font-weight: 400;
-  background-color: $color-white-1;
-  a:link, a:visited{
-      text-decoration: none;
-  }
-  .color-yellow{
-      color: $color-secondary;
-  }
-  .color-green{
-      color: $color-primary;
-  }
-  .color-blue{
-      color: $color-tertiary;
-  }
-  .color-red{
-      color: $color-quaternary;
-  }
+html {
+	font-size: 62.5%;
 
-  &::-webkit-scrollbar {
-      width: 15px;
-  }
-  &::-webkit-scrollbar-track {
-  background: $color-white-1;
-      width: 15px;
-  }
-  &::-webkit-scrollbar-thumb {
-  background: $color-primary;
-  }
-  &::-webkit-scrollbar-thumb:hover {
-      background: $color-primary-dark;
-  }
-  .hidden{
-      opacity: 0;
-      visibility: hidden;
-      width: 0;
-      height: 0;
-      display: none;
-  }
+	@media (max-width: $desktop-view) {
+		font-size: 57%;
+	}
+
+	@media (max-width: $tablet-view) {
+		font-size: 50%;
+	}
+
+	// @media (max-width: $mini-table-view) {
+	//     font-size: 45%;
+	// }
 }
 
+#dark {
+	background-color: $color-dark-mode-primary;
+}
 
-::selection{
-  border-radius: 5px;
-  background-color: $color-primary;
-  color: white;
+body {
+	font-family: Quicksand, sans-serif;
+	overflow-x: hidden;
+	font-size: 2.5rem;
+	font-weight: 400;
+	background-color: $color-white-1;
+
+	a:link,
+	a:visited {
+		text-decoration: none;
+	}
+
+	.color-yellow {
+		color: $color-secondary;
+	}
+
+	.color-green {
+		color: $green-8;
+	}
+
+	.color-blue {
+		color: $color-tertiary;
+	}
+
+	.color-red {
+		color: $color-quaternary;
+	}
+
+	&::-webkit-scrollbar {
+		width: 15px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: $color-white-1;
+		width: 15px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: $green-8;
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background: $green-8-dark;
+	}
+
+	.hidden {
+		opacity: 0;
+		visibility: hidden;
+		width: 0;
+		height: 0;
+		display: none;
+	}
+}
+
+
+::selection {
+	border-radius: 5px;
+	background-color: $green-8;
+	color: white;
 }
 
 
 
-#dark, #light{
-  position: relative;
+#dark,
+#light {
+	position: relative;
 }
 
-body .popup-window{ // i wrote body to add a primitive
-  background-color: $color-white-1;
-  border-radius: 3rem;
-  padding: 2rem;
-  padding-top: 1.5rem;
-  color: $color-black-1;
-  max-height: 95vh;
-  height: fit-content;
-  overflow-y:scroll;
+#body {
 
-  
+	// to add priority
+	input[type='text'][color='green'] {
 
-  &::-webkit-scrollbar {
-    width: 1px;
-  }
-  
-  &__head{
-    display: flex;
-    align-items: center;
-    
-    gap: 1rem;
-    width: 100%;
-    font-family: inherit;
-    color: inherit;
-  }
-  
-  &__icon{
-    fill: $color-black-1;
-    height: 100%;
-    width: auto;
-  }
+		&:active,
+		&:focus,
+		&:focus-visible {
+			border-color: $green-7 ;
+			outline-color: $green-7 ;
+		}
 
-  &__button{
-    height: 4.5rem;
-    font-size: 2rem;  
-    font-family: Quicksand, sans-serif;
-    letter-spacing: 0;
-    text-transform: none;
-  }
+		&:hover {
+			border-color: $green-7;
+		}
+	}
 
-  &__close-icon {
-    margin-left: auto;
-    height: 100%;
-    width: auto;
-    border-radius: 50%;
+	button[color='green'] {
+		background-color: $green-8;
 
-    &:hover {
-        cursor: pointer;
-        background-color: $color-white-2;
-    }
+		&:hover {
+			background-color: $green-7;
+		}
+
+		&:focus-visible {
+			outline: 4px solid $green-3;
+		}
+
+		&:disabled {
+			background-color: $green-3;
+		}
+	}
+
+	button[color='orange'] {
+		background-color: $orange-8;
+
+		&:hover {
+			background-color: $orange-7;
+		}
+
+		&:focus-visible {
+			outline: 4px solid $orange-3;
+		}
+
+		&:disabled {
+			background-color: $orange-3;
+		}
+	}
+
+
+	button[color='blue'] {
+		background-color: $blue-8;
+
+		&:hover {
+			background-color: $blue-7;
+		}
+
+		&:focus-visible {
+			outline: 4px solid $blue-3;
+		}
+	}
+
+	button[color='cyan'] {
+		background-color: $cyan-7;
+
+		&:hover {
+			background-color: $cyan-6;
+		}
+
+		&:focus-visible {
+			outline: 4px solid $cyan-3;
+		}
+
+		&:disabled {
+			background-color: $cyan-3;
+		}
+	}
+
+	button[color='yellow'] {
+		background-color: $yellow-7;
+
+		&:hover {
+			background-color: $yellow-6;
+		}
+
+		&:focus-visible {
+			outline: 4px solid $yellow-3;
+		}
+	}
+
+	button[color='volcano'] {
+		background-color: $volcano-7;
+
+		&:hover {
+			background-color: $volcano-6;
+		}
+
+		&:focus-visible {
+			outline: 4px solid $volcano-3;
+		}
+	}
+
+	button[color='red'] {
+		background-color: $red-7;
+
+		&:hover {
+			background-color: $red-6;
+		}
+
+		&:focus-visible {
+			outline: 4px solid $red-3;
+		}
+	}
+
 }
+
+body .popup-window {
+	// i wrote body to add a primitive
+	background-color: $color-white-1;
+	border-radius: 3rem;
+	padding: 2rem;
+	padding-top: 1.5rem;
+	color: $color-black-1;
+	max-height: 95vh;
+	height: fit-content;
+	overflow-y: scroll;
+
+
+
+	&::-webkit-scrollbar {
+		width: 1px;
+	}
+
+	&__head {
+		display: flex;
+		align-items: center;
+
+		gap: 1rem;
+		width: 100%;
+		font-family: inherit;
+		color: inherit;
+	}
+
+	&__icon {
+		fill: $color-black-1;
+		height: 3rem;
+		width: auto;
+	}
+
+	&__button {
+		height: 4.5rem;
+		font-size: 2rem;
+		font-family: Quicksand, sans-serif;
+		letter-spacing: 0;
+		text-transform: none;
+	}
+
+	&__close-icon {
+		margin-left: auto;
+		border-radius: 3330%;
+		height: 3.5rem;
+		width: 3.5rem;
+		padding: .2rem;
+
+		img {
+			width: 100%;
+			height: 100%;
+		}
+
+		// &:hover {
+		//     cursor: pointer;
+		//     background-color: $color-white-2;
+		// }
+	}
 }
 
 @import './style/btn.styles.scss';

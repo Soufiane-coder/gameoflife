@@ -262,8 +262,8 @@ $height-of-popup: 40rem;
 
         // &:active,
         // &:focus {
-        //     border-color: $color-primary;
-        //     outline-color: $color-primary;
+        //     border-color: $green-8;
+        //     outline-color: $green-8;
         // }
     }
 
@@ -279,7 +279,7 @@ $height-of-popup: 40rem;
 
         &--filled {
             // color: $color-white-1;
-            // background-color: $color-primary;
+            // background-color: $green-8;
             // padding: 1.5rem;
 
             &:hover {
@@ -288,7 +288,7 @@ $height-of-popup: 40rem;
         }
 
         &--outlined {
-            color: $color-primary;
+            color: $green-8;
             background-color: $color-white-1;
             padding: 1.5rem;
 

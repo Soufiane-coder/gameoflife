@@ -29,11 +29,11 @@ $font-size: 3rem;
         padding: 10px;
         outline: none;
         border: none;
-        color: $color-primary;
+        color: $green-8;
         font-size: calc($font-size / 2);
         background: transparent;
-        border-left: 2px solid $color-primary;
-        border-bottom: 2px solid $color-primary;
+        border-left: 2px solid $green-8;
+        border-bottom: 2px solid $green-8;
         transition: 0.1s;
         border-bottom-left-radius: 8px;
     }
@@ -47,7 +47,7 @@ $font-size: 3rem;
         padding: 10px;
         pointer-events: none;
         font-size: calc($font-size / 2);
-        color: $color-primary;
+        color: $green-8;
         text-transform: uppercase;
         transition: 0.5s;
         letter-spacing: 3px;
@@ -59,7 +59,7 @@ $font-size: 3rem;
         transform: translateX(156px) translateY(-15px);
         font-size: calc($font-size / 2);
         padding: 5px 10px;
-        background: $color-primary;
+        background: $green-8;
         letter-spacing: 0.2em;
         color: #fff;
         border: 2px;
@@ -67,11 +67,11 @@ $font-size: 3rem;
 
     &__inputBox input:valid,
     &__inputBox input:focus {
-        border: 2px solid $color-primary;
+        border: 2px solid $green-8;
         border-radius: 8px;
     }
     &__title {
-        color: $color-primary;
+        color: $green-8;
         font-size: inherit;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -85,11 +85,11 @@ $font-size: 3rem;
         font-size: 1.5rem;
     }
     &__sign-in-button, &__sign-up-button {
-        color: $color-primary;
+        color: $green-8;
         height: 45px;
         width: 100px;
         border-radius: 5px;
-        border: 2px solid $color-primary;
+        border: 2px solid $green-8;
         cursor: pointer;
         background-color: transparent;
         transition: 0.5s;
@@ -97,7 +97,7 @@ $font-size: 3rem;
         font-size: calc($font-size / 2);
         letter-spacing: 2px;
         &:hover {
-            background-color: $color-primary;
+            background-color: $green-8;
             color: white;
         }
     }

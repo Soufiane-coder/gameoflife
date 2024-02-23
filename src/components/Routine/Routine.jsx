@@ -24,7 +24,8 @@ import {
 	addSkipDayToFirebase ,
 	buySkipFromFirebase} from "../../../lib/firebase";
 import { NotficationContext } from "../../App";
-import { Button } from "@mui/material";
+import {Badge, Button} from 'antd';
+import { ContextHolderMessage} from "../../App";
 
 const Routine = (
 	{ 
@@ -39,6 +40,7 @@ const Routine = (
 	const [deleteLoading, setDeleteLoading] = useState(false);
 	const [skipLoading, setSkipLoading] = useState(false);
 	const {notificationSystem} = useContext(NotficationContext);
+	const messageApi = useContext(ContextHolderMessage);
 
 	const handleDone = async (event) => {
 		const { routineId } = routine
@@ -135,63 +137,85 @@ const Routine = (
 		displayAddRoutinePopupState(routine.routineId)
 	}
 	return (
-		<div className='routine' id={routine.routineId}>
-			
-			{
-				routine.priority === 'important' && <div className="important"></div>
-			}
-			{
-				routine.priority === 'medium' && <div className="medium"></div>
-			}
-			{/* {
-				<Cracks style={{ width: '100%', position: 'absolute', zIndex: '-1', height: '100%', top: '0', left: '0' }} />
-			} */}
-			{/* <div className="category">📚</div> */}
-			<div className="emoji" style={{ backgroundColor: routine.bgEmojiColor }}>{deleteLoading ? <LoadingSpinner /> : routine.emoji}</div>
-			<div className="title">{routine.title}</div>
-			<div className="description">{routine.description}</div>
-			<div className="extra">
-				<div className="combo">{routine.combo === 0 ? "" : `🔥${routine.combo}`}</div>
-				<div className="skip-num">{routine.skip === 0 ? "" : `↪️${routine.skip}`}</div>
-				<div className="level">🎚️{routine.level}</div>
-			</div>
-			<div className="buttons">
-				{
-					routine.isSubmitted === false ?
-						<button className="btn btn-success done" onClick={handleDone}><Done /></button>
-						:
-						<button className="btn btn-secondary done" disabled><Undone /></button>
-				}
-				<button className="btn btn-info skip" disabled={user.coins < 10} onClick={handleSkip}>
+		<Badge.Ribbon 
+			text={routine.priority.charAt(0).toUpperCase() + routine.priority.slice(1)}
+			color={routine.priority === 'important' ? 'red' : (routine.priority === 'medium' ? 'volcano': 'cyan')}>
+			<div className='routine' id={routine.routineId}>
+				
+				{/* {
+					routine.priority === 'important' && <div className="important"></div>
+				} */}
+				{/* {
+					routine.priority === 'medium' && <div className="medium"></div>
+				} */}
+				{/* {
+					<Cracks style={{ width: '100%', position: 'absolute', zIndex: '-1', height: '100%', top: '0', left: '0' }} />
+				} */}
+				{/* <div className="category">📚</div> */}
+				<div className="emoji" style={{ backgroundColor: routine.bgEmojiColor }}>{deleteLoading ? <LoadingSpinner /> : routine.emoji}</div>
+				<div className="title">{routine.title}</div>
+				<div className="description">{routine.description}</div>
+				<div className="extra">
+					<div className="combo">{routine.combo === 0 ? "" : `🔥${routine.combo}`}</div>
+					<div className="skip-num">{routine.skip === 0 ? "" : `↪️${routine.skip}`}</div>
+					<div className="level">🎚️{routine.level}</div>
+				</div>
+				<div className="buttons">
 					{
-						skipLoading ? <LoadingSpinner /> : <Skip />
+						routine.isSubmitted === false ?
+							<Button 
+								className="routine__btn"
+								type='primary'
+								color='green'
+								onClick={handleDone}><Done /></Button>
+							:
+							<Button className="routine__btn" disabled><Undone /></Button>
 					}
-				</button>
-				<button className="btn btn-message message" onClick={handleMessage} >
-					<MessageIcon />
-				</button>
-				<button className="btn btn-danger remove  " onClick={handleRoadMapClick} >
-					<GoalIcon />
-				</button>
-				<button 
-					className="routine__other-options "
-					onClick={() => setShowOtherOptions(!showOtherOptions)}>
-					<ul className="routine__other-options-list" style={!showOtherOptions ? { display: 'none' } : {}}>
-						<li className="routine__other-options-item"
-							onClick={async () => {
-								await setArchivedOptionInFirebase(user.uid, routine.routineId, !routine.isArchived)
-								setArchivedOption(routine.routineId, !routine.isArchived)
-							}}>{routine.isArchived ? "Desarchive" : "Archive"}</li>
-						<li className="routine__other-options-item"
-							onClick={handleEditRoutine}
-							>Edit</li>
-						<li className="routine__other-options-item"
-						onClick={handleRemove}>Delete</li>
-					</ul>
-					< MoreOptionsIcon />
-				</button>
+					<Button 
+						className="routine__btn"
+						type="primary"
+						color="cyan"
+						disabled={user.coins < 10}
+						onClick={handleSkip}>
+						{
+							skipLoading ? <LoadingSpinner /> : <Skip />
+						}
+					</Button>
+					<Button
+						className="routine__btn"
+						type="primary"
+						color="volcano"
+						onClick={handleMessage} >
+						<MessageIcon />
+					</Button>
+					<Button 
+						className="routine__btn"
+						type="primary"
+						color="red"
+						onClick={handleRoadMapClick} >
+						<GoalIcon />
+					</Button>
+					<Button 
+						type="text"
+						className="routine__other-options "
+						onClick={() => setShowOtherOptions(!showOtherOptions)}>
+						<ul className="routine__other-options-list" style={!showOtherOptions ? { display: 'none' } : {}}>
+							<li className="routine__other-options-item"
+								onClick={async () => {
+									await setArchivedOptionInFirebase(user.uid, routine.routineId, !routine.isArchived)
+									setArchivedOption(routine.routineId, !routine.isArchived)
+								}}>{routine.isArchived ? "Desarchive" : "Archive"}</li>
+							<li className="routine__other-options-item"
+								onClick={handleEditRoutine}
+								>Edit</li>
+							<li className="routine__other-options-item"
+							onClick={handleRemove}>Delete</li>
+						</ul>
+						< MoreOptionsIcon />
+					</Button>
+				</div>
 			</div>
-		</div>
+		</Badge.Ribbon>
 	)
 }
 

@@ -15,5 +15,4 @@ const LPHeader = () => {
 }
 
 
-
 export default LPHeader;

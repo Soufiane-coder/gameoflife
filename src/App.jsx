@@ -30,8 +30,10 @@ import { initialProtocol } from "./utils";
 import NotificationSystem from 'react-notification-system';
 import { setCurrentCategories } from "./redux/categories/categories.actions";
 import GoogleAd from "./components/google-ad/google-ad.component";
+import { message } from 'antd';
 
 export const NotficationContext = createContext();
+export const ContextHolderMessage = createContext();
 
 const App = ({ 
     user, 
@@ -46,6 +48,8 @@ const App = ({
     //and getting the user's informations from firebase
     const [userFromFirebaseLoading, setUserFromFirebaseLoading] = useState(true);
     const notificationSystem = createRef()
+    const [messageApi, contextHolder] = message.useMessage();
+    
     
     useEffect(() => {
         (async () => {
@@ -107,6 +111,8 @@ const App = ({
     return (
         <>
             <div id={displayMode}>
+            {contextHolder}
+            <ContextHolderMessage.Provider value={messageApi}>
                 {/* <GoogleAd/> */}
                 <NotficationContext.Provider value={{ notificationSystem }}>
                     {
@@ -124,7 +130,7 @@ const App = ({
                             {!user ? (
                                 <SignInAndSignUp />
                             ) : (
-                                <Redirect to="/gameField" />
+                                <Redirect to="/game-field" />
                             )}
                         </Route>
                         <Route exact={true} path="/">
@@ -141,7 +147,7 @@ const App = ({
                                             :
                                             <Redirect to="/signin" />}
                                     </Route>
-                                    <Route exact={true} path='/gameField'>
+                                    <Route exact={true} path='/game-field'>
                                         {user ?
                                             <GameField />
                                             :
@@ -169,6 +175,7 @@ const App = ({
                         </Route>
                     </Switch>
                 </NotficationContext.Provider>
+                </ContextHolderMessage.Provider>
             </div>
         </>
 

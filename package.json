@@ -15,6 +15,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@uiw/react-clock": "^1.2.5",
     "@vitejs/plugin-react": "^4.0.3",
+    "antd": "^5.14.1",
     "chartjs": "^0.3.24",
     "chroma-js": "^2.4.2",
     "emoji-mart": "^5.5.2",

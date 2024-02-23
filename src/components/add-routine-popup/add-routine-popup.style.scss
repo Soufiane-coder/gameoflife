@@ -237,12 +237,12 @@ $border-radius: .6rem;
     }
 
     &__add-btn{
-        background-color: $color-primary;
+        background-color: $green-8;
         grid-column: 1 / -1;
         width : 100%;
         cursor: pointer;
         &:hover {
-            background-color: $color-primary-1;
+            background-color: $green-8-1;
         }
         @media (max-width: 561px) {
             margin-top: auto;
@@ -262,8 +262,8 @@ $border-radius: .6rem;
         grid-column: 1 / -1;
         &:active,
         &:focus {
-            border-color: $color-primary;
-            outline-color: $color-primary;
+            border-color: $green-8;
+            outline-color: $green-8;
         }
     }
 
@@ -283,8 +283,8 @@ $border-radius: .6rem;
 
         &:active,
         &:focus {
-            border-color: $color-primary;
-            outline-color: $color-primary;
+            border-color: $green-8;
+            outline-color: $green-8;
         }
     }
 

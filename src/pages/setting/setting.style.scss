@@ -33,7 +33,7 @@
         }
         &--selected{
             background-color: $color-white-1;
-            color: $color-primary;
+            color: $green-8;
         }
     }
 
@@ -45,7 +45,7 @@
     }
 
     &__title{
-        color: $color-primary-1;
+        color: $green-8-1;
         border-bottom: 1px solid $color-black-1;
         padding: 2rem;
         padding-left: 0;

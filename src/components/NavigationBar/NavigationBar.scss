@@ -78,7 +78,7 @@ $demension-icon: 7rem;
             position: fixed;
             top: $menu-position-top ;
             right: $menu-position-right ;
-            background-image: radial-gradient($color-primary, $color-primary-dark);
+            background-image: radial-gradient($green-8, $green-8-dark);
             z-index: 1000;
             transition: transform .8s cubic-bezier(0.86, 0, 0.07, 1);
         }

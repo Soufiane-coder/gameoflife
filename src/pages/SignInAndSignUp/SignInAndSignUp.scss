@@ -25,10 +25,10 @@ $width-navigation: 15rem;
             width: 10rem;
             left: 0px;
             height: 100vh;
-            background-color: $color-primary;
+            background-color: $green-8;
         }
         &-bar-dark{
-            background-color: $color-primary-1;
+            background-color: $green-8-1;
             clip-path: polygon(0 0, 80% 100%, 50% 100%, 0 100%);;
         }
     }

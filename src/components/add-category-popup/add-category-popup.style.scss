@@ -45,6 +45,13 @@ $width-of-popup: 60rem;
         margin-bottom: auto;
     }
 
+    &__emoji-btn{
+        margin-left: auto;
+        @media (max-width: $mini-tablet-view) {
+            margin-left: 0;
+        }
+
+    }
     &__btn{
         width: 26.9rem;
         @media (max-width: $mini-tablet-view) {

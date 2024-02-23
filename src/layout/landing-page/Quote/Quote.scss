@@ -12,14 +12,14 @@
         width: 100vw;
         height: $height-section;
         clip-path: ellipse(50% 50% at 50% 50%);
-        background-color: $color-primary;
+        background-color: $green-8;
         z-index: -1;
     }
     .rectangle-green-up-right{
         position: absolute;
         width: 50vw;
         height: calc($height-section / 2);
-        background-color: $color-primary;
+        background-color: $green-8;
         right: 0;
         z-index: -1;
     }
@@ -27,7 +27,7 @@
         position: absolute;
         width: 50vw;
         height: calc($height-section / 2);
-        background-color: $color-primary;
+        background-color: $green-8;
         left: 0;
         bottom: 0;
         z-index: -1;

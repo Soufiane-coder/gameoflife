@@ -1,6 +1,7 @@
 @import '../../../style/variables.scss';
 
-.option-bar{
+
+#root .option-bar{
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -15,7 +16,8 @@
     //   justify-content: center;
     //   align-items: center;
     // }
-    .adding-routine-button{
+
+    &__routine-btn, &__category-btn{
             display: flex;
             justify-content: center;
             align-items: center;

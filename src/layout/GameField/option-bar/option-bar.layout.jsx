@@ -14,7 +14,9 @@ import { customStyles } from "./styles";
 
 import { displayAddRoutinePopupState, displayAddCategoryPopupState } from "../../../redux/popup/popup.actions";
 import { selectCurrentCategories } from "../../../redux/categories/categories.selector";
-import { Button } from '@mui/material';
+// import { Button } from '@mui/material';
+import { Button, Flex } from 'antd';
+import { blue ,} from '@ant-design/colors';
 
 const animatedComponents = makeAnimated();
 
@@ -104,11 +106,11 @@ const OptionBarLayout = ({
 				/>
 				
 			</div>
-			<div className="option-bar__btns">
+			<Flex wrap="wrap" gap="small">
 			<Button
-					className="popup-window__button adding-routine-button"
-					variant='contained'
-					color='info'
+					className="option-bar__routine-btn"
+					type="primary"
+					color='green'
 					onClick={() => displayAddCategoryPopupState(false)}
 				>
 					<svg
@@ -128,9 +130,9 @@ const OptionBarLayout = ({
 					<span className="lable">Add category</span>
 				</Button>
 				<Button
-					className="popup-window__button adding-routine-button"
-					variant='contained'
-					color='success'
+					className="option-bar__category-btn"
+					type="primary"
+					color='blue'
 					onClick={() => displayAddRoutinePopupState(false)}
 				>
 					<svg
@@ -151,7 +153,7 @@ const OptionBarLayout = ({
 				</Button>
 				
 
-			</div>
+			</Flex>
 		</div>
 	);
 };

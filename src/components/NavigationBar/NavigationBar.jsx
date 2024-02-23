@@ -23,7 +23,7 @@ const NavigationBar = ({ history, user,}) => {
     }, {
         label: 'game field',
         icon: GamePageIcon,
-        url: '/gameField',
+        url: '/game-field',
         action: () => { }
     }, {
         label: 'clock view',
@@ -52,7 +52,7 @@ const NavigationBar = ({ history, user,}) => {
     }, {
         label: 'game field',
         icon: GamePageIcon,
-        url: '/gameField',
+        url: '/game-field',
         action: () => { }
     }, {
         label: 'sign up',

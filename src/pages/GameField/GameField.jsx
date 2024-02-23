@@ -9,6 +9,7 @@ import { setCurrentRoutines } from '../../redux/routines/routines.actions';
 import { selectCurrentRoutines } from '../../redux/routines/routines.selector';
 import LoadingRoutine from '../../components/loading-routine/loading-routine.component'
 import PageHeader from '../../components/PageHeader/page-header';
+import {Drawer } from 'antd';
 
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 const isRoutineArchived = (routine) => routine.isArchived
@@ -78,6 +79,7 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
     }, [routines])
 
     return (
+        
         <div className='game-field'>
             <PageHeader title="Routines" />
             <main className='game-field__main'>
@@ -103,6 +105,16 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
                         </>
                 }
             </main>
+            <Drawer
+                title="Add routine"
+                placement={'left'}
+                closable={true}
+                // onClose={onClose}
+                // open={true}
+                // key={placement}
+                >
+
+            </Drawer>
         </div >
     )
 }
