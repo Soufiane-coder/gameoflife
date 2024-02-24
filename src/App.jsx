@@ -30,10 +30,11 @@ import { initialProtocol } from "./utils";
 import NotificationSystem from 'react-notification-system';
 import { setCurrentCategories } from "./redux/categories/categories.actions";
 import GoogleAd from "./components/google-ad/google-ad.component";
-import { message } from 'antd';
+import { message, notification } from 'antd';
 
 export const NotficationContext = createContext();
 export const ContextHolderMessage = createContext();
+export const ContextHolderNotification = createContext();
 
 const App = ({ 
     user, 
@@ -48,7 +49,9 @@ const App = ({
     //and getting the user's informations from firebase
     const [userFromFirebaseLoading, setUserFromFirebaseLoading] = useState(true);
     const notificationSystem = createRef()
-    const [messageApi, contextHolder] = message.useMessage();
+
+    const [messageApi, contextHolderMessage] = message.useMessage();
+    const [notificationApi, contextHolderNotification] = notification.useNotification()
     
     
     useEffect(() => {
@@ -111,9 +114,10 @@ const App = ({
     return (
         <>
             <div id={displayMode}>
-            {contextHolder}
+            {contextHolderMessage}
+            {contextHolderNotification}
             <ContextHolderMessage.Provider value={messageApi}>
-                {/* <GoogleAd/> */}
+                <ContextHolderNotification.Provider value={notificationApi}>
                 <NotficationContext.Provider value={{ notificationSystem }}>
                     {
                         user ? <PopupField /> : ''
@@ -174,7 +178,8 @@ const App = ({
                             <div style={{ fontSize: "200px" }}>not found</div>
                         </Route>
                     </Switch>
-                </NotficationContext.Provider>
+                    </NotficationContext.Provider>
+                    </ContextHolderNotification.Provider>
                 </ContextHolderMessage.Provider>
             </div>
         </>

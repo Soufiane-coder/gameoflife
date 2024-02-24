@@ -24,8 +24,9 @@ import {
 	addSkipDayToFirebase ,
 	buySkipFromFirebase} from "../../../lib/firebase";
 import { NotficationContext } from "../../App";
-import {Badge, Button} from 'antd';
-import { ContextHolderMessage} from "../../App";
+import {Badge, Button, Space} from 'antd';
+import { ContextHolderNotification, ContextHolderMessage } from "../../App";
+
 
 const Routine = (
 	{ 
@@ -40,6 +41,7 @@ const Routine = (
 	const [deleteLoading, setDeleteLoading] = useState(false);
 	const [skipLoading, setSkipLoading] = useState(false);
 	const {notificationSystem} = useContext(NotficationContext);
+	const notificationApi = useContext(ContextHolderNotification);
 	const messageApi = useContext(ContextHolderMessage);
 
 	const handleDone = async (event) => {
@@ -61,17 +63,18 @@ const Routine = (
 				await addSkipDayToFirebase (user.uid, routineId);
 				skipRoutine(routineId);	
 			}
+			messageApi.open({
+				type: 'success',
+				content: 'Skip added',
+			})
 		}
 		catch(error){
 			setSkipLoading(false);
 			console.error(error);
-            notificationSystem.current.addNotification({
-                title: 'Error',
-                message: 'Error while skipping routine',
-                level: 'error',
-                position: 'tl',
-                autoDismiss: 5
-            });
+            messageApi.open({
+				type: 'error',
+				content: 'Failed skip routine',
+			})
         }finally{
 			setSkipLoading(false);
 		}
@@ -82,45 +85,49 @@ const Routine = (
 		try{
 			await deleteRoutineFromFirebase(user.uid, routineId);
 			removeRoutine(routineId);
+			messageApi.open({
+				type: 'success',
+				content: 'Item deleted',
+			})
 		}
 		catch(err){
 			console.error(err)
-			notificationSystem.current.addNotification({
-                title: 'Error',
-                message: 'Error while removing routine',
-                level: 'error',
-                position: 'tl',
-                autoDismiss: 5
-            });
+			messageApi.open({
+				type: 'error',
+				content: 'Failed delete routine',
+			})
 		}
 		finally{
 			setDeleteLoading(false)
+			notificationApi.destroy()
 		}
 	}
 
 	const handleRemove = async (event) => {
 		event.preventDefault();
 		const { routineId } = routine
-		const notification = notificationSystem.current;
-		notification.addNotification({
-			title: 'Do you really want to delete this item',
-			message: routine.title,
-			level: 'warning',
-			autoDismiss: 0,
-			children : (
-				<div style={{display: 'flex', justifyContent: 'space-between'}}>
-					<Button 
-						variant='outlined'
-						type='button'
-						style={{border: 'none'}}>cancel</Button>
-					<Button
-						variant='outlined'
-						type='submit'
-						onClick={() => handleRemoveRoutine(routineId)} style={{backgroundColor: '#ebad1a',color: '#fff', border: 'none'}}>Delete this rouitne</Button>
-				</div>
-			),
-			position: 'tc',
-		});
+		const btn = (
+			<Space>
+				<Button 
+					type='default'
+					// type='button'
+					onClick={() => {notificationApi.destroy();}}
+					>Cancel</Button>
+				<Button
+					type='primary'
+					// thmlType='submit'
+					color='red'
+					loading={deleteLoading} // not working cause not re-rendering
+					onClick={() => handleRemoveRoutine(routineId)} >Delete this rouitne</Button>
+			</Space>)
+
+		notificationApi.warning({
+			placement: 'top',
+			message: 'Do you want to delete this routine',
+			description: `${routine.title}: ${routine.description}`,
+			duration: null,
+			btn : btn,
+		})
 	}
 
 	const handleMessage = (event) => {

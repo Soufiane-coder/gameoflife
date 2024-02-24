@@ -1,5 +1,5 @@
 import './check-popup.style.scss';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import useSound from 'use-sound';
 
 import { ReactComponent as MessageIcon } from '../../assets/icons/message.svg';
@@ -16,10 +16,10 @@ import { checkGoalInFirabase, checkRoutineInFirebase } from '../../../lib/fireba
 import { selectCurrentRoutines } from '../../redux/routines/routines.selector';
 import { getGoalsOfRoutine } from '../../../lib/firebase';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import {Button} from '@mui/material';
+import {Button} from 'antd';
 import { addCoin } from '../../redux/user/user.actions';
 
-
+import { ContextHolderMessage } from "../../App";
 
 
 
@@ -39,7 +39,7 @@ const CheckPopup = ({
 
     const [lastGoal, setLastGoal] = useState(false)
 
-    
+    const messageApi = useContext(ContextHolderMessage);
 
     useEffect(() => {
         if(routines){
@@ -67,8 +67,16 @@ const CheckPopup = ({
             checkRoutine(routine.routineId, messageInput);
             addCoin()
             hidePopup()
+            messageApi.open({
+                type: 'success',
+                content: 'Routine checked',
+            })
         } catch (err) {
             console.error(`Error cannot checked this routine`, err.message);
+            messageApi.open({
+                type: 'error',
+                content: 'Failed check routine',
+            })
         } finally {
             setIsLoading(false);
         }
@@ -118,10 +126,12 @@ const CheckPopup = ({
                     />
                     
                     <Button 
-                        variant="contained"
                         className='popup-window__button btn-success'
                         onClick={handleCheckRoutine}
                         disabled={isLoading}
+                        type='primary'
+                        color='green'
+                        htmlType='submit'
                     >
                         {
                             isLoading ? <LoadingSpinner /> : "Check this routine"

@@ -28,6 +28,8 @@ import { Timestamp } from "firebase/firestore";
 import { selectCurrentCategories } from "../../redux/categories/categories.selector";
 import { NotficationContext } from "../../App";
 import { Button } from 'antd';
+import { ContextHolderMessage } from "../../App";
+
 
 
 const AddRoutinePopup = ({
@@ -84,6 +86,14 @@ const AddRoutinePopup = ({
 
 	const [loadingAdding, setLoadingAdding] = useState(false);
 
+	const messageApi = useContext(ContextHolderMessage);
+
+	// useEffect(() => {
+	// 	messageApi.open({
+	// 		type: 'success',
+	// 		content: 'Routine Checked',
+	// 	  });
+	// }, [])
 	const handleChange = (event) => {
 		const { name, value, type } = event.target;
 		if (type === "checkbox") {
@@ -160,8 +170,16 @@ const AddRoutinePopup = ({
 				);
 				addRoutine({ ...newRoutineObject, routineId });
 			}
+			messageApi.open({
+				type: 'success',
+				content: editRoutine ? 'Routine edited' : 'New routine added',
+			  });
 		} catch (err) {
 			console.error(`Error detected login : ${err.message}`);
+			messageApi.open({
+				type: 'error',
+				content: 'Failed adding routine',
+			  });
 		} finally {
 			setLoadingAdding(false);
 		}
@@ -419,11 +437,12 @@ const AddRoutinePopup = ({
 						// className="add-routine-window__add-bt"
 						color='green'
 						type='primary'
+						htmlType='submit'
 					>
 						{loadingAdding ? (
 							<LoadingSpinner />
 						) : editThisRoutine ? (
-							"Modify Routine"
+							"Edit Routine"
 						) : (
 							"Add Routine"
 						)}
