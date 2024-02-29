@@ -10,6 +10,7 @@ import { selectCurrentRoutines } from '../../redux/routines/routines.selector';
 import LoadingRoutine from '../../components/loading-routine/loading-routine.component'
 import PageHeader from '../../components/PageHeader/page-header';
 import {Drawer } from 'antd';
+import ToDoList from '../../components/todo-list/todo-list.component';
 
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 const isRoutineArchived = (routine) => routine.isArchived
@@ -106,14 +107,15 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
                 }
             </main>
             <Drawer
-                title="Add routine"
+                title=""
                 placement={'left'}
                 closable={true}
                 // onClose={onClose}
+                width={450}
                 // open={true}
                 // key={placement}
                 >
-
+                    <ToDoList user={user}/>
             </Drawer>
         </div >
     )
