@@ -14,6 +14,8 @@ import {
     changeTodoItemAttributesInFirebase,
     deleteAllToDoCheckedItemsFromFirebase} from '../../../lib/firebase';
 import { selectCurrentUser } from '../../redux/user/user.selector';
+import { Checkbox, Card, Row, Col, Button, Input} from 'antd';
+import {DeleteOutlined, AppstoreAddOutlined} from '@ant-design/icons';
 
 const ClockView = ({ user, routines }) => {
     const [loadingRoutines, setLoadingRoutines] = useState(true);
@@ -88,20 +90,51 @@ const ClockView = ({ user, routines }) => {
                 
                 <div>
                     <div className="clock-view-page__to-do-list">
-                        {
+                        <Card 
+                            title='To do list'
+                            onClick={handleAddingTodoItem}
+                            extra={
+                            <Button type='link'>
+                                <AppstoreAddOutlined /> Add to-do item
+                            </Button>}>
+                            <Row gutter={[0, 0]}>
+                                <Input placeholder='Write a description to your task'/>
+                            </Row>
+                            <Row gutter={[0, 0]}>
+                                <Col span={21}>
+                                    <Checkbox>a task to do</Checkbox>
+                                </Col>
+                                <Col span={1}>
+                                    <Button
+                                        type='text'
+                                        danger
+                                        >
+                                        <DeleteOutlined onClick={() => console.log("fired")}/>
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Card>
+                        {/* {
                             todoList?.map(todoItem => (
                                 <React.Fragment key={todoItem.todoItemId}>
                                     <input onChange={handleCheckTodoItem} checked={todoItem.isAchieved}  id={"todo-item:"+ todoItem.todoItemId} type="checkbox"/>
                                     <label htmlFor={"todo-item:"+ todoItem.todoItemId}>{todoItem.description}</label>
                                 </React.Fragment>
                             ))
-                        }
+                        } */}
                     </div>
-                    <div className='clock-view-page__add-todo-item-wrapper'>
-                        <button onClick={handleAddingTodoItem} className='clock-view-page__add-todo-item-button'>Add a todo item</button>
+                    {/* <div 
+                        className='clock-view-page__add-todo-item-wrapper'
+                        >
+                        <Button 
+                            onClick={handleAddingTodoItem}
+                            // className='clock-view-page__add-todo-item-button'
+                            type='primary'
+                            color='green'
+                            >Add a todo item</Button>
                         <input value={todoItemInput} onChange={handleTodoItemInput} className='clock-view-page__add-todo-item-input' type="text" />
-                        <button onClick={handleDeletingChekedItems}>Delete checked items</button>
-                    </div>
+                        {/* <button onClick={handleDeletingChekedItems}>Delete checked items</button>
+                    </div> */}
                 </div>
             </div>
         </>
