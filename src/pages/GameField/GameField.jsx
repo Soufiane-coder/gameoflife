@@ -13,6 +13,7 @@ import {Drawer } from 'antd';
 import ToDoList from '../../components/todo-list/todo-list.component';
 
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+
 const isRoutineArchived = (routine) => routine.isArchived
 
 const GameField = ({ setCurrentRoutines, user, routines }) => {
@@ -36,6 +37,8 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
         console.error("user is not logged in")
         history.push('/signin')
     }
+
+
 
     useEffect(() => {
         setLoadingRoutine(!routines)

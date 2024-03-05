@@ -4,6 +4,7 @@ import {Col, Checkbox, Button} from 'antd';
 import {EditOutlined,LoadingOutlined, DeleteOutlined} from '@ant-design/icons'
 import {changeTodoItemAttributesInFirebase,
     deleteToDoItemFromFirebase} from '../../../lib/firebase';
+import { Popconfirm } from 'antd'
 
 const ToDoItem = ({todoItem: thisToDoItem, setTodoList, user}) => {
     const [loadingDelete, setLoadingDelete] = useState(false)
@@ -35,6 +36,10 @@ const ToDoItem = ({todoItem: thisToDoItem, setTodoList, user}) => {
             setLoadingDelete(false)
         }
     }
+
+    const cancelDelete = (event) => {
+        console.error('Click on no')
+    }
     return (
         <>
             <Col span={20}>
@@ -52,16 +57,24 @@ const ToDoItem = ({todoItem: thisToDoItem, setTodoList, user}) => {
                 </Button>
             </Col>
             <Col span={2}>
-                <Button
-                    type='text'
-                    onClick={handleDeleteItem}
-                    // loading={loadingDelete}
-                    danger
+                <Popconfirm
+                    title='Delete the task'
+                    description='Are you sure to delete this task'
+                    onConfirm={handleDeleteItem}
+                    onCancel={cancelDelete}
+                    okText='Yes'
+                    cancelText='No'
                     >
-                    {
-                        loadingDelete ? <LoadingOutlined/> : <DeleteOutlined />
-                    }
-                </Button>
+                    <Button
+                        type='text'
+                        // loading={loadingDelete}
+                        danger
+                        >
+                        {
+                            loadingDelete ? <LoadingOutlined/> : <DeleteOutlined />
+                        }
+                    </Button>
+                </Popconfirm>
             </Col>
             
         </>

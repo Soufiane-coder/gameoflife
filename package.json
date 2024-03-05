@@ -18,6 +18,7 @@
     "antd": "^5.14.1",
     "chartjs": "^0.3.24",
     "chroma-js": "^2.4.2",
+    "dayjs": "^1.11.10",
     "emoji-mart": "^5.5.2",
     "firebase": "^10.3.1",
     "randomcolor": "^0.6.2",

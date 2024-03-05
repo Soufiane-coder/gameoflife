@@ -27,10 +27,10 @@ import {
 import { Timestamp } from "firebase/firestore";
 import { selectCurrentCategories } from "../../redux/categories/categories.selector";
 import { NotficationContext } from "../../App";
-import { Button } from 'antd';
 import { ContextHolderMessage } from "../../App";
+import { Button , TimePicker, Input, Slider, Select} from 'antd';
 
-
+const {TextArea} = Input
 
 const AddRoutinePopup = ({
 	user,
@@ -77,6 +77,7 @@ const AddRoutinePopup = ({
 				skip: 0,
 				combo: 0,
 				isSubmitted: false,
+				days: ['every-day']
 			}
 	);
 
@@ -85,15 +86,11 @@ const AddRoutinePopup = ({
 		editThisRoutine ? (editThisRoutine.categoryId || (selectCategoriesOptions[0]?.categoryId || 'default')) : (selectCategoriesOptions[0]?.categoryId || 'default'))
 
 	const [loadingAdding, setLoadingAdding] = useState(false);
+	const [selectDaysMode, setSelectDaysMode] = useState(editThisRoutine ? 
+		(editThisRoutine.days === undefined || editThisRoutine.days.includes('every-day') ? undefined : 'tags') : undefined);
 
 	const messageApi = useContext(ContextHolderMessage);
 
-	// useEffect(() => {
-	// 	messageApi.open({
-	// 		type: 'success',
-	// 		content: 'Routine Checked',
-	// 	  });
-	// }, [])
 	const handleChange = (event) => {
 		const { name, value, type } = event.target;
 		if (type === "checkbox") {
@@ -105,6 +102,10 @@ const AddRoutinePopup = ({
 		}
 		setAddRoutineForm({ ...addRoutineForm, [name]: value });
 	};
+
+	const handleChangeDiff = (level) => {
+		setAddRoutineForm({ ...addRoutineForm, level : Number(level) })
+	}
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -118,7 +119,6 @@ const AddRoutinePopup = ({
         //     });
 		// 	return;
 		// }
-
 		if (
 			timeStringToFloat(addRoutineForm.startRoutine) >
 			timeStringToFloat(addRoutineForm.endRoutine)
@@ -158,11 +158,11 @@ const AddRoutinePopup = ({
 			} else {
 				const newRoutineObject = {
 					...addRoutineForm,
-					level: Number(addRoutineForm.level),
-					emoji,
 					bgEmojiColor: bgEmojiColorBtn,
 					lastSubmit: new Timestamp(0, 0),
+					emoji,
 					categoryId,
+
 				};
 				const routineId = await addRoutineToFirebase(
 					user.uid,
@@ -184,6 +184,22 @@ const AddRoutinePopup = ({
 			setLoadingAdding(false);
 		}
 	};
+
+	const handleSelectDays = async (days) => {
+		if (typeof days === 'string' && days === 'day') {
+			setSelectDaysMode(undefined)
+			setAddRoutineForm({ ...addRoutineForm, days: ['every-day'] })
+		}
+		else if (typeof days === 'object' && days.indexOf('day') !== -1){
+			setSelectDaysMode(undefined)
+			setAddRoutineForm({ ...addRoutineForm, days: ['every-day'] })
+		}
+		else{
+			setSelectDaysMode('tags')
+			setAddRoutineForm({ ...addRoutineForm, days })
+		}
+		
+	}
 	const handleEmoji = (emoji) => {
 		setEmoji(emoji.native);
 		setShowEmojiList(false);
@@ -220,7 +236,16 @@ const AddRoutinePopup = ({
 	};
 
 
-
+	const daysSchedule = [
+		{value:'day', label: 'Day'},
+		{value: 'monday', label: 'Monday'},
+		{value: 'tuesday', label: 'Tuesday'},
+		{value: 'wednesday', label: 'Wednesday'},
+		{value: 'thursday', label: 'Thursday'},
+		{value: 'friday', label: 'Friday'},
+		{value: 'saturday', label: 'Saturday'},
+		{value: 'sunday', label: 'Sunday'}
+	]
 
 
 	return (
@@ -231,33 +256,6 @@ const AddRoutinePopup = ({
 					data={data}
 					onEmojiSelect={handleEmoji}
 				/>
-			)}
-
-			{showTimePiker && (
-				<div className="add-routine-window__clock">
-					<TimeKeeper
-						time={
-							showTimePiker === "start-routine"
-								? addRoutineForm.startRoutine
-								: addRoutineForm.endRoutine
-						}
-						onChange={handleChangeTime}
-						disabledTimeRange={
-							showTimePiker === "start-routine"
-								? {}
-								: { from: "23:59", to: addRoutineForm.startRoutine }
-						}
-						hour24Mode
-						doneButton={() => (
-							<div
-								className="add-routine-window__close-clock"
-								onClick={() => setShowTimePicker(false)}
-							>
-								Close
-							</div>
-						)}
-					/>
-				</div>
 			)}
 			<Zoom duration={500}>
 				<form className="popup-window add-routine-window__popup" onSubmit={handleSubmit}>
@@ -274,11 +272,10 @@ const AddRoutinePopup = ({
 						/>
 					</div>
 					<h5 className="add-routine-window__title-input-label">Title</h5>
-					<input
-						type="text"
+					<Input
 						className="add-routine-window__title-input"
 						name="title"
-						id="routine-title"
+						color='green'
 						value={addRoutineForm.title}
 						onChange={handleChange}
 						required
@@ -287,31 +284,48 @@ const AddRoutinePopup = ({
 					<h5 className="add-routine-window__description-input-label">
 						Description
 					</h5>
-					<textarea
+					<TextArea
 						className="add-routine-window__description-input"
 						name="description"
-						id="routine-description"
+						color='green'
 						cols="30"
 						rows="10"
 						value={addRoutineForm.description}
 						onChange={handleChange}
 						required
-					></textarea>
+					></TextArea>
 
 					<h5 className="add-routine-window__message-input-label">Message</h5>
-					<textarea
+					<TextArea
 						className="add-routine-window__message-input"
 						name="message"
-						id="routine-message"
-						cols="30"
-						rows="10"
+						color='green'
 						value={addRoutineForm.message}
 						onChange={handleChange}
-					></textarea>
+					></TextArea>
 
+					<TimePicker.RangePicker
 
+						className="add-routine-window__time-range-picker"
+						/>
+
+					<h5 className="add-routine-window__category-input-label">
+						Every
+					</h5>
+					 <Select
+						// className="add-routine-window__category-input"
+						// name="categories"
+						// onChange={handleChange}
+						mode={selectDaysMode}
+						defaultValue={daysSchedule[0].label}
+						onChange={handleSelectDays}
+						value={addRoutineForm.days}
+						options={daysSchedule}
+						/>
+						
+					
 					{/* <div className="add-routine-window__start"> */}
-						<h5 className="add-routine-window__start-label">Start</h5>
+						{/* <h5 className="add-routine-window__start-label">Start</h5>
 						<input
 							className="add-routine-window__start-time-input"
 							type="time"
@@ -319,10 +333,10 @@ const AddRoutinePopup = ({
 							value={addRoutineForm.startRoutine}
 							onChange={() => { }}
 							onClick={handleTimeRoutine}
-						></input>
+						></input> */}
 					{/* </div> */}
 					{/* <div className="add-routine-window__end"> */}
-						<h5 className="add-routine-window__end-label">End</h5>
+						{/* <h5 className="add-routine-window__end-label">End</h5>
 						<input
 							className="add-routine-window__end-time-input"
 							type="time"
@@ -330,62 +344,58 @@ const AddRoutinePopup = ({
 							value={addRoutineForm.endRoutine}
 							onChange={() => { }}
 							onClick={handleTimeRoutine}
-						></input>
+						></input> */}
 					{/* </div> */}
 					{/* <div> */}
 						<h5 className="add-routine-window__difficulty-input-label">
 							Difficulty
 						</h5>
 						<div className="add-routine-window__difficulty-input-div">
-							<input
+							<Slider
 								className="add-routine-window__difficulty-input"
-								type="range"
-								name="level"
-								id="range-difficulty"
-								min="1"
-								max="5"
+								min={1}
+								max={5}
 								value={addRoutineForm.level}
-								onChange={handleChange}
+
+								onChange={handleChangeDiff}
 							/>
 							<p className="add-routine-window__difficulty-input-value">
 								{addRoutineForm.level}🎚️
 							</p>
 						</div>
-
-
 						<h5 className="add-routine-window__priority-input-label">
 							Priority
 						</h5>
-						<select
+						<Select
 							className="add-routine-window__priority-input"
 							name="priority"
 							value={addRoutineForm.priority}
 							onChange={handleChange}
 						>
-							<option
+							<Select.Option
 								className="add-routine-window__priority-option"
 								value="low"
 							>
 								Low
-							</option>
-							<option
+							</Select.Option>
+							<Select.Option
 								className="add-routine-window__priority-option"
 								value="medium"
 							>
 								Medium
-							</option>
-							<option
+							</Select.Option>
+							<Select.Option
 								className="add-routine-window__priority-option"
 								value="important"
 							>
 								Important
-							</option>
-						</select>
+							</Select.Option>
+						</Select>
 
 					<h5 className="add-routine-window__category-input-label">
 							Category
 					</h5>
-					 <select
+					 <Select
 						className="add-routine-window__category-input"
 						name="categories"
 						onChange={handleChange}
@@ -393,16 +403,17 @@ const AddRoutinePopup = ({
 					>
 						{
 							selectCategoriesOptions.map(category => (
-								<option
+								<Select.Option
 									key={`cat-opt__${category.categoryId}`}
 									className="add-routine-window__priority-option"
 									value={category.categoryId}
 								>
 									{category.label}
-								</option>
+								</Select.Option>
 							))
 						}
-					</select>
+					</Select>
+					
 					
 					<div className="add-routine-window__emoji-section">
 						<Button

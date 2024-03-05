@@ -26,7 +26,7 @@ import { createContext, createRef, useEffect, useState } from "react";
 import { getRoutinesFromFirebase, getCategories, } from "../lib/firebase";
 import { setCurrentRoutines } from "./redux/routines/routines.actions";
 import { setCurrentUser } from "./redux/user/user.actions";
-import { initialProtocol } from "./utils";
+import { initialProtocol, getTodayName } from "./utils";
 import NotificationSystem from 'react-notification-system';
 import { setCurrentCategories } from "./redux/categories/categories.actions";
 import GoogleAd from "./components/google-ad/google-ad.component";
@@ -52,7 +52,7 @@ const App = ({
 
     const [messageApi, contextHolderMessage] = message.useMessage();
     const [notificationApi, contextHolderNotification] = notification.useNotification()
-    
+    const todayName = getTodayName()
     
     useEffect(() => {
         (async () => {
@@ -66,6 +66,9 @@ const App = ({
 
                 let routines = await getRoutinesFromFirebase(user.uid)
                 routines = await initialProtocol(user, routines);
+                console.log(routines)
+                routines = routines.filter(routine => 
+                    (routine.days === undefined || routine.days.includes(todayName) || routine.days.includes('every-day')))
                 setCurrentRoutines(routines)
             }
         })()

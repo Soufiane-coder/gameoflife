@@ -4,7 +4,13 @@ import {
     setComboToZeroInFirebase,
     UpdateSkipAndLastSubmitInFirebase  } from "../lib/firebase"
 import { Timestamp } from "firebase/firestore";
+import dayjs from "dayjs";
 
+export const getTodayName = () => {
+    const dayOfWeek = dayjs().day()
+    const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday' , 'friday', 'saturday']
+    return daysOfWeek[dayOfWeek]
+}
 
 const formattingDate = (inputDateString) => {
     const date = new Date(inputDateString);
@@ -64,7 +70,7 @@ export const initialProtocol = async (user, routines) => {
             routine.combo = 0;
         }
 
-        return routine;
+        return routine
     }))
 
 }

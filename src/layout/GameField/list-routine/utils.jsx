@@ -24,14 +24,13 @@ export const filterRoutines = (routines, filterLabel) =>{
 
 export const filterCategoriesAndRoutines = (categories, routines, filterLabel, categoryLabels) => {
     let filteredCategories = categories
-
     // const isAll = categoryLabels.find(categoryLabel => categoryLabel.value === 'all') !== -1
-
     if (!Boolean(categoryLabels?.legnth)){
         filteredCategories = categories.filter(
             category =>  categoryLabels.some(categoryLabel => categoryLabel.value === category.categoryId))
-    }
-
+        }
+        
+   
     filteredCategories = filteredCategories.map(category => ({
         ...category,
         routines: filterRoutines(
