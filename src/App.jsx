@@ -30,6 +30,7 @@ import { initialProtocol, getTodayName } from "./utils";
 import NotificationSystem from 'react-notification-system';
 import { setCurrentCategories } from "./redux/categories/categories.actions";
 import GoogleAd from "./components/google-ad/google-ad.component";
+import CalendarPage from "./pages/calendar/calendar.page";
 import { message, notification } from 'antd';
 
 export const NotficationContext = createContext();
@@ -159,6 +160,13 @@ const App = ({
                                             <GameField />
                                             :
                                             <Redirect to="/signin" />}
+                                    </Route>
+                                    <Route exact={true} path='/calendar'>
+                                        {
+                                            user ? <CalendarPage/>
+                                            :
+                                            <Redirect to="/signin" />
+                                        }
                                     </Route>
                                     <Route exact={true} path="/statistics">
                                         {user ?

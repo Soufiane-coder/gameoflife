@@ -31,6 +31,11 @@ const NavigationBar = ({ history, user,}) => {
         url: '/clockView',
         action: () => { }
     }, {
+        label: 'calendar',
+        icon: SettingPageIcon,
+        url: '/calendar',
+        action: () => { }
+    },{
         label: 'statistics',
         icon: StatisticsIcon,
         url: '/statistics',

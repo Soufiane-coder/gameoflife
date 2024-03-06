@@ -1,1 +1,0 @@
-import { sampleData, displayDate } from './events-utc';
