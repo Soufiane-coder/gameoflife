@@ -67,9 +67,7 @@ const App = ({
 
                 let routines = await getRoutinesFromFirebase(user.uid)
                 routines = await initialProtocol(user, routines);
-                console.log(routines)
-                routines = routines.filter(routine => 
-                    (routine.days === undefined || routine.days.includes(todayName) || routine.days.includes('every-day')))
+        
                 setCurrentRoutines(routines)
             }
         })()

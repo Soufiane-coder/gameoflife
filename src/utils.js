@@ -12,6 +12,22 @@ export const getTodayName = () => {
     return daysOfWeek[dayOfWeek]
 }
 
+export const andOperator = (...conditions) => {
+    if (conditions.length === 0) {
+        return false; // No conditions to test
+    }
+
+    // Test all conditions using logical AND
+    for (let condition of conditions) {
+        if (!condition) {
+            return false; // If any condition is false, return false
+        }
+    }
+
+    return true;
+}
+
+
 const formattingDate = (inputDateString) => {
     const date = new Date(inputDateString);
 

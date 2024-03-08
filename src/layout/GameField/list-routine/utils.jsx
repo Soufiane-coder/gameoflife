@@ -1,22 +1,43 @@
 import Routine from "../../../components/Routine/Routine";
 import { Fade } from "react-reveal";
+import { getTodayName, andOperator } from "../../../utils";
 
 const isRoutineArchived = (routine) => routine.isArchived
 
+const todayName = getTodayName();
+
 export const filterRoutines = (routines, filterLabel) =>{
+            
     switch (filterLabel) {
         case 'all':
             return routines
         case 'important':
-            return routines.filter(routine => routine.priority === 'important' && !isRoutineArchived(routine));
+            return routines.filter(routine => andOperator(
+                routine.days === undefined || routine.days.includes(todayName) || routine.days.includes('every-day'),
+                routine.priority === 'important',
+                !isRoutineArchived(routine)))
+
         case 'completed':
-            return routines.filter(routine => routine.isSubmitted === true && !isRoutineArchived(routine));
+            return routines.filter(routine => andOperator(
+                routine.days === undefined || routine.days.includes(todayName) || routine.days.includes('every-day'),
+                routine.isSubmitted === true,
+                !isRoutineArchived(routine)))
+
         case 'waiting':
-            return routines.filter(routine => routine.isSubmitted === false && !isRoutineArchived(routine));
+            return routines.filter(routine => andOperator(
+                routine.days === undefined || routine.days.includes(todayName) || routine.days.includes('every-day'),
+                routine.isSubmitted === false,
+                !isRoutineArchived(routine)))
+
         case 'archived':
-            return routines.filter(routine => routine.isArchived === true);
+            return routines.filter(routine => andOperator(
+                routine.days === undefined || routine.days.includes(todayName) || routine.days.includes('every-day'),
+                routine.isArchived === true))
+            
         case 'unarchived':
-            return routines.filter(routine => routine.isArchived === false);
+            return routines.filter(routine => andOperator(
+                routine.days === undefined || routine.days.includes(todayName) || routine.days.includes('every-day'),
+                routine.isArchived === false))
         default:
             return routines;
         }

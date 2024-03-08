@@ -7,7 +7,22 @@ $height-of-popup: 70rem;
 
 $border-radius: .6rem;
 
-
+.routine-emoji{
+    width: 10rem;
+    height: 10rem;
+    // background-color: red;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 7rem;
+    border-radius: 1.6rem;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+}
 
 .add-routine-window {
     width: $width-of-popup;

@@ -17,6 +17,8 @@ import { selectCurrentCategories } from "../../../redux/categories/categories.se
 // import { Button } from '@mui/material';
 import { Button, Flex } from 'antd';
 import { blue ,} from '@ant-design/colors';
+import AddRoutinePopup from "../../../components/add-routine-popup/add-routine-popup.component";
+import { useState } from "react";
 
 const animatedComponents = makeAnimated();
 
@@ -33,6 +35,11 @@ const OptionBarLayout = ({
 	setSelectedSort,
 	categories,
 }) => {
+
+	const [addRoutinePopup, setAddRoutinePopup] = useState({
+		open : false,
+	});
+
 	let selectFilterOptions = [
 		{ value: "all", label: "All routine" },
 		{ value: "important", label: "Important" },
@@ -133,7 +140,7 @@ const OptionBarLayout = ({
 					className="option-bar__category-btn"
 					type="primary"
 					color='blue'
-					onClick={() => displayAddRoutinePopupState(false)}
+					onClick={() => setAddRoutinePopup(old => ({...old, open: true}))}
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -154,6 +161,9 @@ const OptionBarLayout = ({
 				
 
 			</Flex>
+			< AddRoutinePopup 
+				open={addRoutinePopup.open}
+				onCancel={() => setAddRoutinePopup({open: false})}/>
 		</div>
 	);
 };
