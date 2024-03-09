@@ -11,6 +11,8 @@ import LoadingRoutine from '../../components/loading-routine/loading-routine.com
 import PageHeader from '../../components/PageHeader/page-header';
 import {Drawer } from 'antd';
 import ToDoList from '../../components/todo-list/todo-list.component';
+import { daysSchedule as daysWeekOptions, } from "../../utils";
+import dayjs from 'dayjs';
 
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
@@ -20,6 +22,7 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
     const [selectedFilterOption, setSelectedFilterOption] = useState('unarchived');
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedSort, setSelectedSort] = useState()
+    const [selectedDaysSchedule ,setSelectedDaysSchedule] = useState([daysWeekOptions[dayjs().day()].value])
 
     const [loadingRoutine, setLoadingRoutine] = useState(true);
     const [labelFilterTags, setLabelFilterTags] = useState({
@@ -37,7 +40,6 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
         console.error("user is not logged in")
         history.push('/signin')
     }
-
 
 
     useEffect(() => {
@@ -99,12 +101,14 @@ const GameField = ({ setCurrentRoutines, user, routines }) => {
                                     setSelectedCategories,
                                     setSelectedSort,
                                     labelFilterTags,
+                                    setSelectedDaysSchedule,
                                 }} />
                             <ListRoutine {
                                 ...{
                                     selectedFilterOption,
                                     selectedCategories,
                                     selectedSort,
+                                    selectedDaysSchedule
                                 }} />
                         </>
                 }

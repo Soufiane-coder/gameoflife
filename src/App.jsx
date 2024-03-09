@@ -29,7 +29,6 @@ import { setCurrentUser } from "./redux/user/user.actions";
 import { initialProtocol, getTodayName } from "./utils";
 import NotificationSystem from 'react-notification-system';
 import { setCurrentCategories } from "./redux/categories/categories.actions";
-import GoogleAd from "./components/google-ad/google-ad.component";
 import CalendarPage from "./pages/calendar/calendar.page";
 import { message, notification } from 'antd';
 

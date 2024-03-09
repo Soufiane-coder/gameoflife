@@ -7,18 +7,21 @@ import { selectCurrentRoutines } from "../../../redux/routines/routines.selector
 
 import Filter from "../../../components/Filter/Filter";
 
-import Select from "react-select";
+// import Select from "react-select";
+import { Select } from 'antd';
 import makeAnimated from 'react-select/animated';
+import { daysSchedule as daysWeekOptions, } from "../../../utils";
 
-import { customStyles } from "./styles";
+
 
 import { displayAddRoutinePopupState, displayAddCategoryPopupState } from "../../../redux/popup/popup.actions";
 import { selectCurrentCategories } from "../../../redux/categories/categories.selector";
 // import { Button } from '@mui/material';
-import { Button, Flex } from 'antd';
+import { Button, Flex, Space } from 'antd';
 import { blue ,} from '@ant-design/colors';
 import AddRoutinePopup from "../../../components/add-routine-popup/add-routine-popup.component";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 
 const animatedComponents = makeAnimated();
 
@@ -34,6 +37,7 @@ const OptionBarLayout = ({
 	selectedCategory,
 	setSelectedSort,
 	categories,
+	setSelectedDaysSchedule,
 }) => {
 
 	const [addRoutinePopup, setAddRoutinePopup] = useState({
@@ -68,51 +72,44 @@ const OptionBarLayout = ({
 		{ value: "priority", label: "Priority" },
 	];
 
-	const handleChoosingCategory = (selectedCategories) => {
-		setSelectedCategories(selectedCategories);
-	};
-
-	const handleChoosingFilter = (event) => {
-		setSelectedFilterOption(event.value);
-	};
-
-	const handleChoosingSort = (event) => {
-		setSelectedSort(event.value)
-	}
 
 	return (
 		<div className="option-bar">
-			<div className="option-bar__filter">
+			<Space
+				wrap
+				// className="option-bar__filter"
+				>
 				<Select
 					options={selectFilterOptions}
 					defaultValue={selectFilterOptions[selectFilterOptions.length - 1]}
 					placeholder="select attribute..."
-					styles={customStyles}
-					onChange={handleChoosingFilter}
-					components={animatedComponents}
-					isSearchable={false}
+					style={{minWidth: '15rem'}}
+					onChange={setSelectedFilterOption}
 				/>
 				<Select
 					options={selectSortOptions}
-					// defaultValue={selectSortOptions[selectSortOptions.length - 1]}
+					style={{minWidth: '15rem'}}
 					placeholder="Sort by..."
-					styles={customStyles}
-					onChange={handleChoosingSort}
-					components={animatedComponents}
-					isSearchable={false}
+					onChange={setSelectedSort}
 				/>
 				<Select
 					options={selectCategoriesOptions}
-					
 					placeholder="Select category..."
-					styles={customStyles}
-					onChange={handleChoosingCategory}
-					components={animatedComponents}
-					isSearchable={false}
-					isMulti
+					onChange={setSelectedCategories}
+					style={{minWidth: '15rem'}}
+					mode='tags'
+				/>
+
+				<Select
+					options={daysWeekOptions}
+					placeholder="Select days..."
+					defaultValue={daysWeekOptions[dayjs().day()]}
+					onChange={setSelectedDaysSchedule}
+					style={{minWidth: '15rem'}}
+					mode='tags'
 				/>
 				
-			</div>
+			</Space>
 			<Flex wrap="wrap" gap="small">
 			<Button
 					className="option-bar__routine-btn"
@@ -163,7 +160,9 @@ const OptionBarLayout = ({
 			</Flex>
 			< AddRoutinePopup 
 				open={addRoutinePopup.open}
-				onCancel={() => setAddRoutinePopup({open: false})}/>
+				categories={categories}
+				onCancel={() => setAddRoutinePopup({open: false})}
+				user={user}/>
 		</div>
 	);
 };

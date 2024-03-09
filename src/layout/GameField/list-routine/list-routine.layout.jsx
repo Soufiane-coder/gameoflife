@@ -19,29 +19,28 @@ const ListRoutine = ({
     selectedCategories,
     currentCategories,
     selectedSort,
+    selectedDaysSchedule
 }) => {
 
     const [choosenCategory, setChoosenCategory ] = useState(
         filterCategoriesAndRoutines(
-            currentCategories, currentRoutines,selectedFilterOption, selectedCategories)
+            currentCategories, currentRoutines,selectedFilterOption, selectedCategories, selectedDaysSchedule)
     )
 
     const [choosenRoutines, setChoosenRoutines ] = useState(
-        filterRoutines(currentRoutines, selectedFilterOption)) // so it render directely filtered routines in the first render
+        filterRoutines(currentRoutines, selectedFilterOption, selectedDaysSchedule)) // so it render directely filtered routines in the first render
 
     useEffect(() => {
         if (selectedCategories.length === 0){
             setChoosenRoutines(
-                sortRoutinesBy(
-                    filterRoutines(currentRoutines, selectedFilterOption), selectedSort))
+                    filterRoutines(currentRoutines, selectedFilterOption, selectedDaysSchedule))
             return
         }
         setChoosenCategory(
-            sortRoutinesBy(
                 filterCategoriesAndRoutines(
-                    currentCategories, currentRoutines,selectedFilterOption, selectedCategories), selectedSort))
+                    currentCategories, currentRoutines,selectedFilterOption, selectedCategories, selectedDaysSchedule))
         
-    }, [selectedFilterOption, selectedCategories, currentRoutines, selectedSort])
+    }, [selectedFilterOption, selectedCategories, currentRoutines, selectedDaysSchedule])
 
 
     if (currentRoutines.length === 0){
