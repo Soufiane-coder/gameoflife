@@ -26,8 +26,8 @@ import { createContext, createRef, useEffect, useState } from "react";
 import { getRoutinesFromFirebase, getCategories, } from "../lib/firebase";
 import { setCurrentRoutines } from "./redux/routines/routines.actions";
 import { setCurrentUser } from "./redux/user/user.actions";
-import { initialProtocol, getTodayName } from "./utils";
-import NotificationSystem from 'react-notification-system';
+import { initialProtocol} from "./utils";
+
 import { setCurrentCategories } from "./redux/categories/categories.actions";
 import CalendarPage from "./pages/calendar/calendar.page";
 import { message, notification } from 'antd';
@@ -52,7 +52,6 @@ const App = ({
 
     const [messageApi, contextHolderMessage] = message.useMessage();
     const [notificationApi, contextHolderNotification] = notification.useNotification()
-    const todayName = getTodayName()
     
     useEffect(() => {
         (async () => {
@@ -89,28 +88,6 @@ const App = ({
         })()
     }, [userImp, userLoading])
 
-    
-
-
-    const style = {
-        NotificationItem: { // Override the notification item
-            DefaultStyle: { // Applied to every notification, regardless of the notification level
-                fontSize: '2rem',
-                width: '40rem',
-                zIndex: '110'
-            },
-        },
-        Title: {
-            DefaultStyle: {
-                fontSize: '2rem',
-            }
-        },
-        MessageWrapper: {
-            DefaultStyle: {
-                margin: '5px',
-            }
-        }
-    }
 
     return (
         <>
@@ -127,8 +104,6 @@ const App = ({
                     {
                         userLoading || userFromFirebaseLoading ? null : <NavigationBar />
                     }
-
-                    <NotificationSystem ref={notificationSystem} style={style} />
                     <Switch>
 
                         <Route exact={true} path="/signin">

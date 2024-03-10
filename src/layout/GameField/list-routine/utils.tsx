@@ -9,7 +9,10 @@ import CategoryType from '../../../types/category.type';
 
 const isRoutineArchived = (routine : RoutineType) : boolean => routine.isArchived
 
-export const filterRoutines = (routines: RoutineType[], filterLabel : FilterLabelsType, selectedDaysSchedule : DaysWeekType[]) => {
+export const filterRoutines = (
+    routines: RoutineType[],
+    filterLabel : FilterLabelsType,
+    selectedDaysSchedule : DaysWeekType[],) => {
     switch (filterLabel) {
         case FilterLabelsType.ALL:
             return routines.filter(routine => 
@@ -56,9 +59,10 @@ export const filterCategoriesAndRoutines = (
 
     let filteredCategories = categories
     // const isAll = categoryLabels.find(categoryLabel => categoryLabel.value === 'all') !== -1
-    if (!Boolean(categoryLabels?.length)){
+    
+    if (Boolean(categoryLabels?.length)){
         filteredCategories = categories.filter(
-            category =>  categoryLabels.some(categoryLabel => categoryLabel === category.categoryId))
+            category => categoryLabels.some(categoryLabel => categoryLabel === category.categoryId))
         }
     
     filteredCategories = filteredCategories.map(category => {
@@ -72,7 +76,7 @@ export const filterCategoriesAndRoutines = (
     return filteredCategories
 }
 
-export const sortRoutinesBy = (routines : RoutineType[], sortAttr) => {
+export const sortRoutinesBy = (routines : RoutineType[], sortAttr : 'difficulty' | 'priority') => {
     switch (sortAttr){
         case 'difficulty':
             routines.sort((a, b) => b.level - a.level)
@@ -88,8 +92,8 @@ export const sortRoutinesBy = (routines : RoutineType[], sortAttr) => {
     }
     
 }
-export const ListRoutinesComponent : any = ({routines}: any) => {
-    return routines.map((routine : RoutineType) => {
+export const ListRoutinesComponent : React.FC<{routines: RoutineType[]}> = ({routines}) => {
+    return routines.map((routine) => {
         return (
             <React.Fragment key={routine.routineId}>
                 <Fade >

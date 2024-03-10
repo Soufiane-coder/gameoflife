@@ -1,25 +1,27 @@
 @import '../../style/variables.scss';
 
 
-$demension-icon: 7rem;
+$demension-icon: 6.5rem;
 
 .navigation-bar{
     z-index: 40;
-    padding: 2rem .7rem;
-    padding-right: 0;
+    padding: 2rem 1rem;
+    padding-right: .2rem;
     position: fixed;
     width: fit-content;
     right: 0;
-    top: 4.5rem;
+    top: 3.5rem;
     background-color: $color-secondary;
     border-radius: 5rem 0 0 5rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     
     .icon{
         display: inline-block;
 
+        border-radius: 100rem;
+        border: 2px solid white;
+        margin: 3px 2px;
         padding: 5px;
 
         height: $demension-icon;
@@ -27,7 +29,7 @@ $demension-icon: 7rem;
 
         fill: $color-white-1 !important;
         &, circle{
-        stroke: $color-white-1 !important;
+            stroke: $color-white-1 !important;
         }
         &:hover{
             cursor: pointer;

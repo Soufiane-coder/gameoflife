@@ -9,9 +9,7 @@ import Filter from "../../../components/Filter/Filter";
 
 // import Select from "react-select";
 import { Select } from 'antd';
-import makeAnimated from 'react-select/animated';
 import { daysSchedule as daysWeekOptions, } from "../../../utils";
-
 
 
 import { displayAddRoutinePopupState, displayAddCategoryPopupState } from "../../../redux/popup/popup.actions";
@@ -23,7 +21,6 @@ import AddRoutinePopup from "../../../components/add-routine-popup/add-routine-p
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
-const animatedComponents = makeAnimated();
 
 const OptionBarLayout = ({
 	user,

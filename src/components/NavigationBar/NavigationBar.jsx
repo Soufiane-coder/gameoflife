@@ -3,9 +3,10 @@ import { ReactComponent as HomePageIcon } from '../../assets/icons/homepage.svg'
 import { ReactComponent as GamePageIcon } from '../../assets/icons/gamepage.svg';
 import { ReactComponent as SignInPageIcon } from '../../assets/icons/sign-in-page.svg';
 import { ReactComponent as SignUpPageIcon } from '../../assets/icons/sign-up-page.svg';
-import { ReactComponent as SettingPageIcon } from '../../assets/icons/setting-page.svg';
+import { ReactComponent as SettingPageIcon } from '../../assets/icons/settings.svg';
 import { ReactComponent as ClockIcon } from '../../assets/icons/schedule.svg';
 import { ReactComponent as StatisticsIcon } from '../../assets/icons/statistics.svg';
+import { ReactComponent as CalendarIcon} from '../../assets/icons/calendar.svg';
 import './NavigationBar.scss';
 import { withRouter } from 'react-router-dom';
 import { selectCurrentUser } from '../../redux/user/user.selector';
@@ -32,7 +33,7 @@ const NavigationBar = ({ history, user,}) => {
         action: () => { }
     }, {
         label: 'calendar',
-        icon: SettingPageIcon,
+        icon: CalendarIcon,
         url: '/calendar',
         action: () => { }
     },{

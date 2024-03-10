@@ -1,12 +1,11 @@
 import React , { useState } from 'react';
 import './add-routine-popup.style.scss';
 
-import Params from './types';
 import RoutineType from '../../types/routine.type';
 import { PriorityType } from '../../types/general.type'
 
 import { Timestamp } from 'firebase/firestore';
-import { addRoutineToFirebase } from '../../../lib/firebase/routine';
+import { addRoutineToFirebase, editRoutineInFirebase } from '../../../lib/firebase/routine.apis';
 
 import { daysSchedule} from '../../utils';
 
@@ -15,16 +14,24 @@ import dayjs from 'dayjs';
 import Picker from "@emoji-mart/react";
 import { randomColor } from "randomcolor";
 import { Modal , Form, Input, TimePicker, Select, Slider , Button} from 'antd'
+import { addRoutine, editRoutine } from '../../redux/routines/routines.actions';
+import { connect, ConnectedProps} from 'react-redux';
+
+const mapDispatchToProps = (dispatch: any) => ({
+	editRoutine: (routine: RoutineType) => dispatch(editRoutine(routine)),
+	addRoutine: (routine : RoutineType) => dispatch(addRoutine(routine)),
+})
+const connector = connect(null, mapDispatchToProps)
+export type PropsFromRedux = ConnectedProps<typeof connector>
+import Params from './types';
 
 const { TextArea } = Input
-const { confirm } = Modal
 
-
-const AddRoutinePopup :React.FC<Params> = ({user, open, onCancel, categories}) => {
+const AddRoutinePopup : React.FC<Params> = ({user, open, onCancel, categories, routineToEdit, editRoutine, addRoutine}) => {
 	const [form] = Form.useForm();
 	const [showEmojis, setShowEmojis] = useState<boolean>(false)
-	const [emoji, setEmoji] = useState<string>('')
-	const [bgEmojiColor, setBgEmojiColor] = useState<string>('#fff')
+	const [emoji, setEmoji] = useState<string>(routineToEdit?.emoji || '')
+	const [bgEmojiColor, setBgEmojiColor] = useState<string>(routineToEdit?.bgEmojiColor || '#fff')
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 
 	const prioritiesOptions : {value: PriorityType, label: string}[] = [
@@ -33,7 +40,7 @@ const AddRoutinePopup :React.FC<Params> = ({user, open, onCancel, categories}) =
 		{value: PriorityType.IMPORTANT , label: 'Important'},
 	]
 
-	const initialValues : RoutineType = {
+	const initialValues : RoutineType = routineToEdit? {...routineToEdit} : {
 		title: "",
 		description: "",
 		message: "",
@@ -61,7 +68,14 @@ const AddRoutinePopup :React.FC<Params> = ({user, open, onCancel, categories}) =
 	const onFinish = async (values : RoutineType) => {
 		setIsLoading(true)
 		try {
-			await addRoutineToFirebase(user.uid, {...initialValues, ...values, emoji, bgEmojiColor})
+			if(routineToEdit){
+				await editRoutineInFirebase(user.uid,  {...initialValues, ...values, emoji, bgEmojiColor})
+				editRoutine({...initialValues, ...values, emoji, bgEmojiColor})
+			}
+			else{
+				const routineId = await addRoutineToFirebase(user.uid, {...initialValues, ...values, emoji, bgEmojiColor})
+				addRoutine({...initialValues, ...values, emoji, bgEmojiColor, routineId})
+			}
 		}
 		catch(err) {
 			console.error(err);
@@ -87,7 +101,7 @@ const AddRoutinePopup :React.FC<Params> = ({user, open, onCancel, categories}) =
 		<>
 		  	<Button type='primary' color='cyan' onClick={() => {setShowEmojis(true)}}>Change Emoji</Button>
 			<CancelBtn />
-		 	<Button type='primary' color='green' loading={isLoading} onClick={onOk}> Add Routine</Button>
+		 	<Button type='primary' color='green' loading={isLoading} onClick={onOk}> {routineToEdit ? 'Edit Routine' : 'Add routine'}</Button>
 		</>
 	  )
 
@@ -171,4 +185,8 @@ const AddRoutinePopup :React.FC<Params> = ({user, open, onCancel, categories}) =
 	)
 }
 
-export default AddRoutinePopup
+
+
+
+
+export default connector(AddRoutinePopup)

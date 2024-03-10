@@ -11,13 +11,13 @@ const CalendarPage = ({routines}) => {
   return (
     <section className='calendar-page'>
       <ul className='calendar-page__weeksdays'>
-        {weeksdays.map((day) => (
-          <li className={`calendar-page__weeksday ${day === todayName ? 'calendar-page__weeksday--selected' : ''}`}>{day}</li>
+        {weeksdays.map((day, index) => (
+          <li kay={index} className={`calendar-page__weeksday ${day === todayName ? 'calendar-page__weeksday--selected' : ''}`}>{day}</li>
         ))}
 
         {
-          weeksdays.map((dayName) => (
-            <li className={`calendar-page__day ${dayName === todayName ? 'calendar-page__day--selected' : ''}`}>
+          weeksdays.map((dayName, index) => (
+            <li key={index} className={`calendar-page__day ${dayName === todayName ? 'calendar-page__day--selected' : ''}`}>
             {
               routines?.filter(routine => 
                 (routine.days === undefined || routine.days.includes(dayName) || routine.days.includes('every-day'))).map(routine => (

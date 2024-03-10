@@ -6,6 +6,7 @@ import { ReactComponent as Undone } from '../../assets/icons/undone.svg';
 import { ReactComponent as MessageIcon } from '../../assets/icons/message.svg';
 import { ReactComponent as MoreOptionsIcon } from '../../assets/icons/more.svg';
 import './Routine.scss';
+
 import { connect } from "react-redux";
 import { selectCurrentRoutines } from "../../redux/routines/routines.selector";
 import { createStructuredSelector } from "reselect";
@@ -13,7 +14,9 @@ import { selectCurrentUser } from "../../redux/user/user.selector";
 import { removeRoutine, skipRoutine, setArchivedOption } from "../../redux/routines/routines.actions";
 import { buySkip } from '../../redux/user/user.actions';
 import { useState } from "react";
+
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import AddRoutinePopup from '../add-routine-popup/add-routine-popup.component';
 import { ReactComponent as GoalIcon } from '../../assets/icons/goal.svg';
 import { useHistory } from "react-router-dom";
 import { displayCheckPopupState, displayMessagePopupState, displayAddRoutinePopupState } from "../../redux/popup/popup.actions";
@@ -23,26 +26,40 @@ import {
 	deleteRoutineFromFirebase ,
 	addSkipDayToFirebase ,
 	buySkipFromFirebase} from "../../../lib/firebase";
-import { NotficationContext } from "../../App";
-import {Badge, Button, Space} from 'antd';
+import {Badge, Button, Space, Dropdown} from 'antd';
+// import type { MenuProps } from 'antd';
 import { ContextHolderNotification, ContextHolderMessage } from "../../App";
+import { selectCurrentCategories } from "../../redux/categories/categories.selector";
 
+{/* <ul className="routine__other-options-list" style={!showOtherOptions ? { display: 'none' } : {}}>
+								<li className="routine__other-options-item"
+									onClick={async () => {
+										await setArchivedOptionInFirebase(user.uid, routine.routineId, !routine.isArchived)
+										setArchivedOption(routine.routineId, !routine.isArchived)
+									}}>{routine.isArchived ? "Desarchive" : "Archive"}</li>
+								<li className="routine__other-options-item"
+									onClick={handleEditRoutine}
+									>Edit</li>
+								<li className="routine__other-options-item"
+								onClick={handleRemove}>Delete</li>
+							</ul> */}
+
+// const items: MenuProps['items'] = [
 
 const Routine = (
 	{ 
 		user, routine, removeRoutine, setArchivedOption,
 		skipRoutine, buySkip,
 		displayCheckPopupState, displayMessagePopupState,
-		displayAddRoutinePopupState
+		displayAddRoutinePopupState,
+		categories
 	}) => {
 	const history = useHistory();
-
-	const [showOtherOptions, setShowOtherOptions] = useState(false);
 	const [deleteLoading, setDeleteLoading] = useState(false);
 	const [skipLoading, setSkipLoading] = useState(false);
-	const {notificationSystem} = useContext(NotficationContext);
 	const notificationApi = useContext(ContextHolderNotification);
 	const messageApi = useContext(ContextHolderMessage);
+	const [open, setOpen] = useState(false);
 
 	const handleDone = async (event) => {
 		const { routineId } = routine
@@ -141,24 +158,45 @@ const Routine = (
 	}
 	const handleEditRoutine = (event) => {
 		event.preventDefault();
-		displayAddRoutinePopupState(routine.routineId)
+		setOpen(true)
 	}
+
+	const menuItems = [
+		{
+			key: '1',
+			label: (
+			<a onClick={async (event) => {
+				event.preventDefault();
+				await setArchivedOptionInFirebase(user.uid, routine.routineId, !routine.isArchived)
+				setArchivedOption(routine.routineId, !routine.isArchived)
+			}}>
+				{routine.isArchived ? "Desarchive" : "Archive"}
+			</a>
+			),
+		},
+		{
+			key: '2',
+			label: (
+			<a onClick={handleEditRoutine}>
+				Edit
+			</a>
+			),
+		},
+		{
+			key: '3',
+			label: (
+			<a  onClick={handleRemove}>
+				Delete
+			</a>
+			),
+		},
+	];
+
 	return (
 		<Badge.Ribbon 
 			text={routine.priority.charAt(0).toUpperCase() + routine.priority.slice(1)}
 			color={routine.priority === 'important' ? 'red' : (routine.priority === 'medium' ? 'volcano': 'cyan')}>
 			<div className='routine' id={routine.routineId}>
-				
-				{/* {
-					routine.priority === 'important' && <div className="important"></div>
-				} */}
-				{/* {
-					routine.priority === 'medium' && <div className="medium"></div>
-				} */}
-				{/* {
-					<Cracks style={{ width: '100%', position: 'absolute', zIndex: '-1', height: '100%', top: '0', left: '0' }} />
-				} */}
-				{/* <div className="category">📚</div> */}
 				<div className="emoji" style={{ backgroundColor: routine.bgEmojiColor }}>{deleteLoading ? <LoadingSpinner /> : routine.emoji}</div>
 				<div className="title">{routine.title}</div>
 				<div className="description">{routine.description}</div>
@@ -202,26 +240,17 @@ const Routine = (
 						onClick={handleRoadMapClick} >
 						<GoalIcon />
 					</Button>
-					<Button 
-						type="text"
-						className="routine__other-options "
-						onClick={() => setShowOtherOptions(!showOtherOptions)}>
-						<ul className="routine__other-options-list" style={!showOtherOptions ? { display: 'none' } : {}}>
-							<li className="routine__other-options-item"
-								onClick={async () => {
-									await setArchivedOptionInFirebase(user.uid, routine.routineId, !routine.isArchived)
-									setArchivedOption(routine.routineId, !routine.isArchived)
-								}}>{routine.isArchived ? "Desarchive" : "Archive"}</li>
-							<li className="routine__other-options-item"
-								onClick={handleEditRoutine}
-								>Edit</li>
-							<li className="routine__other-options-item"
-							onClick={handleRemove}>Delete</li>
-						</ul>
-						< MoreOptionsIcon />
-					</Button>
+					<Dropdown menu={{items: menuItems}} placement="topRight">
+						<Button 
+							type="text"
+							className="routine__other-options "
+							>
+							< MoreOptionsIcon />
+						</Button>
+					</Dropdown>
 				</div>
 			</div>
+			<AddRoutinePopup user={user} open={open} onCancel={() => setOpen(false)} categories={categories} routineToEdit={routine}/>
 		</Badge.Ribbon>
 	)
 }
@@ -229,6 +258,7 @@ const Routine = (
 const mapStateToProps = createStructuredSelector({
 	routinesCollection: selectCurrentRoutines,
 	user: selectCurrentUser,
+	categories: selectCurrentCategories
 })
 
 const mapDispatchToProps = (dispatch) => ({
