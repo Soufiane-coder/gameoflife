@@ -26,15 +26,16 @@ interface AbstractRoutineType{
     bgEmojiColor: string;
     character : string;
     days: DaysWeekType[];
-    // goals: GoalType[];
 }
 
 export default interface RoutineType extends AbstractRoutineType {
     lastSubmit : Dayjs; // yyyy-mm-dd
     rangeTime: [Dayjs,Dayjs]; // 'HH:mm:ss'
+    spentedTime: Dayjs;
 }
 
 export interface RoutineDeliverableType extends AbstractRoutineType {
     lastSubmit : Timestamp;
     rangeTime: [Timestamp,Timestamp]; // 'HH:mm:ss'
+    spentedTime: Timestamp;
 }

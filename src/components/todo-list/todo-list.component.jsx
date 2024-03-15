@@ -7,6 +7,7 @@ import {
     deleteToDoItemFromFirebase} from '../../../lib/firebase';
 import { useEffect, useState,} from 'react';
 import ToDoItem from './todo-item.component';
+import './todo-list.style.scss';
 
 
 const ToDoList = ({user}) => {

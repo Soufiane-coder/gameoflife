@@ -23,6 +23,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 })
 const connector = connect(null, mapDispatchToProps)
 export type PropsFromRedux = ConnectedProps<typeof connector>
+
 import Params from './types';
 
 const { TextArea } = Input
@@ -60,6 +61,7 @@ const AddRoutinePopup : React.FC<Params> = ({user, open, onCancel, categories, r
 		lastSubmit : dayjs(0),
 		bgEmojiColor : '#fff',
 		character : '',
+		spentedTime: dayjs(0),
 	}
 
 	let categoriesOption = categories.map(category => ({label: `${category.emoji} ${category.label}`, value: category.categoryId}))

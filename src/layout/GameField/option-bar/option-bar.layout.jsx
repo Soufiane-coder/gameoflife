@@ -80,12 +80,12 @@ const OptionBarLayout = ({
 					options={selectFilterOptions}
 					defaultValue={selectFilterOptions[selectFilterOptions.length - 1]}
 					placeholder="select attribute..."
-					style={{minWidth: '15rem'}}
+					style={{minWidth: '23rem'}}
 					onChange={setSelectedFilterOption}
 				/>
 				<Select
 					options={selectSortOptions}
-					style={{minWidth: '15rem'}}
+					style={{minWidth: '23rem'}}
 					placeholder="Sort by..."
 					onChange={setSelectedSort}
 				/>
@@ -93,8 +93,9 @@ const OptionBarLayout = ({
 					options={selectCategoriesOptions}
 					placeholder="Select category..."
 					onChange={setSelectedCategories}
-					style={{minWidth: '15rem'}}
+					style={{minWidth: '23rem'}}
 					mode='tags'
+					maxTagCount='responsive'
 				/>
 
 				<Select
@@ -102,8 +103,9 @@ const OptionBarLayout = ({
 					placeholder="Select days..."
 					defaultValue={daysWeekOptions[dayjs().day()]}
 					onChange={setSelectedDaysSchedule}
-					style={{minWidth: '15rem'}}
+					style={{minWidth: '23rem'}}
 					mode='tags'
+					maxTagCount='responsive'
 				/>
 				
 			</Space>

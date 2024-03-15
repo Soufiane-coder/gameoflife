@@ -1,0 +1,12 @@
+@import '../../style/variables.scss';
+
+.focus-mode-page{
+    padding: 2rem;
+    margin-right: $width-navigation;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(30rem, 1fr));
+    justify-items: center;
+    align-items: start;
+    min-height: calc(100vh - $user-bar-height);
+    align-items: center;
+}

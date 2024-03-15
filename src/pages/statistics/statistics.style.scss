@@ -3,13 +3,18 @@
 .statistics-page{
     padding: $page-padding;
     padding-top: 0;
+    padding-right: $width-navigation;
     height: 100lvh;
-    &__30days-progession{
-        background-color: $color-white-1;
-        padding: 2rem;
-        margin: auto;
-        max-width: 80rem;
-    }
+    display: grid;
+    grid-template-columns: repeat(2, minmax(50rem, 1fr));
+    align-items: center;
+    gap: 3rem;
+    // &__30days-progession{
+    //     // background-color: $color-white-1;
+    //     // padding: 2rem;
+    //     // margin: auto;
+    //     // max-width: 80rem;
+    // }
 }
 
 #dark .statistics-page{

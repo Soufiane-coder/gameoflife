@@ -23,13 +23,15 @@ import { auth, getUserData } from "../lib/firebase";
 import UserLoader from "./layout/user-loader/user-loader.layout";
 import { selectCurrentRoutines } from "./redux/routines/routines.selector";
 import { createContext, createRef, useEffect, useState } from "react";
-import { getRoutinesFromFirebase, getCategories, } from "../lib/firebase";
+import { getRoutinesFromFirebase, } from "../lib/firebase/routine.apis";
+import { getCategories } from "../lib/firebase";
 import { setCurrentRoutines } from "./redux/routines/routines.actions";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { initialProtocol} from "./utils";
 
 import { setCurrentCategories } from "./redux/categories/categories.actions";
 import CalendarPage from "./pages/calendar/calendar.page";
+import FocusModePage from './pages/focus-mode/focus-mode.page'
 import { message, notification } from 'antd';
 
 export const NotficationContext = createContext();
@@ -65,7 +67,7 @@ const App = ({
 
                 let routines = await getRoutinesFromFirebase(user.uid)
                 routines = await initialProtocol(user, routines);
-        
+                
                 setCurrentRoutines(routines)
             }
         })()
@@ -146,7 +148,17 @@ const App = ({
                                                 <StatisticsPage />
                                             </>
                                             :
-                                            <Redirect to="/signin" />}
+                                            <Redirect to="/signin" />
+                                        }
+                                    </Route>
+                                    <Route exact={true} path="/focus-mode/:routineId">
+                                        {user ?
+                                            <>
+                                                <FocusModePage />
+                                            </>
+                                            :
+                                            <Redirect to="/signin" />
+                                        }
                                     </Route>
                                     <Route path="/settings" component={Setting} />
                                     <Route path='/road-map/:routineId'>

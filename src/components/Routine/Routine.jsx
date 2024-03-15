@@ -156,6 +156,7 @@ const Routine = (
 		const { routineId } = routine
 		history.push(`/road-map/${routineId}`)
 	}
+	
 	const handleEditRoutine = (event) => {
 		event.preventDefault();
 		setOpen(true)
@@ -184,6 +185,14 @@ const Routine = (
 		},
 		{
 			key: '3',
+			label: (
+			<a  onClick={() => history.push('/focus-mode/' + routine.routineId)}>
+				focus mode
+			</a>
+			),
+		},
+		{
+			key: '4',
 			label: (
 			<a  onClick={handleRemove}>
 				Delete
