@@ -5,6 +5,7 @@
     margin-right: $width-navigation;
     display: grid;
     grid-template-columns: repeat(2, minmax(30rem, 1fr));
+    gap: 2rem;
     justify-items: center;
     align-items: start;
     min-height: calc(100vh - $user-bar-height);

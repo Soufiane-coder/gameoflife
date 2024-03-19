@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { ReactComponent as Done } from '../../assets/icons/done.svg';
 import { ReactComponent as Remove } from '../../assets/icons/remove.svg';
 import { ReactComponent as Skip } from '../../assets/icons/skip.svg';
@@ -30,6 +30,7 @@ import {Badge, Button, Space, Dropdown} from 'antd';
 // import type { MenuProps } from 'antd';
 import { ContextHolderNotification, ContextHolderMessage } from "../../App";
 import { selectCurrentCategories } from "../../redux/categories/categories.selector";
+import CheckRoutinePopup from '../../components/check-routine-popup/check-routine-popup.component'
 
 {/* <ul className="routine__other-options-list" style={!showOtherOptions ? { display: 'none' } : {}}>
 								<li className="routine__other-options-item"
@@ -59,14 +60,18 @@ const Routine = (
 	const [skipLoading, setSkipLoading] = useState(false);
 	const notificationApi = useContext(ContextHolderNotification);
 	const messageApi = useContext(ContextHolderMessage);
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState({
+		addRoutine : false,
+		checkRoutine: false,
+	});
 
 	const handleDone = async (event) => {
-		const { routineId } = routine
-		displayCheckPopupState({
-			routineId,
-			message: routine.message,
-		});
+		event.preventDefault();
+		setOpen(old =>
+			{
+				old.checkRoutine = true;
+				return {...old};
+			})
 	}
 
 	const handleSkip = async (event) => {
@@ -159,7 +164,10 @@ const Routine = (
 	
 	const handleEditRoutine = (event) => {
 		event.preventDefault();
-		setOpen(true)
+		setOpen(old => {
+			old.addRoutine = true;
+			return {...old};
+		})
 	}
 
 	const menuItems = [
@@ -187,7 +195,7 @@ const Routine = (
 			key: '3',
 			label: (
 			<a  onClick={() => history.push('/focus-mode/' + routine.routineId)}>
-				focus mode
+				Focus mode
 			</a>
 			),
 		},
@@ -202,65 +210,79 @@ const Routine = (
 	];
 
 	return (
-		<Badge.Ribbon 
-			text={routine.priority.charAt(0).toUpperCase() + routine.priority.slice(1)}
-			color={routine.priority === 'important' ? 'red' : (routine.priority === 'medium' ? 'volcano': 'cyan')}>
-			<div className='routine' id={routine.routineId}>
-				<div className="emoji" style={{ backgroundColor: routine.bgEmojiColor }}>{deleteLoading ? <LoadingSpinner /> : routine.emoji}</div>
-				<div className="title">{routine.title}</div>
-				<div className="description">{routine.description}</div>
-				<div className="extra">
-					<div className="combo">{routine.combo === 0 ? "" : `🔥${routine.combo}`}</div>
-					<div className="skip-num">{routine.skip === 0 ? "" : `↪️${routine.skip}`}</div>
-					<div className="level">🎚️{routine.level}</div>
-				</div>
-				<div className="buttons">
-					{
-						routine.isSubmitted === false ?
-							<Button 
-								className="routine__btn"
-								type='primary'
-								color='green'
-								onClick={handleDone}><Done /></Button>
-							:
-							<Button className="routine__btn" disabled><Undone /></Button>
-					}
-					<Button 
-						className="routine__btn"
-						type="primary"
-						color="cyan"
-						disabled={user.coins < 10}
-						onClick={handleSkip}>
+		// this div for badge to be fixes in its place
+		<div> 
+			<Badge.Ribbon 
+				text={routine.priority.charAt(0).toUpperCase() + routine.priority.slice(1)}
+				color={routine.priority === 'important' ? 'red' : (routine.priority === 'medium' ? 'volcano': 'cyan')}>
+				<div className='routine' id={routine.routineId}>
+					<div className="emoji" style={{ backgroundColor: routine.bgEmojiColor }}>{deleteLoading ? <LoadingSpinner /> : routine.emoji}</div>
+					<div className="title">{routine.title}</div>
+					<div className="description">{routine.description}</div>
+					<div className="extra">
+						<div className="combo">{routine.combo === 0 ? "" : `🔥${routine.combo}`}</div>
+						<div className="skip-num">{routine.skip === 0 ? "" : `↪️${routine.skip}`}</div>
+						<div className="level">🎚️{routine.level}</div>
+					</div>
+					<div className="buttons">
 						{
-							skipLoading ? <LoadingSpinner /> : <Skip />
+							routine.isSubmitted === false ?
+								<Button 
+									className="routine__btn"
+									type='primary'
+									color='green'
+									onClick={handleDone}><Done /></Button>
+								:
+								<Button className="routine__btn" disabled><Undone /></Button>
 						}
-					</Button>
-					<Button
-						className="routine__btn"
-						type="primary"
-						color="volcano"
-						onClick={handleMessage} >
-						<MessageIcon />
-					</Button>
-					<Button 
-						className="routine__btn"
-						type="primary"
-						color="red"
-						onClick={handleRoadMapClick} >
-						<GoalIcon />
-					</Button>
-					<Dropdown menu={{items: menuItems}} placement="topRight">
 						<Button 
-							type="text"
-							className="routine__other-options "
-							>
-							< MoreOptionsIcon />
+							className="routine__btn"
+							type="primary"
+							color="cyan"
+							disabled={user.coins < 10}
+							onClick={handleSkip}>
+							{
+								skipLoading ? <LoadingSpinner /> : <Skip />
+							}
 						</Button>
-					</Dropdown>
+						<Button
+							className="routine__btn"
+							type="primary"
+							color="volcano"
+							onClick={handleMessage} >
+							<MessageIcon />
+						</Button>
+						<Button 
+							className="routine__btn"
+							type="primary"
+							color="red"
+							onClick={handleRoadMapClick} >
+							<GoalIcon />
+						</Button>
+						<Dropdown menu={{items: menuItems}} placement="topRight">
+							<Button 
+								type="text"
+								className="routine__other-options "
+								>
+								< MoreOptionsIcon />
+							</Button>
+						</Dropdown>
+					</div>
 				</div>
-			</div>
-			<AddRoutinePopup user={user} open={open} onCancel={() => setOpen(false)} categories={categories} routineToEdit={routine}/>
-		</Badge.Ribbon>
+				<AddRoutinePopup 
+					user={user}
+					open={open.addRoutine}
+					onCancel={
+						() => setOpen(old => {old.addRoutine = false; return {...old};})}
+					categories={categories}
+					routineToEdit={routine}/>
+				<CheckRoutinePopup 
+					open={open.checkRoutine}
+					routine={routine}
+					onCancel={
+						() => setOpen(old => {old.checkRoutine = false; return {...old};})}/>
+			</Badge.Ribbon>
+		</div>
 	)
 }
 

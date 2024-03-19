@@ -31,6 +31,7 @@ const ToDoList = ({user}) => {
     return(
         <div className="clock-view-page__to-do-list">
             <Card 
+                style={{height: '100%'}}
                 title='To do list'
                 extra={
                 <Button
