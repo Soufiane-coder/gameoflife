@@ -33,9 +33,9 @@ const FocusModePage : React.FC<PropsFromRedux> = ({user, routines}) => {
 
   return (
     <div className='focus-mode-page'>
-      <Routine routine={selectedRoutine}/>
-      <ToDoList user={user}/>
       <TimeRecorderPage user={user}/>
+      <ToDoList user={user}/>
+      <Routine routine={selectedRoutine}/>
     </div>
   )
 }

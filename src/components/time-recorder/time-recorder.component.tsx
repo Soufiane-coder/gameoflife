@@ -86,7 +86,7 @@ const TimeRecorderPage : React.FC<{user: UserType}> = ({user}) => {
         <Card>
             <Flex className='time-recorder' vertical={true} align='stretch' gap='small'>
                 <PieSlice 
-                    radius={100}
+                    radius={80}
                     startAngle={getAngleFromSeconds(totalSeconds, seconds) - 89.9}
                     endAngle={360 - 90}
                     fill="#1677ff" />

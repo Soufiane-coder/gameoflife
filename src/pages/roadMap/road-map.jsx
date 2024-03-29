@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentRoutines } from '../../redux/routines/routines.selector';
 import { useParams } from 'react-router-dom';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import PageHeader from '../../components/PageHeader/page-header';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -39,8 +39,13 @@ const RoadMap = ({ routines, user, }) => {
     }, [routines])
 
 
-    const getIndexOfReverseArray = [...goals].reverse().findIndex(goal => goal.isAchieved)
-    const getIndexOfLastAchievedGoal = getIndexOfReverseArray === -1 ? -1 : (goals.length - 1 - getIndexOfReverseArray)
+    const getIndexOfReverseArray = useMemo(() => {
+        return [...goals].reverse().findIndex(goal => goal.isAchieved)
+    }, [goals])
+    
+    const getIndexOfLastAchievedGoal = useMemo(() => {
+        return getIndexOfReverseArray === -1 ? -1 : (goals.length - 1 - getIndexOfReverseArray)
+    }, [goals])
 
     useEffect(() => {
         if (goals) {

@@ -7,7 +7,7 @@ const PathGoal = ({ goals, setGoal, getIndexOfLastAchievedGoal, user }) => {
     const characterDiv = useRef(null);
     useEffect(() => {
         if (goals && goals.length > 0){
-            characterDiv.current.scrollIntoView({ behavior: 'smooth' ,block: 'nearest', inline: 'center'});
+            characterDiv?.current?.scrollIntoView({ behavior: 'smooth' ,block: 'nearest', inline: 'center'});
         }
     }, [goals])
 

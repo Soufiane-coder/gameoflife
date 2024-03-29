@@ -1,3 +1,5 @@
+import './check-popup.style.scss';
+
 import React from 'react'
 import { Input, Modal } from 'antd'
 import RoutineType from '../../types/routine.type';

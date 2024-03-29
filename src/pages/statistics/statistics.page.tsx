@@ -73,6 +73,7 @@ const StatisticsPage : React.FC<{user: UserType, routines: RoutineType[]}> = ({u
 
     const data = useMemo(() => {
         if(last30DaysStatistics) {
+
             return {
                 labels: last30DaysStatistics.map(
                     statistic => (isYesterday(statistic.day) ? 'yesterday' : 

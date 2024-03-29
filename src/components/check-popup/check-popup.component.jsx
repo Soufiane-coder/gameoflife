@@ -1,4 +1,3 @@
-import './check-popup.style.scss';
 import { useContext, useEffect, useState } from 'react';
 import useSound from 'use-sound';
 
